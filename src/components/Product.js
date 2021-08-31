@@ -17,19 +17,23 @@ const useStyles = makeStyles({
   },
 });
 
-const Product = () => {
+const Product = (props) => {
   const [mahsulot, setMahsulot] = useState([]);
+
+  let CatId = window.localStorage.getItem(`${props.locId}`);
+
+  console.log("1111111111111111111111111", CatId);
 
   useEffect(() => {
     axios
-      .get(apiUrl.url + "/products")
+      .get(apiUrl.url + props.page + `/${CatId}`)
       .then((res) => {
         setMahsulot(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [setMahsulot]);
+  }, [CatId, props.page, setMahsulot]);
 
   const classes = useStyles();
   return (
@@ -45,7 +49,6 @@ const Product = () => {
                     alt="Rasm"
                     height="300"
                     image="https://www.digger.ru/storage/app/media/news/2021/7/1/gsmarena-001-1.jpeg"
-                    title="Contemplative Reptile"
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">

@@ -3,7 +3,10 @@ import Menu from "./components/Menu";
 import "./index.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Grid } from "@material-ui/core";
-import Product from "./components/MaishiyProduct";
+import Product from "./components/Product";
+// import CustomerList from "./components/CustomerList";
+import Customer from "./components/Customer";
+import AddCustomer from "./components/AddCustomer";
 
 const App = () => {
   return (
@@ -15,11 +18,19 @@ const App = () => {
               <Menu />
             </Grid>
             <Grid item md={9} style={{ marginTop: "80px", textAlign: "start" }}>
+              <Route path="/setcustomer">
+                {/* <CustomerList /> */}
+                <Customer />
+              </Route>
+              {/* <Route path="/setproduct"></Route> */}
+              <Route path="/addcustomer">
+                <AddCustomer />
+              </Route>
               <Route path="/maishiy">
-                <Product />
+                <Product page="/products" locId="maishiy" />
               </Route>
               <Route path="/mebel">
-                <h1>Mebel</h1>
+                <Product page="/products" locId="mebel" />
               </Route>
             </Grid>
           </Grid>

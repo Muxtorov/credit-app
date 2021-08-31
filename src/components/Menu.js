@@ -15,6 +15,14 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import SettingsIcon from "@material-ui/icons/Settings";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
 
@@ -79,7 +87,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
   content: {
@@ -98,21 +105,21 @@ export default function Menu() {
         setMenuItems(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("errorrrrrrrrrrrrrrrrrr", err);
       });
   }, [setMenuItems]);
 
   const classes = useStyles();
   const theme = useTheme();
 
-  const [open, setOpen] = React.useState(false);
+  const [openm, setOpenm] = React.useState(false);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpenm(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpenm(false);
   };
 
   const menuClick = (pageUrl) => {
@@ -120,13 +127,31 @@ export default function Menu() {
     // history.push(pageUrl);
   };
 
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
+          [classes.appBarShift]: openm,
         })}
       >
         <Toolbar>
@@ -136,7 +161,7 @@ export default function Menu() {
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, {
-              [classes.hide]: open,
+              [classes.hide]: openm,
             })}
           >
             <MenuIcon />
@@ -145,18 +170,75 @@ export default function Menu() {
           <Typography variant="h6" className={classes.title}>
             Codemy
           </Typography>
+          <div>
+            <Button
+              ref={anchorRef}
+              aria-controls={open ? "menu-list-grow" : undefined}
+              aria-haspopup="true"
+              onClick={handleToggle}
+            >
+              <SettingsIcon style={{ color: "white" }} />
+            </Button>
+            <Popper
+              open={open}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === "bottom" ? "center top" : "center bottom",
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleClose}>
+                      <MenuList
+                        autoFocusItem={open}
+                        id="menu-list-grow"
+                        onKeyDown={handleListKeyDown}
+                      >
+                        <MenuItem
+                          component={Link}
+                          style={{ fontSize: "26px" }}
+                          onClick={handleClose}
+                          to={"/setcustomer"}
+                        >
+                          Customers
+                        </MenuItem>
+                        <MenuItem
+                          component={Link}
+                          to={"setproduct"}
+                          style={{ fontSize: "26px" }}
+                          onClick={handleClose}
+                        >
+                          Product
+                        </MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </div>
+          <Button>
+            <AddShoppingCartIcon style={{ color: "white" }} />
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
+          [classes.drawerOpen]: openm,
+          [classes.drawerClose]: !openm,
         })}
         classes={{
           paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
+            [classes.drawerOpen]: openm,
+            [classes.drawerClose]: !openm,
           }),
         }}
       >
@@ -172,7 +254,10 @@ export default function Menu() {
         <Divider />
         <List>
           {menuItems.map((menuItem, index) => {
-            const { title } = menuItem;
+            const { title, id } = menuItem;
+
+            window.localStorage.setItem(`${title}`, id);
+
             return (
               <ListItemText key={index}>
                 <Button
