@@ -1,5 +1,5 @@
 import { Button, Grid, Switch, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
@@ -30,6 +30,7 @@ const AddCustomer = (props) => {
   const [jshshir, setJshshir] = useState("");
   const [telefon, setTelefon] = useState("+998");
   const [activ, setActiv] = useState(true);
+  const [id, setId] = useState("");
 
   let customId = window.localStorage.getItem("customId");
 
@@ -43,7 +44,10 @@ const AddCustomer = (props) => {
       setJshshir(pers.jshshir);
       setTelefon(pers.phone);
       setActiv(pers.active);
+      setId(pers.customId);
     });
+
+    window.localStorage.removeItem("customId");
   }
 
   const addPerson = () => {
@@ -56,14 +60,25 @@ const AddCustomer = (props) => {
       phone: `${telefon}`,
       active: activ,
     };
-    axios
-      .post(apiUrl.url + "/customers", person)
-      .then((res) => {
-        console.log("Then....", res.status);
-      })
-      .catch((err) => {
-        console.log("error....", err);
-      });
+    if (customId !== null) {
+      axios
+        .put(apiUrl.url + "/customers/" + id, person)
+        .then((res) => {
+          console.log("Then Edit....", res.status);
+        })
+        .catch((err) => {
+          console.log("error Edit....", err);
+        });
+    } else {
+      axios
+        .post(apiUrl.url + "/customers", person)
+        .then((res) => {
+          window.history.back();
+        })
+        .catch((err) => {
+          console.log("error....", err);
+        });
+    }
   };
 
   return (
@@ -81,7 +96,9 @@ const AddCustomer = (props) => {
             className={classes.input}
             variant="outlined"
             value={ism}
-            onChange={(e) => setIsm(e.target.value)}
+            onChange={(e) => {
+              setIsm(e.target.value);
+            }}
           />
           <TextField
             id="outlined-textarea"
