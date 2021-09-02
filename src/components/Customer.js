@@ -61,6 +61,9 @@ const Customer = () => {
             color="primary"
             disableElevation
             to={"/addcustomer"}
+            onClick={() => {
+              window.localStorage.removeItem("customId");
+            }}
           >
             Add
           </Button>

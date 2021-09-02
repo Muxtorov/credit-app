@@ -1,6 +1,8 @@
 import { Button, Grid, Switch, TextField } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
+import apiUrl from "../config/httpConnect";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,8 +20,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddCustomer = () => {
+const AddCustomer = (props) => {
   const classes = useStyles();
+
+  const [ism, setIsm] = useState("");
+  const [familiya, setFamiliya] = useState("");
+  const [sharif, setSharif] = useState("");
+  const [pasport, setPasport] = useState("");
+  const [jshshir, setJshshir] = useState("");
+  const [telefon, setTelefon] = useState("+998");
+  const [activ, setActiv] = useState(true);
+
+  let customId = window.localStorage.getItem("customId");
+
+  if (customId !== null) {
+    axios.get(apiUrl.url + "/customers/" + customId).then((res) => {
+      let pers = res.data;
+      setIsm(pers.username);
+      setFamiliya(pers.surname);
+      setSharif(pers.sheriff);
+      setPasport(pers.pasSerNum);
+      setJshshir(pers.jshshir);
+      setTelefon(pers.phone);
+      setActiv(pers.active);
+    });
+  }
+
+  const addPerson = () => {
+    let person = {
+      username: `${ism}`,
+      surname: `${familiya}`,
+      sheriff: `${sharif}`,
+      pasSerNum: `${pasport}`,
+      jshshir: `${jshshir}`,
+      phone: `${telefon}`,
+      active: activ,
+    };
+    axios
+      .post(apiUrl.url + "/customers", person)
+      .then((res) => {
+        console.log("Then....", res.status);
+      })
+      .catch((err) => {
+        console.log("error....", err);
+      });
+  };
 
   return (
     <div>
@@ -35,6 +80,8 @@ const AddCustomer = () => {
             multiline
             className={classes.input}
             variant="outlined"
+            value={ism}
+            onChange={(e) => setIsm(e.target.value)}
           />
           <TextField
             id="outlined-textarea"
@@ -43,6 +90,8 @@ const AddCustomer = () => {
             multiline
             className={classes.input}
             variant="outlined"
+            value={familiya}
+            onChange={(e) => setFamiliya(e.target.value)}
           />
           <TextField
             id="outlined-textarea"
@@ -51,6 +100,8 @@ const AddCustomer = () => {
             multiline
             className={classes.input}
             variant="outlined"
+            value={sharif}
+            onChange={(e) => setSharif(e.target.value)}
           />
           <TextField
             id="outlined-textarea"
@@ -59,6 +110,8 @@ const AddCustomer = () => {
             multiline
             className={classes.input}
             variant="outlined"
+            value={pasport}
+            onChange={(e) => setPasport(e.target.value)}
           />
           <TextField
             id="outlined-textarea"
@@ -67,6 +120,8 @@ const AddCustomer = () => {
             multiline
             className={classes.input}
             variant="outlined"
+            value={jshshir}
+            onChange={(e) => setJshshir(e.target.value)}
           />
           <TextField
             id="outlined-textarea"
@@ -75,6 +130,8 @@ const AddCustomer = () => {
             multiline
             className={classes.input}
             variant="outlined"
+            value={telefon}
+            onChange={(e) => setTelefon(e.target.value)}
           />
         </Grid>
         <Grid
@@ -90,6 +147,9 @@ const AddCustomer = () => {
               color="primary"
               name="checkedB"
               inputProps={{ "aria-label": "primary checkbox" }}
+              value={activ}
+              onChange={(e) => setActiv(e.target.checked)}
+              defaultChecked="true"
             />
           </Grid>
           <Button
@@ -101,6 +161,7 @@ const AddCustomer = () => {
             variant="contained"
             color="primary"
             disableElevation
+            onClick={addPerson}
           >
             Submit
           </Button>
