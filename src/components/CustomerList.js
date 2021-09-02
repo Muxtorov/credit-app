@@ -12,6 +12,7 @@ import apiUrl from "../config/httpConnect";
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import { Link } from "react-router-dom";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -59,20 +60,28 @@ const CustomerList = () => {
       });
   };
 
+  const handleEdit = (id) => {
+    console.log("EDIT", id);
+    window.localStorage.setItem("customId", `${id}`);
+  };
+
   const classes = useStyles();
 
   return (
-    <TableContainer style={{ marginTop: "30px" }} component={Paper}>
+    <TableContainer
+      style={{ marginTop: "30px", marginBottom: "20px" }}
+      component={Paper}
+    >
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Ismi</StyledTableCell>
-            <StyledTableCell align="right">Familiyasi</StyledTableCell>
-            <StyledTableCell align="right">Sharifi</StyledTableCell>
-            <StyledTableCell align="right">Pasport Seriyasi</StyledTableCell>
-            <StyledTableCell align="right">JSHSHIR</StyledTableCell>
-            <StyledTableCell align="right">Telefon Raqami</StyledTableCell>
-            <StyledTableCell align="right">Actions</StyledTableCell>
+            <StyledTableCell>Familiyasi</StyledTableCell>
+            <StyledTableCell>Sharifi</StyledTableCell>
+            <StyledTableCell>Pasport Seriyasi</StyledTableCell>
+            <StyledTableCell>JSHSHIR</StyledTableCell>
+            <StyledTableCell>Telefon Raqami</StyledTableCell>
+            <StyledTableCell>Actions</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -81,12 +90,12 @@ const CustomerList = () => {
               <StyledTableCell component="th" scope="row">
                 {item.username}
               </StyledTableCell>
-              <StyledTableCell align="right">{item.surname}</StyledTableCell>
-              <StyledTableCell align="right">{item.sheriff}</StyledTableCell>
-              <StyledTableCell align="right">{item.pasSerNum}</StyledTableCell>
-              <StyledTableCell align="right">{item.jshshir}</StyledTableCell>
-              <StyledTableCell align="right">{item.phone}</StyledTableCell>
-              <StyledTableCell align="right">
+              <StyledTableCell>{item.surname}</StyledTableCell>
+              <StyledTableCell>{item.sheriff}</StyledTableCell>
+              <StyledTableCell>{item.pasSerNum}</StyledTableCell>
+              <StyledTableCell>{item.jshshir}</StyledTableCell>
+              <StyledTableCell>{item.phone}</StyledTableCell>
+              <StyledTableCell>
                 <IconButton
                   onClick={() => {
                     handleDel(item.id);
@@ -94,7 +103,13 @@ const CustomerList = () => {
                 >
                   <DeleteIcon fontSize="inherit" color="error" />
                 </IconButton>
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    handleEdit(item.id);
+                  }}
+                  component={Link}
+                  to={"/addcustomer"}
+                >
                   <EditIcon
                     fontSize="default"
                     style={{ color: "green", marginLeft: "15%" }}
