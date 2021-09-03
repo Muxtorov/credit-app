@@ -7,6 +7,7 @@ import Products from "./components/Products";
 // import CustomerList from "./components/CustomerList";
 import Customer from "./components/Customer";
 import AddCustomer from "./components/AddCustomer";
+import ProdCRUD from "./components/ProdCRUD";
 
 const App = () => {
   return (
@@ -19,18 +20,19 @@ const App = () => {
             </Grid>
             <Grid item md={9} style={{ marginTop: "80px", textAlign: "start" }}>
               <Route path="/setcustomer">
-                {/* <CustomerList /> */}
                 <Customer />
               </Route>
-              {/* <Route path="/setproduct"></Route> */}
+              <Route path="/setproduct">
+                <ProdCRUD />
+              </Route>
               <Route path="/addcustomer">
                 <AddCustomer />
               </Route>
               <Route path="/maishiy">
-                <Products page="/products" locId="maishiy" />
+                <Products locId="maishiy" />
               </Route>
               <Route path="/mebel">
-                <Products page="/products" locId="mebel" />
+                <Products locId="mebel" />
               </Route>
             </Grid>
           </Grid>
