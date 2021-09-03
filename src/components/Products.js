@@ -26,7 +26,7 @@ const Product = (props) => {
 
   useEffect(() => {
     axios
-      .get(apiUrl.url + props.page + `/${CatId}`)
+      .get(apiUrl.url + `/incomingorders/category/${CatId}`)
       .then((res) => {
         setMahsulot(res.data);
       })
@@ -55,15 +55,10 @@ const Product = (props) => {
                       {item.title}
                     </Typography>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Narxi: {item.price}
+                      Narxi: {item.product.price}
                     </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                      style={{ margin: "15px" }}
-                    >
-                      {item.desc}
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Soni: {item.quantity}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
