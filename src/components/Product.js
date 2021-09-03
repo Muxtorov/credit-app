@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router";
 
 const useStyles = makeStyles({
   root: {
@@ -20,26 +21,25 @@ const useStyles = makeStyles({
 });
 
 const Product = () => {
+  const location = useLocation();
+
   const classes = useStyles();
   // const stateData = useSelector(stateData);
   const dispatch = useDispatch();
 
   const [count, setCount] = React.useState(1);
 
-  const data = {
-    productId: 101,
-    categoryId: "001",
-    productName: "Artel TV 32",
-    price: 1500000,
-    quantity: 3,
-    description: "smart hd 32dyuym",
-  };
-
+  const data = location.state.item;
+  console.log(data);
   function HandleClick(data, count) {
     let orData = {
-      productId: data.productId,
-      productName: data.productName,
-      price: data.price,
+      productId: data.product.id,
+      productName: data.product.title,
+      price: data.basePrice,
+      category: {
+        id: data.category.id,
+        percent: data.category.percent,
+      },
       quantity: count,
     };
     dispatch({ type: "ADD_PRODUCT", payload: { orData } });
@@ -59,10 +59,10 @@ const Product = () => {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {data.productName}
+              {data.title}
             </Typography>
             <Typography gutterBottom variant="h5" component="h2">
-              Narxi: {data.price}
+              Narxi: {data.basePrice}
             </Typography>
             <Typography
               variant="body2"
@@ -70,7 +70,7 @@ const Product = () => {
               component="p"
               style={{ margin: "15px" }}
             >
-              {data.description}
+              {data.product.desc}
             </Typography>
             <Button
               color="primary"
