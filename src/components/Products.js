@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Product = (props) => {
+const Products = (props) => {
   const [mahsulot, setMahsulot] = useState([]);
 
   let CatId = window.localStorage.getItem(`${props.locId}`);
@@ -26,7 +26,9 @@ const Product = (props) => {
 
   useEffect(() => {
     axios
+
       .get(apiUrl.url + `/incomingorders/category/${CatId}`)
+
       .then((res) => {
         setMahsulot(res.data);
       })
@@ -43,7 +45,7 @@ const Product = (props) => {
           <div style={{ margin: 20 }}>
             <Grid item md={6} lg={6} container justifyContent="center">
               <Card className={classes.root}>
-                <CardActionArea>
+                <CardActionArea onClick="handleClick()">
                   <CardMedia
                     component="img"
                     alt="Rasm"
@@ -71,4 +73,4 @@ const Product = (props) => {
   );
 };
 
-export default Product;
+export default Products;
