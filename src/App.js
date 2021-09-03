@@ -8,6 +8,8 @@ import Products from "./components/Products";
 import Customer from "./components/Customer";
 import AddCustomer from "./components/AddCustomer";
 import ProdCRUD from "./components/ProdCRUD";
+import Product from "./components/Product";
+import Cart from "./components/Cart";
 
 const App = () => {
   return (
@@ -33,6 +35,12 @@ const App = () => {
               </Route>
               <Route path="/mebel">
                 <Products locId="mebel" />
+              </Route>
+              <Route path="/product">
+                <Product />
+              </Route>
+              <Route path="/cart">
+                <Cart />
               </Route>
             </Grid>
           </Grid>
