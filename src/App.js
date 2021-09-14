@@ -41,6 +41,12 @@ const App = () => {
               <Route path="/mebel">
                 <Products locId="mebel" />
               </Route>
+              <Route path="/product">
+                <Product />
+              </Route>
+              <Route path="/cart">
+                <Cart />
+              </Route>
             </Grid>
           </Grid>
         </Router>

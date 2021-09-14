@@ -5,7 +5,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-
+import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
@@ -19,6 +19,7 @@ const useStyles = makeStyles({
 
 const Products = (props) => {
   const [mahsulot, setMahsulot] = useState([]);
+  let history = useHistory();
 
   let CatId = window.localStorage.getItem(`${props.locId}`);
 
@@ -27,21 +28,28 @@ const Products = (props) => {
       .get(apiUrl.url + `/stockorders/category/${CatId}`)
       .then((res) => {
         setMahsulot(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [CatId, props.page, setMahsulot]);
 
+  const handleClick = (item) => {
+    console.log("foo");
+    console.log(item);
+    history.push({ pathname: "/product", state: { item } });
+  };
+
   const classes = useStyles();
   return (
     <Grid container>
       {mahsulot.map((item) => {
         return (
-          <div style={{ margin: 20 }}>
+          <div style={{ margin: 20 }} key={item.id}>
             <Grid item md={6} lg={6} container justifyContent="center">
               <Card className={classes.root}>
-                <CardActionArea onClick="handleClick()">
+                <CardActionArea onClick={() => handleClick(item)}>
                   <CardMedia
                     component="img"
                     alt="Rasm"
