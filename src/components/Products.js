@@ -22,13 +22,9 @@ const Products = (props) => {
 
   let CatId = window.localStorage.getItem(`${props.locId}`);
 
-  console.log("1111111111111111111111111", CatId);
-
   useEffect(() => {
     axios
-
-      .get(apiUrl.url + `/incomingorders/category/${CatId}`)
-
+      .get(apiUrl.url + `/stockorders/category/${CatId}`)
       .then((res) => {
         setMahsulot(res.data);
       })
@@ -54,10 +50,10 @@ const Products = (props) => {
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {item.title}
+                      {item.product.title}
                     </Typography>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Narxi: {item.product.price}
+                      Narxi: {item.price}
                     </Typography>
                     <Typography gutterBottom variant="h5" component="h2">
                       Soni: {item.quantity}

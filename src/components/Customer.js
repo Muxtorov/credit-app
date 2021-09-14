@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Button, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import CustomerList from "./CustomerList";
+import axios from "axios";
+import apiUrl from "../config/httpConnect";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +25,49 @@ const useStyles = makeStyles((theme) => ({
 const Customer = () => {
   const classes = useStyles();
 
+  const [jshr, setJshr] = useState("");
+  const [custom, setCustom] = useState([]);
+  const [customData, setCustomData] = useState([]);
+  const [liboy, setLiboy] = useState(true);
+
+  useEffect(() => {
+    axios.get(apiUrl.url + "/customers").then((res) => {
+      setCustom(res.data);
+      setCustomData(res.data);
+    });
+  }, [setCustom, liboy]);
+
+  const search_data = (value) => {
+    console.log(custom, jshr);
+
+    const newData = custom.filter((v) => {
+      let a;
+      if (v.jshshir.indexOf(value) > -1) {
+        a = v;
+      }
+      return a;
+    });
+    console.log("new data", newData);
+    setCustomData(newData);
+  };
+
+  const handleDel = async (id) => {
+    await axios
+      .delete(apiUrl.url + "/customers/" + id)
+      .then((res) => {
+        console.log(res.status);
+        setLiboy(!liboy);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleEdit = (id) => {
+    console.log("EDIT", id);
+    window.localStorage.setItem("customId", `${id}`);
+  };
+
   return (
     <div>
       <Grid container>
@@ -40,19 +85,15 @@ const Customer = () => {
               InputLabelProps={{
                 shrink: true,
               }}
+              value={jshr}
+              onChange={(e) => {
+                setJshr(e.target.value);
+                search_data(e.target.value);
+              }}
             />
           </form>
         </Grid>
-        <Grid item md={2}>
-          <Button
-            style={{ display: "flex", marginTop: "20px" }}
-            variant="contained"
-            color="primary"
-            disableElevation
-          >
-            Search
-          </Button>
-        </Grid>
+        <Grid item md={2} />
         <Grid item md={1}>
           <Button
             component={Link}
@@ -66,7 +107,11 @@ const Customer = () => {
           </Button>
         </Grid>
         <Grid style={{ marginLeft: "-60px" }} item md={12}>
-          <CustomerList />
+          <CustomerList
+            custom={customData}
+            handleDel={handleDel}
+            handleEdit={handleEdit}
+          />
         </Grid>
       </Grid>
     </div>

@@ -4,10 +4,11 @@ import "./index.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import Products from "./components/Products";
-// import CustomerList from "./components/CustomerList";
 import Customer from "./components/Customer";
 import AddCustomer from "./components/AddCustomer";
-import ProdCRUD from "./components/ProdCRUD";
+import ProdCRUD from "./components/ProdList";
+import AddProd from "./components/AddProd";
+import AddIncoming from "./components/AddIncoming";
 
 const App = () => {
   return (
@@ -27,6 +28,12 @@ const App = () => {
               </Route>
               <Route path="/addcustomer">
                 <AddCustomer />
+              </Route>
+              <Route path="/addproduct">
+                <AddProd />
+              </Route>
+              <Route path="/addincoming">
+                <AddIncoming />
               </Route>
               <Route path="/maishiy">
                 <Products locId="maishiy" />

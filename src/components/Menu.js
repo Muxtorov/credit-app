@@ -103,9 +103,10 @@ export default function Menu() {
       .get(apiUrl.url + "/categorys")
       .then((res) => {
         setMenuItems(res.data);
+        window.localStorage.setItem("categoriyalar", JSON.stringify(res.data));
       })
       .catch((err) => {
-        console.log("errorrrrrrrrrrrrrrrrrr", err);
+        console.log("error", err);
       });
   }, [setMenuItems]);
 
@@ -124,7 +125,6 @@ export default function Menu() {
 
   const menuClick = (pageUrl) => {
     console.log(pageUrl);
-    // history.push(pageUrl);
   };
 
   const [open, setOpen] = React.useState(false);

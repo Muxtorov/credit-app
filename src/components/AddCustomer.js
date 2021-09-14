@@ -50,7 +50,7 @@ const AddCustomer = (props) => {
     window.localStorage.removeItem("customId");
   }
 
-  const addPerson = () => {
+  const addPerson = async () => {
     let person = {
       username: `${ism}`,
       surname: `${familiya}`,
@@ -61,7 +61,7 @@ const AddCustomer = (props) => {
       active: activ,
     };
     if (customId !== null) {
-      axios
+      await axios
         .put(apiUrl.url + "/customers/" + id, person)
         .then((res) => {
           console.log("Then Edit....", res.status);
@@ -70,7 +70,7 @@ const AddCustomer = (props) => {
           console.log("error Edit....", err);
         });
     } else {
-      axios
+      await axios
         .post(apiUrl.url + "/customers", person)
         .then((res) => {
           window.history.back();
