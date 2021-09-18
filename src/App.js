@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "./components/Menu";
 import "./index.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -9,8 +9,21 @@ import AddCustomer from "./components/AddCustomer";
 import ProdCRUD from "./components/ProdList";
 import AddProd from "./components/AddProd";
 import AddIncoming from "./components/AddIncoming";
+import Category from "./components/Category";
+import AddCategory from "./components/AddCategory";
+import axios from "axios";
+import apiUrl from "./config/httpConnect";
+import Contract from "./components/Contract";
 
 const App = () => {
+  const [qoshiq, setQoshiq] = useState([]);
+
+  useEffect(() => {
+    axios.get(apiUrl.url + "/categorys").then((res) => {
+      setQoshiq(res.data);
+    });
+  }, [setQoshiq]);
+
   return (
     <div className="container">
       <Switch>
@@ -26,6 +39,12 @@ const App = () => {
               <Route path="/setproduct">
                 <ProdCRUD />
               </Route>
+              <Route path="/setcategory">
+                <Category />
+              </Route>
+              <Route path="/addcategory">
+                <AddCategory />
+              </Route>
               <Route path="/addcustomer">
                 <AddCustomer />
               </Route>
@@ -35,12 +54,16 @@ const App = () => {
               <Route path="/addincoming">
                 <AddIncoming />
               </Route>
-              <Route path="/maishiy">
-                <Products locId="maishiy" />
+              <Route path="/contract">
+                <Contract />
               </Route>
-              <Route path="/mebel">
-                <Products locId="mebel" />
-              </Route>
+              {qoshiq.map((item) => {
+                return (
+                  <Route path={"/" + item.title}>
+                    <Products locId={item.title} />
+                  </Route>
+                );
+              })}
             </Grid>
           </Grid>
         </Router>

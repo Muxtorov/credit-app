@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -7,10 +7,12 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { Button, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import apiUrl from "../config/httpConnect";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -36,12 +38,16 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomerList = ({ custom, handleDel, handleEdit }) => {
+const CategoryList = ({ handleDel, handleEdit }) => {
   const classes = useStyles();
 
-  const handleClick = (id) => {
-    console.log(id);
-  };
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios.get(apiUrl.url + "/categorys").then((res) => {
+      setData(res.data);
+    });
+  }, []);
 
   return (
     <TableContainer
@@ -51,40 +57,29 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell></StyledTableCell>
-            <StyledTableCell>Ismi</StyledTableCell>
-            <StyledTableCell>Familiyasi</StyledTableCell>
-            <StyledTableCell>Sharifi</StyledTableCell>
-            <StyledTableCell>Pasport Seriyasi</StyledTableCell>
-            <StyledTableCell>JSHSHIR</StyledTableCell>
-            <StyledTableCell>Telefon Raqami</StyledTableCell>
-            <StyledTableCell>Actions</StyledTableCell>
+            <StyledTableCell>Nomi</StyledTableCell>
+            <StyledTableCell>0 oy</StyledTableCell>
+            <StyledTableCell>3 oy</StyledTableCell>
+            <StyledTableCell>6 oy</StyledTableCell>
+            <StyledTableCell>9 oy</StyledTableCell>
+            <StyledTableCell>12 oy</StyledTableCell>
+
+            <StyledTableCell align="right">Actions</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {custom.map((item) => (
+          {data.map((item) => (
             <StyledTableRow key={item.name}>
-              <StyledTableCell>
-                <Button
-                  component={Link}
-                  style={{ display: "flex" }}
-                  variant="contained"
-                  color="primary"
-                  disableElevation
-                  to={"/contract"}
-                >
-                  info
-                </Button>
-              </StyledTableCell>
               <StyledTableCell component="th" scope="row">
-                {item.username}
+                {item.title}
               </StyledTableCell>
-              <StyledTableCell>{item.surname}</StyledTableCell>
-              <StyledTableCell>{item.sheriff}</StyledTableCell>
-              <StyledTableCell>{item.pasSerNum}</StyledTableCell>
-              <StyledTableCell>{item.jshshir}</StyledTableCell>
-              <StyledTableCell>{item.phone}</StyledTableCell>
-              <StyledTableCell>
+              <StyledTableCell>{item.percent[0].oy0}</StyledTableCell>
+              <StyledTableCell>{item.percent[1].oy3}</StyledTableCell>
+              <StyledTableCell>{item.percent[2].oy6}</StyledTableCell>
+              <StyledTableCell>{item.percent[3].oy9}</StyledTableCell>
+              <StyledTableCell>{item.percent[4].oy12}</StyledTableCell>
+
+              <StyledTableCell align="right">
                 <IconButton
                   onClick={() => {
                     handleDel(item.id);
@@ -94,10 +89,10 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
                 </IconButton>
                 <IconButton
                   onClick={() => {
-                    handleClick(item.id);
+                    handleEdit(item.id);
                   }}
                   component={Link}
-                  to={"/addcustomer"}
+                  to={"/addcategory"}
                 >
                   <EditIcon
                     fontSize="default"
@@ -113,4 +108,4 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
   );
 };
 
-export default CustomerList;
+export default CategoryList;

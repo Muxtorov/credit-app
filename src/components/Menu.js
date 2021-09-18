@@ -217,6 +217,14 @@ export default function Menu() {
                         >
                           Product
                         </MenuItem>
+                        <MenuItem
+                          component={Link}
+                          to={"setcategory"}
+                          style={{ fontSize: "26px" }}
+                          onClick={handleClose}
+                        >
+                          Category
+                        </MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
