@@ -15,6 +15,10 @@ import axios from "axios";
 import apiUrl from "./config/httpConnect";
 import Contract from "./components/Contract";
 import Logo from "./components/Logo.js";
+import Product from "./components/Product";
+import Cart from "./components/Cart";
+
+
 const App = () => {
   const [data, setData] = useState([]);
 
@@ -67,6 +71,7 @@ const App = () => {
                   </Route>
                 );
               })}
+
             </Grid>
           </Grid>
         </Router>

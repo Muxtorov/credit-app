@@ -25,6 +25,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -141,6 +142,8 @@ export default function Menu() {
     }
   }
 
+  const history = useHistory();
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -229,7 +232,12 @@ export default function Menu() {
             </Popper>
           </div>
           <Button>
-            <AddShoppingCartIcon style={{ color: "white" }} />
+            <AddShoppingCartIcon
+              style={{ color: "white" }}
+              onClick={() => {
+                history.push("/cart");
+              }}
+            />
           </Button>
         </Toolbar>
       </AppBar>
