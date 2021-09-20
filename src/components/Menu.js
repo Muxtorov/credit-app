@@ -124,10 +124,6 @@ export default function Menu() {
     setOpenm(false);
   };
 
-  const menuClick = (pageUrl) => {
-    console.log(pageUrl);
-  };
-
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -220,6 +216,14 @@ export default function Menu() {
                         >
                           Product
                         </MenuItem>
+                        <MenuItem
+                          component={Link}
+                          to={"setcategory"}
+                          style={{ fontSize: "26px" }}
+                          onClick={handleClose}
+                        >
+                          Category
+                        </MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
@@ -273,7 +277,6 @@ export default function Menu() {
                   to={`/${title}`}
                   style={{ marginLeft: "10px" }}
                   onClick={() => {
-                    menuClick(title);
                     setOpen(false);
                   }}
                 >

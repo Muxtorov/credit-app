@@ -38,8 +38,6 @@ const Customer = () => {
   }, [setCustom, liboy]);
 
   const search_data = (value) => {
-    console.log(custom, jshr);
-
     const newData = custom.filter((v) => {
       let a;
       if (v.jshshir.indexOf(value) > -1) {
@@ -47,7 +45,7 @@ const Customer = () => {
       }
       return a;
     });
-    console.log("new data", newData);
+
     setCustomData(newData);
   };
 
@@ -55,7 +53,6 @@ const Customer = () => {
     await axios
       .delete(apiUrl.url + "/customers/" + id)
       .then((res) => {
-        console.log(res.status);
         setLiboy(!liboy);
       })
       .catch((err) => {
@@ -64,7 +61,6 @@ const Customer = () => {
   };
 
   const handleEdit = (id) => {
-    console.log("EDIT", id);
     window.localStorage.setItem("customId", `${id}`);
   };
 

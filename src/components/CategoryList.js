@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,7 +11,8 @@ import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import axios from "axios";
+import apiUrl from "../config/httpConnect";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -37,12 +38,16 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomerList = ({ prod, handleEdit, handleDel }) => {
-  const handleAdd = (item) => {
-    window.localStorage.setItem("item", JSON.stringify(item));
-  };
-
+const CategoryList = ({ handleDel, handleEdit }) => {
   const classes = useStyles();
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios.get(apiUrl.url + "/categorys").then((res) => {
+      setData(res.data);
+    });
+  }, []);
 
   return (
     <TableContainer
@@ -53,18 +58,26 @@ const CustomerList = ({ prod, handleEdit, handleDel }) => {
         <TableHead>
           <TableRow>
             <StyledTableCell>Nomi</StyledTableCell>
-            <StyledTableCell align="right">Description</StyledTableCell>
+            <StyledTableCell>0 oy</StyledTableCell>
+            <StyledTableCell>3 oy</StyledTableCell>
+            <StyledTableCell>6 oy</StyledTableCell>
+            <StyledTableCell>9 oy</StyledTableCell>
+            <StyledTableCell>12 oy</StyledTableCell>
+
             <StyledTableCell align="right">Actions</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {prod.map((item) => (
-            <StyledTableRow key={item.id}>
+          {data.map((item) => (
+            <StyledTableRow key={item.name}>
               <StyledTableCell component="th" scope="row">
                 {item.title}
               </StyledTableCell>
-              <StyledTableCell align="right">{item.desc}</StyledTableCell>
+              <StyledTableCell>{item.percent[0].oy0}</StyledTableCell>
+              <StyledTableCell>{item.percent[1].oy3}</StyledTableCell>
+              <StyledTableCell>{item.percent[2].oy6}</StyledTableCell>
+              <StyledTableCell>{item.percent[3].oy9}</StyledTableCell>
+              <StyledTableCell>{item.percent[4].oy12}</StyledTableCell>
 
               <StyledTableCell align="right">
                 <IconButton
@@ -79,23 +92,12 @@ const CustomerList = ({ prod, handleEdit, handleDel }) => {
                     handleEdit(item.id);
                   }}
                   component={Link}
-                  to={"/addproduct"}
+                  to={"/addcategory"}
                 >
                   <EditIcon
                     fontSize="default"
                     style={{ color: "green", marginLeft: "15%" }}
                   />
-                </IconButton>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <IconButton
-                  onClick={() => {
-                    handleAdd(item);
-                  }}
-                  component={Link}
-                  to={"/addincoming"}
-                >
-                  <AddCircleOutlineIcon fontSize="inherit" />
                 </IconButton>
               </StyledTableCell>
             </StyledTableRow>
@@ -106,4 +108,4 @@ const CustomerList = ({ prod, handleEdit, handleDel }) => {
   );
 };
 
-export default CustomerList;
+export default CategoryList;

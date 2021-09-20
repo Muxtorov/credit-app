@@ -48,7 +48,6 @@ const AddProduct = (props) => {
   }, [setArr]);
 
   if (proId !== null) {
-    console.log("1111111111111111111");
     axios
       .get(apiUrl.url + "/products/" + proId)
       .then((res) => {
@@ -73,15 +72,12 @@ const AddProduct = (props) => {
       await axios
         .put(apiUrl.url + "/products/" + id, newprod)
         .then((res) => {
-          console.log("Then Edit....", res.status);
           window.history.back();
         })
         .catch((err) => {
           console.log("error Edit....", err);
         });
     } else {
-      console.log("ELSEprodID", proId);
-
       await axios
         .post(apiUrl.url + "/products", newprod)
         .then((res) => {

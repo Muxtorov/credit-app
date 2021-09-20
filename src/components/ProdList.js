@@ -37,8 +37,6 @@ const ProdList = () => {
   }, [setProd]);
 
   const search_data = (value) => {
-    console.log(prod, name);
-
     const newData = prod.filter((v) => {
       let b;
       if (v.title.indexOf(value) > -1) {
@@ -46,12 +44,11 @@ const ProdList = () => {
       }
       return b;
     });
-    console.log("new data", newData);
+
     setProdData(newData);
   };
 
   const handleEdit = (id) => {
-    console.log("EDIT", id);
     window.localStorage.setItem("prodId", `${id}`);
   };
 

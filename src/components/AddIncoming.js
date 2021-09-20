@@ -48,7 +48,6 @@ const AddIncoming = () => {
       quantity: soni * 1,
       basePrice: narxi * 1,
     };
-    console.log("iiiiiiiiiiiiiii", newIco);
 
     await axios
       .post(apiUrl.url + "/incomingorders", newIco)
