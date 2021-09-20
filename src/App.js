@@ -18,7 +18,6 @@ import Logo from "./components/Logo.js";
 import Product from "./components/Product";
 import Cart from "./components/Cart";
 
-
 const App = () => {
   const [data, setData] = useState([]);
 
@@ -71,7 +70,12 @@ const App = () => {
                   </Route>
                 );
               })}
-
+              <Route path="/product">
+                <Product />
+              </Route>
+              <Route path="/cart">
+                <Cart />
+              </Route>
             </Grid>
           </Grid>
         </Router>

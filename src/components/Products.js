@@ -46,7 +46,10 @@ const Products = (props) => {
     <Grid container>
       {mahsulot.map((item) => {
         return (
-          <div style={{ margin: 20 }} key={item.id}>
+          <div
+            style={{ width: "44%", margin: "10px 10px 10px 50px" }}
+            key={item.id}
+          >
             <Grid item md={6} lg={6} container justifyContent="center">
               <Card className={classes.root}>
                 <CardActionArea onClick={() => handleClick(item)}>

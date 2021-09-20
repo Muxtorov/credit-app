@@ -67,14 +67,14 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
           {custom.map((item) => (
             <StyledTableRow key={item.name}>
               <StyledTableCell>
-                <button
+                <Button
                   onClick={() => {
                     AddCustomer(item);
                     alert("Xaridor tanlandi");
                   }}
                 >
-                  Tanlash
-                </button>
+                  info
+                </Button>
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 {item.username}
