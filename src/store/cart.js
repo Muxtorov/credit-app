@@ -8,6 +8,9 @@ const cartReducer = (state = initialState, action) => {
     case "INIT":
       return { ...initialState, customer: action.payload.userId };
 
+    case "ADD_CUSTOMER":
+      let customer = action.payload.data;
+      return { ...state, customer };
     case "ADD_PRODUCT":
       // tekshirib qushish kerak, duplikate larni oldini olish.
       const items = state.items;

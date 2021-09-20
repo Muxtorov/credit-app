@@ -10,6 +10,8 @@ import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import Radio from "@material-ui/core/Radio";
+// import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
+import Button from "@material-ui/core/Button";
 
 const GreenRadio = withStyles({
   root: {
@@ -22,20 +24,24 @@ const GreenRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 const Cart = () => {
-  //   const [state, setState] = useState([]);
+  // const [state, setState] = useState(0);
+  var totalSum = 0;
   const [selectedValue, setSelectedValue] = React.useState("oy0");
+  const [date, SetDate] = useState(new Date());
+  const [payment, setPayment] = useState({ array: [], sum: 0 });
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
 
   const data = useSelector((state) => {
-    return state.cart.items;
+    return state.cart;
   });
   console.log(data);
   console.log(selectedValue);
-  const rows = data;
-  console.log(data);
+  const rows = data.items;
+  console.log(rows);
+
   function rowTotal(quan, price, percent) {
     let foiz = -1;
     switch (selectedValue) {
@@ -57,8 +63,42 @@ const Cart = () => {
       default:
         break;
     }
-    return quan * ((price * foiz) / 100 + price);
+    var s = quan * ((price * foiz) / 100 + price);
+
+    total(s);
+    return s;
   }
+
+  function total(s) {
+    totalSum += s;
+  }
+
+  function dateHisob() {
+    var now = new Date(date);
+    var n = selectedValue.slice(2) * 1;
+    console.log(n);
+    var current;
+    var arr = [];
+    for (let i = 0; i < n; i++) {
+      if (now.getMonth() === 11) {
+        current = new Date(now.getFullYear() + 1, 0, now.getDate());
+      } else {
+        current = new Date(
+          now.getFullYear(),
+          now.getMonth() + 1,
+          now.getDate()
+        );
+      }
+      arr.push(current);
+      now = current;
+    }
+    let oylikSum = (totalSum / n).toFixed(2);
+    setPayment({ array: arr, sum: oylikSum });
+  }
+  console.log("11111111111111", payment.array);
+  // function paymentHisob() {}
+
+  console.log(date);
 
   return (
     <div style={{ marginRight: "30px" }}>
@@ -116,7 +156,13 @@ const Cart = () => {
           <TableHead>
             <TableRow>
               <TableCell align="center" colSpan={3}>
-                Customer Name
+                {data.customer == null ? (
+                  ""
+                ) : (
+                  <h2 style={{ color: "blue" }}>
+                    {data.customer.surname + " " + data.customer.username}{" "}
+                  </h2>
+                )}
               </TableCell>
               <TableCell align="right">Narxi</TableCell>
             </TableRow>
@@ -138,9 +184,73 @@ const Cart = () => {
                 </TableCell>
               </TableRow>
             ))}
+            <TableRow>
+              <TableCell align="center" colSpan={4}>
+                Jami:
+                {totalSum}
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
+      <div style={{ margin: "20px" }}>
+        <h2 style={{ display: "inline-block" }}>Sanani kiriting:</h2>
+        <input
+          type="date"
+          id="date"
+          onChange={(e) => {
+            SetDate(e.target.value);
+          }}
+          style={{ fontSize: "20px" }}
+        />
+        <Button
+          style={{ margin: "20px" }}
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            dateHisob();
+          }}
+        >
+          ok
+        </Button>
+      </div>
+      <TableContainer component={Paper}>
+        <Table aria-label="spanning table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center" colSpan={3}>
+                foo
+              </TableCell>
+              <TableCell align="right">Narxi</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>T/r</TableCell>
+              <TableCell align="right">To'lov Sanasi</TableCell>
+              <TableCell align="right">To'lash kerak bo'lgan summa</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {payment.array.map((row, ind) => (
+              <TableRow key={ind}>
+                <TableCell>{ind + 1}</TableCell>
+                <TableCell align="right">
+                  {row.getDate()}.{row.getMonth() + 1}.{row.getFullYear()}
+                </TableCell>
+                <TableCell align="right">{payment.sum}</TableCell>
+              </TableRow>
+            ))}
+            <TableRow>
+              <TableCell align="center" colSpan={4}>
+                Jami:
+                {totalSum}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Button style={{ margin: "20px" }} variant="contained" color="primary">
+        chop etish
+      </Button>
     </div>
   );
 };
