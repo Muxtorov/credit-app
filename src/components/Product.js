@@ -35,7 +35,7 @@ const Product = () => {
     let orData = {
       productId: data.product.id,
       productName: data.product.title,
-      price: data.basePrice,
+      price: data.price,
       category: {
         id: data.category.id,
         percent: data.category.percent,
@@ -109,6 +109,7 @@ const Product = () => {
               variant="contained"
               onClick={() => {
                 HandleClick(data, count);
+                alert("Maxsulot qo'shildi");
               }}
             >
               <h3> Add to cart</h3>

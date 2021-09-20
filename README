@@ -1,0 +1,59 @@
+Product {
+    id, title, categoryId
+}
+
+Purchase (Incoming Order) {
+    id, productId, basePrice, quantity, date, categoryId
+}
+
+stake{
+    id,
+    productId,
+    price,
+    quantity,
+    
+}
+
+Price: []
+Existing base prices: 
+Date         basePrice      (+20%)
+09/08/2021 - $3900 -        $5100
+21/08/2021 - $4000 -        $5400
+15/09/2021 - $4200 -        $5700
+
+
+
+order{
+    customerId,
+    items:[
+        {productId,
+        productName,
+        price,
+        category:[
+            id,
+            percent
+        ],
+        quantity},
+        {productId,
+        productName,
+        price,
+        category:[
+            id,
+            percent
+        ],
+        quantity},
+    ],
+    
+    tolovlar:[
+        {sana,
+        to'lash_kerak_summa,
+        tsana,
+        to'langan_summa},
+
+
+    ]
+    date,
+    total,
+    muddati
+
+}

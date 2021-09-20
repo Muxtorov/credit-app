@@ -11,6 +11,7 @@ import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -39,6 +40,12 @@ const useStyles = makeStyles({
 const CustomerList = ({ custom, handleDel, handleEdit }) => {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
+  function AddCustomer(data) {
+    dispatch({ type: "ADD_CUSTOMER", payload: { data } });
+  }
+
   return (
     <TableContainer
       style={{ marginTop: "30px", marginBottom: "20px" }}
@@ -47,6 +54,7 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
+            <StyledTableCell></StyledTableCell>
             <StyledTableCell>Ismi</StyledTableCell>
             <StyledTableCell>Familiyasi</StyledTableCell>
             <StyledTableCell>Sharifi</StyledTableCell>
@@ -59,6 +67,16 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
         <TableBody>
           {custom.map((item) => (
             <StyledTableRow key={item.name}>
+              <StyledTableCell>
+                <button
+                  onClick={() => {
+                    AddCustomer(item);
+                    alert("Xaridor tanlandi");
+                  }}
+                >
+                  Tanlash
+                </button>
+              </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 {item.username}
               </StyledTableCell>

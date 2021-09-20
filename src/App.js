@@ -9,6 +9,8 @@ import AddCustomer from "./components/AddCustomer";
 import ProdCRUD from "./components/ProdList";
 import AddProd from "./components/AddProd";
 import AddIncoming from "./components/AddIncoming";
+import Product from "./components/Product";
+import Cart from "./components/Cart";
 
 const App = () => {
   return (
