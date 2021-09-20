@@ -123,10 +123,6 @@ export default function Menu() {
     setOpenm(false);
   };
 
-  const menuClick = (pageUrl) => {
-    console.log(pageUrl);
-  };
-
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -273,7 +269,6 @@ export default function Menu() {
                   to={`/${title}`}
                   style={{ marginLeft: "10px" }}
                   onClick={() => {
-                    menuClick(title);
                     setOpen(false);
                   }}
                 >

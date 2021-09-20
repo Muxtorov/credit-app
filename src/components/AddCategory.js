@@ -74,12 +74,9 @@ const AddCategory = (props) => {
       await axios
         .put(apiUrl.url + "/categorys/" + id, CATEGORIYA)
         .then((res) => {
-          console.log("Then Edit....", res.status);
           window.history.back();
         })
-        .catch((err) => {
-          console.log("error Edit....", err);
-        });
+        .catch((err) => {});
     } else {
       await axios
         .post(apiUrl.url + "/categorys", CATEGORIYA)

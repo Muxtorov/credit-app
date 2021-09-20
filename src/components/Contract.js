@@ -1,4 +1,5 @@
 import React from "react";
+import emblema from "../image_2021-09-20_10-17-21.png";
 
 const Contract = () => {
   return (
@@ -9,6 +10,7 @@ const Contract = () => {
         textAlign: "justify",
       }}
     >
+      <img src={emblema} style={{ position: "absolute" }} alt="" />
       <h1
         style={{
           display: "flex",
@@ -17,133 +19,25 @@ const Contract = () => {
       >
         Shartnoma
       </h1>
-      <div>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum
-        nesciunt tenetur minus iusto nemo corporis, magni perferendis
-        consequuntur id mollitia vel exercitationem eaque sed ea ullam expedita
-        in quasi optio. Lorem, ipsum dolor sit amet consectetur adipisicing
-        elit. Laborum nesciunt tenetur minus iusto nemo corporis, magni
-        perferendis consequuntur id mollitia vel exercitationem eaque sed ea
-        ullam expedita in quasi optio. Lorem, ipsum dolor sit amet consectetur
-        adipisicing elit. Laborum nesciunt tenetur minus iusto nemo corporis,
-        magni perferendis consequuntur id mollitia vel exercitationem eaque sed
-        ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. v Lorem, ipsum dolor sit
-        amet consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto
-        nemo corporis, magni perferendis consequuntur id mollitia vel
-        exercitationem eaque sed ea ullam expedita in quasi optio. Lorem, ipsum
-        dolor sit amet consectetur adipisicing elit. Laborum nesciunt tenetur
-        minus iusto nemo corporis, magni perferendis consequuntur id mollitia
-        vel exercitationem eaque sed ea ullam expedita in quasi optio. Lorem,
-        ipsum dolor sit amet consectetur adipisicing elit. Laborum nesciunt
-        tenetur minus iusto nemo corporis, magni perferendis consequuntur id
-        mollitia vel exercitationem eaque sed ea ullam expedita in quasi optio.
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum
-        nesciunt tenetur minus iusto nemo corporis, magni perferendis
-        consequuntur id mollitia vel exercitationem eaque sed ea ullam expedita
-        in quasi optio. Lorem, ipsum dolor sit amet consectetur adipisicing
-        elit. Laborum nesciunt tenetur minus iusto nemo corporis, magni
-        perferendis consequuntur id mollitia vel exercitationem eaque sed ea
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        {/* consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. v Lorem, ipsum dolor sit
-        amet consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto
-        nemo corporis, magni perferendis consequuntur id mollitia vel
-        exercitationem eaque sed ea ullam expedita in quasi optio. Lorem, ipsum
-        dolor sit amet consectetur adipisicing elit. Laborum nesciunt tenetur
-        minus iusto nemo corporis, magni perferendis consequuntur id mollitia
-        vel exercitationem eaque sed ea ullam expedita in quasi optio. Lorem,
-        ipsum dolor sit amet consectetur adipisicing elit. Laborum nesciunt
-        tenetur minus iusto nemo corporis, magni perferendis consequuntur id
-        mollitia vel exercitationem eaque sed ea ullam expedita in quasi optio.
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum
-        nesciunt tenetur minus iusto nemo corporis, magni perferendis
-        consequuntur id mollitia vel exercitationem eaque sed ea ullam expedita
-        in quasi optio. Lorem, ipsum dolor sit amet consectetur adipisicing
-        elit. Laborum nesciunt tenetur minus iusto nemo corporis, magni
-        perferendis consequuntur id mollitia vel exercitationem eaque sed ea
-        ullam expedita in quasi optio. Lorem, ipsum dolor sit amet consectetur
-        adipisicing elit. Laborum nesciunt tenetur minus iusto nemo corporis,
-        magni perferendis consequuntur id mollitia vel exercitationem eaque sed
-        ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto nemo
-        corporis, magni perferendis consequuntur id mollitia vel exercitationem
-        eaque sed ea ullam expedita in quasi optio. v Lorem, ipsum dolor sit
-        amet consectetur adipisicing elit. Laborum nesciunt tenetur minus iusto
-        nemo corporis, magni perferendis consequuntur id mollitia vel
-        exercitationem eaque sed ea ullam expedita in quasi optio. Lorem, ipsum
-        dolor sit amet consectetur adipisicing elit. Laborum nesciunt tenetur
-        minus iusto nemo corporis, magni perferendis consequuntur id mollitia
-        vel exercitationem eaque sed ea ullam expedita in quasi optio. Lorem,
-        ipsum dolor sit amet consectetur adipisicing elit. Laborum nesciunt
-        tenetur minus iusto nemo corporis, magni perferendis consequuntur id
-        mollitia vel exercitationem eaque sed ea ullam expedita in quasi optio.
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum
-        nesciunt tenetur minus iusto nemo corporis, magni perferendis
-        consequuntur id mollitia vel exercitationem eaque sed ea ullam expedita
-        in quasi optio. Lorem, ipsum dolor sit amet consectetur adipisicing
-        elit. Laborum nesciunt tenetur minus iusto nemo corporis, magni
-        perferendis consequuntur id mollitia vel exercitationem eaque sed ea
-        ullam expedita in quasi optio. */}
+      <div style={{ fontSize: "18px" }}>
+        <p>
+          __.___.2021 йил
+          <span float="right"> Риштон шахар Рошидоний кучаси. </span>
+        </p>
+        Бир томондан Риштон тумани Давлат хизматлари маркази томонидан 23 апрел
+        2021 йил кунги №1383866- сон билан рўйхатдан ўтган устав асосида фаолият
+        кўрсатувчи Риштон тумани ЯТТ раҳбари М,Мухожиров (кейинги ўринларда
+        «Сотувчи») ва ______________ яшовчи фуқаро
+        ________________________________ (шахсини тасдиқловчи ҳужжат: Паспорт
+        серия _______________ ФАРГОНА ВИЛОЯТИ РИШТОН ТУМАНИ ИИБ томонидан
+        ______________да берилган) Риштон туман
+        ___________________________________лавозимида ишловчи (кейинги ўринларда
+        «Ҳаридор») иккинчи томондан ва учинчи томондан
+        _________________________да яшовчи фуқаро (кейинги ўринларда «Кафил»
+        ушбу шартномани тарафлар ўртасида ўзаро келишув асосида қуйидагилар
+        тўғрисида тузилди. 1.ШАРТНОМА МАЗМУНИ 1.1 «Сотувчи» қуйидаги
+        маҳсулотларни «Харидор»га ___ (____________ ) ой муддат давомида
+        қийматини бўлиб тўлаш шарти билан сотади.
       </div>
     </div>
   );

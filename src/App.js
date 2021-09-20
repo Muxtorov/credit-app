@@ -14,15 +14,15 @@ import AddCategory from "./components/AddCategory";
 import axios from "axios";
 import apiUrl from "./config/httpConnect";
 import Contract from "./components/Contract";
-
+import Logo from "./components/Logo.js";
 const App = () => {
-  const [qoshiq, setQoshiq] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     axios.get(apiUrl.url + "/categorys").then((res) => {
-      setQoshiq(res.data);
+      setData(res.data);
     });
-  }, [setQoshiq]);
+  }, [setData]);
 
   return (
     <div className="container">
@@ -33,6 +33,9 @@ const App = () => {
               <Menu />
             </Grid>
             <Grid item md={9} style={{ marginTop: "80px", textAlign: "start" }}>
+              <Route exact path="/">
+                <Logo />
+              </Route>
               <Route path="/setcustomer">
                 <Customer />
               </Route>
@@ -57,7 +60,7 @@ const App = () => {
               <Route path="/contract">
                 <Contract />
               </Route>
-              {qoshiq.map((item) => {
+              {data.map((item) => {
                 return (
                   <Route path={"/" + item.title}>
                     <Products locId={item.title} />

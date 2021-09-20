@@ -37,7 +37,7 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomerList = ({ prod, handleEdit }) => {
+const CustomerList = ({ prod, handleEdit, handleDel }) => {
   const handleAdd = (item) => {
     window.localStorage.setItem("item", JSON.stringify(item));
   };
@@ -69,8 +69,7 @@ const CustomerList = ({ prod, handleEdit }) => {
               <StyledTableCell align="right">
                 <IconButton
                   onClick={() => {
-                    // handleDel(item.id);
-                    console.log("Product uchirildi");
+                    handleDel(item.id);
                   }}
                 >
                   <DeleteIcon fontSize="inherit" color="error" />

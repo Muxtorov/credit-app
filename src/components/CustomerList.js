@@ -39,10 +39,6 @@ const useStyles = makeStyles({
 const CustomerList = ({ custom, handleDel, handleEdit }) => {
   const classes = useStyles();
 
-  const handleClick = (id) => {
-    console.log(id);
-  };
-
   return (
     <TableContainer
       style={{ marginTop: "30px", marginBottom: "20px" }}
@@ -54,7 +50,6 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
             <StyledTableCell></StyledTableCell>
             <StyledTableCell>Ismi</StyledTableCell>
             <StyledTableCell>Familiyasi</StyledTableCell>
-            <StyledTableCell>Sharifi</StyledTableCell>
             <StyledTableCell>Pasport Seriyasi</StyledTableCell>
             <StyledTableCell>JSHSHIR</StyledTableCell>
             <StyledTableCell>Telefon Raqami</StyledTableCell>
@@ -80,7 +75,6 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
                 {item.username}
               </StyledTableCell>
               <StyledTableCell>{item.surname}</StyledTableCell>
-              <StyledTableCell>{item.sheriff}</StyledTableCell>
               <StyledTableCell>{item.pasSerNum}</StyledTableCell>
               <StyledTableCell>{item.jshshir}</StyledTableCell>
               <StyledTableCell>{item.phone}</StyledTableCell>
@@ -94,7 +88,7 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
                 </IconButton>
                 <IconButton
                   onClick={() => {
-                    handleClick(item.id);
+                    handleEdit(item.id);
                   }}
                   component={Link}
                   to={"/addcustomer"}

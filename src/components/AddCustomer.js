@@ -29,6 +29,9 @@ const AddCustomer = (props) => {
   const [pasport, setPasport] = useState("");
   const [jshshir, setJshshir] = useState("");
   const [telefon, setTelefon] = useState("+998");
+  const [bdata, setBdata] = useState("");
+  const [adress, setAdress] = useState("");
+
   const [activ, setActiv] = useState(true);
   const [id, setId] = useState("");
 
@@ -43,6 +46,8 @@ const AddCustomer = (props) => {
       setPasport(pers.pasSerNum);
       setJshshir(pers.jshshir);
       setTelefon(pers.phone);
+      setBdata(pers.birthDate);
+      setAdress(pers.address);
       setActiv(pers.active);
       setId(pers.customId);
     });
@@ -50,7 +55,7 @@ const AddCustomer = (props) => {
     window.localStorage.removeItem("customId");
   }
 
-  const addPerson = async () => {
+  const addPerson = () => {
     let person = {
       username: `${ism}`,
       surname: `${familiya}`,
@@ -58,19 +63,19 @@ const AddCustomer = (props) => {
       pasSerNum: `${pasport}`,
       jshshir: `${jshshir}`,
       phone: `${telefon}`,
+      birthDate: `${bdata}`,
+      address: `${adress}`,
       active: activ,
     };
     if (customId !== null) {
-      await axios
+      axios
         .put(apiUrl.url + "/customers/" + id, person)
-        .then((res) => {
-          console.log("Then Edit....", res.status);
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log("error Edit....", err);
         });
     } else {
-      await axios
+      axios
         .post(apiUrl.url + "/customers", person)
         .then((res) => {
           window.history.back();
@@ -149,6 +154,26 @@ const AddCustomer = (props) => {
             variant="outlined"
             value={telefon}
             onChange={(e) => setTelefon(e.target.value)}
+          />
+          <TextField
+            id="outlined-textarea"
+            label="Tug'ilgan sanasi:"
+            placeholder="01.01.1991"
+            multiline
+            className={classes.input}
+            variant="outlined"
+            value={bdata}
+            onChange={(e) => setBdata(e.target.value)}
+          />
+          <TextField
+            id="outlined-textarea"
+            label="Manzil:"
+            placeholder="Yashash Joyi"
+            multiline
+            className={classes.input}
+            variant="outlined"
+            value={adress}
+            onChange={(e) => setAdress(e.target.value)}
           />
         </Grid>
         <Grid

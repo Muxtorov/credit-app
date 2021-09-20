@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -11,7 +11,6 @@ const Category = () => {
       .delete(apiUrl.url + "/categorys/" + id)
       .then((res) => {
         window.location.reload();
-        console.log(res.status);
       })
       .catch((err) => {
         console.log(err);
@@ -19,7 +18,6 @@ const Category = () => {
   };
 
   const handleEdit = (id) => {
-    console.log("EDIT", id);
     window.localStorage.setItem("categId", `${id}`);
   };
 
