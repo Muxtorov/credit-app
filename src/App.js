@@ -14,9 +14,13 @@ import AddCategory from "./components/AddCategory";
 import axios from "axios";
 import apiUrl from "./config/httpConnect";
 import Contract from "./components/Contract";
-import Logo from "./components/Logo.js";
+import Home from "./components/Home.js";
 import Product from "./components/Product";
 import Cart from "./components/Cart";
+import Tkun from "./components/Tkun.js";
+import Qarzlar from "./components/Qarzlar";
+import Costs from "./components/Costs";
+import AddCosts from "./components/AddCosts";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -37,7 +41,19 @@ const App = () => {
             </Grid>
             <Grid item md={9} style={{ marginTop: "80px", textAlign: "start" }}>
               <Route exact path="/">
-                <Logo />
+                <Home />
+              </Route>
+              <Route exact path="/birthday">
+                <Tkun />
+              </Route>
+              <Route exact path="/addcosts">
+                <AddCosts />
+              </Route>
+              <Route exact path="/costs">
+                <Costs />
+              </Route>
+              <Route exact path="/debts">
+                <Qarzlar />
               </Route>
               <Route path="/setcustomer">
                 <Customer />
@@ -63,6 +79,13 @@ const App = () => {
               <Route path="/contract">
                 <Contract />
               </Route>
+              <Route path="/product">
+                <Product />
+              </Route>
+              <Route path="/cart">
+                <Cart />
+              </Route>
+
               {data.map((item) => {
                 return (
                   <Route path={"/" + item.title}>
@@ -70,12 +93,6 @@ const App = () => {
                   </Route>
                 );
               })}
-              <Route path="/product">
-                <Product />
-              </Route>
-              <Route path="/cart">
-                <Cart />
-              </Route>
             </Grid>
           </Grid>
         </Router>

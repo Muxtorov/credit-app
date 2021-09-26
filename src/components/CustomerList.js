@@ -12,6 +12,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -33,7 +34,8 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 700,
+    // minWidth: 700,
+    width: "100%",
   },
 });
 
@@ -48,19 +50,42 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
 
   return (
     <TableContainer
-      style={{ marginTop: "30px", marginBottom: "20px" }}
+      style={{
+        marginTop: "30px",
+        marginBottom: "20px",
+      }}
       component={Paper}
     >
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell></StyledTableCell>
-            <StyledTableCell>Ismi</StyledTableCell>
-            <StyledTableCell>Familiyasi</StyledTableCell>
-            <StyledTableCell>Pasport Seriyasi</StyledTableCell>
-            <StyledTableCell>JSHSHIR</StyledTableCell>
-            <StyledTableCell>Telefon Raqami</StyledTableCell>
-            <StyledTableCell>Actions</StyledTableCell>
+            <StyledTableCell
+              style={{ backgroundColor: "#3F51B5" }}
+            ></StyledTableCell>
+            <StyledTableCell
+              style={{ backgroundColor: "#3F51B5" }}
+              className={classes.barr}
+            >
+              Ismi
+            </StyledTableCell>
+            <StyledTableCell
+              style={{ backgroundColor: "#3F51B5" }}
+              className={classes.barr}
+            >
+              Familiyasi
+            </StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              Pasport Seriyasi
+            </StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              JSHSHIR
+            </StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              Telefon Raqami
+            </StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              Actions
+            </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -73,13 +98,19 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
                     alert("Xaridor tanlandi");
                   }}
                 >
-                  info
+                  <CheckCircleIcon style={{ color: "#3F51B5" }} />
                 </Button>
               </StyledTableCell>
-              <StyledTableCell component="th" scope="row">
+              <StyledTableCell
+                className={classes.barr}
+                component="th"
+                scope="row"
+              >
                 {item.username}
               </StyledTableCell>
-              <StyledTableCell>{item.surname}</StyledTableCell>
+              <StyledTableCell className={classes.barr}>
+                {item.surname}
+              </StyledTableCell>
               <StyledTableCell>{item.pasSerNum}</StyledTableCell>
               <StyledTableCell>{item.jshshir}</StyledTableCell>
               <StyledTableCell>{item.phone}</StyledTableCell>

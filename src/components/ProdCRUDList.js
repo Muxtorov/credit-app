@@ -52,10 +52,24 @@ const CustomerList = ({ prod, handleEdit, handleDel }) => {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Nomi</StyledTableCell>
-            <StyledTableCell align="right">Description</StyledTableCell>
-            <StyledTableCell align="right">Actions</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              Nomi
+            </StyledTableCell>
+            <StyledTableCell
+              style={{ backgroundColor: "#3F51B5" }}
+              align="right"
+            >
+              Description
+            </StyledTableCell>
+            <StyledTableCell
+              style={{ backgroundColor: "#3F51B5" }}
+              align="right"
+            >
+              Actions
+            </StyledTableCell>
+            <StyledTableCell
+              style={{ backgroundColor: "#3F51B5" }}
+            ></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
