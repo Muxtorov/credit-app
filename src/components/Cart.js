@@ -13,6 +13,9 @@ import Radio from "@material-ui/core/Radio";
 // import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import apiUrl from "../config/httpConnect";
+
 
 // const GreenRadio = withStyles({
 //   root: {
@@ -29,7 +32,8 @@ const Cart = () => {
   var totalSum = 0;
   const [selectedValue, setSelectedValue] = React.useState("oy0");
   const [date, SetDate] = useState(new Date());
-  const [payment, setPayment] = useState({ array: [], sum: 0 });
+  const [discount, setDiscount] = useState(0);
+  const [payment, setPayment] = useState([]);
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -74,12 +78,17 @@ const Cart = () => {
     totalSum += s;
   }
 
+  function discountFunc(dis) {
+    let disc = ((totalSum / 100) * dis).toFixed() * 1;
+    setDiscount(disc);
+  }
   function dateHisob() {
     var now = new Date(date);
     var n = selectedValue.slice(2) * 1;
     console.log(n);
     var current;
-    var arr = [];
+    let pay = [];
+    let oylikSum = ((totalSum - discount) / n).toFixed(2);
     for (let i = 0; i < n; i++) {
       if (now.getMonth() === 11) {
         current = new Date(now.getFullYear() + 1, 0, now.getDate());
@@ -90,16 +99,39 @@ const Cart = () => {
           now.getDate()
         );
       }
-      arr.push(current);
+
+      pay.push({
+        startDate: current,
+        paymentAmount: oylikSum,
+        paymentDate: 0,
+        amountPaid: 0,
+      });
       now = current;
     }
-    let oylikSum = (totalSum / n).toFixed(2);
-    setPayment({ array: arr, sum: oylikSum });
+    setPayment(pay);
   }
-  console.log("11111111111111", payment.array);
+  console.log("11111111111111", payment);
   // function paymentHisob() {}
 
   console.log(date);
+
+  function sendBackend() {
+    const sendData = {
+      customer: data.customer.id,
+      items: data.items,
+      payments: payment,
+      date: date,
+      lifetime: selectedValue.slice(2) * 1,
+      total: totalSum,
+      bonus: [],
+      discount: discount * 1,
+      grandTotal: totalSum - discount,
+    };
+    console.log(sendData);
+    axios
+      .post("apiUrl/outgoingorders", sendData)
+      .then((response) => alert(response));
+  }
 
   return (
     <div style={{ marginRight: "30px" }}>
@@ -188,13 +220,23 @@ const Cart = () => {
             <TableRow>
               <TableCell align="center" colSpan={4}>
                 Jami:
-                {totalSum}
+                {totalSum - discount}
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
       <div style={{ margin: "20px" }}>
+        <h2 style={{ display: "inline-block" }}>Chegirma:</h2>
+        <input
+          type="number"
+          id="discou"
+          onChange={(e) => {
+            discountFunc(e.target.value);
+          }}
+          style={{ fontSize: "20px" }}
+        />
+
         <h2 style={{ display: "inline-block" }}>Sanani kiriting:</h2>
         <input
           type="date"
@@ -231,19 +273,20 @@ const Cart = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {payment.array.map((row, ind) => (
+            {payment.map((row, ind) => (
               <TableRow key={ind}>
                 <TableCell>{ind + 1}</TableCell>
                 <TableCell align="right">
-                  {row.getDate()}.{row.getMonth() + 1}.{row.getFullYear()}
+                  {row.startDate.getDate()}.{row.startDate.getMonth() + 1}.
+                  {row.startDate.getFullYear()}
                 </TableCell>
-                <TableCell align="right">{payment.sum}</TableCell>
+                <TableCell align="right">{row.paymentAmount}</TableCell>
               </TableRow>
             ))}
             <TableRow>
               <TableCell align="center" colSpan={4}>
                 Jami:
-                {totalSum}
+                {totalSum - discount}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -252,6 +295,10 @@ const Cart = () => {
       <Button
         component={Link}
         to={"/contract"}
+        onClick={() => {
+          sendBackend();
+        }}
+
         style={{ margin: "20px" }}
         variant="contained"
         color="primary"

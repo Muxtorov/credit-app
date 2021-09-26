@@ -12,7 +12,7 @@ import apiUrl from "../config/httpConnect";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: "500px",
+    minWidth: "400px",
     margin: "10px",
   },
 });
@@ -35,8 +35,6 @@ const Products = (props) => {
   }, [CatId, props.page, setMahsulot]);
 
   const handleClick = (item) => {
-    console.log("foo");
-    console.log(item);
     history.push({ pathname: "/product", state: { item } });
   };
 
