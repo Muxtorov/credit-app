@@ -12,8 +12,10 @@ import Paper from "@material-ui/core/Paper";
 import Radio from "@material-ui/core/Radio";
 // import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
+
 
 // const GreenRadio = withStyles({
 //   root: {
@@ -291,9 +293,12 @@ const Cart = () => {
         </Table>
       </TableContainer>
       <Button
+        component={Link}
+        to={"/contract"}
         onClick={() => {
           sendBackend();
         }}
+
         style={{ margin: "20px" }}
         variant="contained"
         color="primary"

@@ -57,14 +57,31 @@ const CategoryList = ({ handleDel, handleEdit }) => {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Nomi</StyledTableCell>
-            <StyledTableCell>0 oy</StyledTableCell>
-            <StyledTableCell>3 oy</StyledTableCell>
-            <StyledTableCell>6 oy</StyledTableCell>
-            <StyledTableCell>9 oy</StyledTableCell>
-            <StyledTableCell>12 oy</StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              Nomi
+            </StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              0 oy
+            </StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              3 oy
+            </StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              6 oy
+            </StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              9 oy
+            </StyledTableCell>
+            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              12 oy
+            </StyledTableCell>
 
-            <StyledTableCell align="right">Actions</StyledTableCell>
+            <StyledTableCell
+              style={{ backgroundColor: "#3F51B5" }}
+              align="right"
+            >
+              Actions
+            </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

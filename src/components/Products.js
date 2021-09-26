@@ -28,7 +28,6 @@ const Products = (props) => {
       .get(apiUrl.url + `/stockorders/category/${CatId}`)
       .then((res) => {
         setMahsulot(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

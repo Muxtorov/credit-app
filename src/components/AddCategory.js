@@ -69,8 +69,7 @@ const AddCategory = (props) => {
         },
       ],
     };
-
-    if (id !== undefined) {
+    if (id.length !== 0) {
       await axios
         .put(apiUrl.url + "/categorys/" + id, CATEGORIYA)
         .then((res) => {

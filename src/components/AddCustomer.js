@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddCustomer = (props) => {
+const AddCustomer = () => {
   const classes = useStyles();
 
   const [ism, setIsm] = useState("");
@@ -28,17 +28,22 @@ const AddCustomer = (props) => {
   const [sharif, setSharif] = useState("");
   const [pasport, setPasport] = useState("");
   const [jshshir, setJshshir] = useState("");
-  const [telefon, setTelefon] = useState("+998");
+  const [telefon, setTelefon] = useState("");
+  const [telefon2, setTelefon2] = useState("");
   const [bdata, setBdata] = useState("");
+  const [berildi, setBerildi] = useState("");
   const [adress, setAdress] = useState("");
+  const [ishjoyi, setIshjoyi] = useState("");
+  const [kafil, setKafil] = useState("");
 
   const [activ, setActiv] = useState(true);
   const [id, setId] = useState("");
 
   let customId = window.localStorage.getItem("customId");
+  console.log("dsadsadsadsa", customId);
 
   if (customId !== null) {
-    axios.get(apiUrl.url + "/customers/" + customId).then((res) => {
+    axios.get(apiUrl.url + "/customers/id/" + customId).then((res) => {
       let pers = res.data;
       setIsm(pers.username);
       setFamiliya(pers.surname);
@@ -46,10 +51,14 @@ const AddCustomer = (props) => {
       setPasport(pers.pasSerNum);
       setJshshir(pers.jshshir);
       setTelefon(pers.phone);
+      setTelefon2(pers.phone2);
       setBdata(pers.birthDate);
       setAdress(pers.address);
       setActiv(pers.active);
       setId(pers.customId);
+      setIshjoyi(pers.workplace);
+      setBerildi(pers.pasIssueDate);
+      setKafil(pers.guarantor);
     });
 
     window.localStorage.removeItem("customId");
@@ -57,23 +66,24 @@ const AddCustomer = (props) => {
 
   const addPerson = () => {
     let person = {
-      username: `${ism}`,
-      surname: `${familiya}`,
-      sheriff: `${sharif}`,
-      pasSerNum: `${pasport}`,
-      jshshir: `${jshshir}`,
-      phone: `${telefon}`,
-      birthDate: `${bdata}`,
-      address: `${adress}`,
-      active: activ,
+      username: `${ism.trim()}`,
+      surname: `${familiya.trim()}`,
+      birthDate: `${bdata.trim()}`,
+      pasIssueDate: `${berildi.trim()}`,
+      workplace: `${ishjoyi.trim()}`,
+      sheriff: `${sharif.trim()}`,
+      address: `${adress.trim()}`,
+      pasSerNum: `${pasport.trim()}`,
+      jshshir: `${jshshir.trim()}`,
+      phone: `${telefon.trim()}`,
+      guarantor: `${kafil.trim()}`,
+      phone2: `${telefon2.trim()}`,
+      active: true,
     };
     if (customId !== null) {
-      axios
-        .put(apiUrl.url + "/customers/" + id, person)
-        .then((res) => {})
-        .catch((err) => {
-          console.log("error Edit....", err);
-        });
+      axios.put(apiUrl.url + "/customers/id/" + id, person).catch((err) => {
+        console.log("error Edit....", err);
+      });
     } else {
       axios
         .post(apiUrl.url + "/customers", person)
@@ -174,6 +184,46 @@ const AddCustomer = (props) => {
             variant="outlined"
             value={adress}
             onChange={(e) => setAdress(e.target.value)}
+          />
+          <TextField
+            id="outlined-textarea"
+            label="Pasport berilgan vaqti:"
+            placeholder="20.20.2020"
+            multiline
+            className={classes.input}
+            variant="outlined"
+            value={berildi}
+            onChange={(e) => setBerildi(e.target.value)}
+          />
+          <TextField
+            id="outlined-textarea"
+            label="Ish Joyi:"
+            placeholder="Ish joyi va lavozimi"
+            multiline
+            className={classes.input}
+            variant="outlined"
+            value={ishjoyi}
+            onChange={(e) => setIshjoyi(e.target.value)}
+          />
+          <TextField
+            id="outlined-textarea"
+            label="Kafil FISH:"
+            placeholder="Kafilning ism, familiya, sharifi"
+            multiline
+            className={classes.input}
+            variant="outlined"
+            value={kafil}
+            onChange={(e) => setKafil(e.target.value)}
+          />
+          <TextField
+            id="outlined-textarea"
+            label="Telefon (Kafilniki):"
+            placeholder="+998 99 777 77 77"
+            multiline
+            className={classes.input}
+            variant="outlined"
+            value={telefon2}
+            onChange={(e) => setTelefon2(e.target.value)}
           />
         </Grid>
         <Grid

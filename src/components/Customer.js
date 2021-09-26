@@ -51,7 +51,7 @@ const Customer = () => {
 
   const handleDel = async (id) => {
     await axios
-      .delete(apiUrl.url + "/customers/" + id)
+      .delete(apiUrl.url + "/customers/id/" + id)
       .then((res) => {
         setLiboy(!liboy);
       })
