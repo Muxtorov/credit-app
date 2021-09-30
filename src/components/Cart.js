@@ -88,7 +88,7 @@ const Cart = () => {
     console.log(n);
     var current;
     let pay = [];
-    let oylikSum = ((totalSum - discount) / n).toFixed(2);
+    let oylikSum = ((totalSum - discount) / n).toFixed(2) * 1;
     for (let i = 0; i < n; i++) {
       if (now.getMonth() === 11) {
         current = new Date(now.getFullYear() + 1, 0, now.getDate());
@@ -116,20 +116,24 @@ const Cart = () => {
   console.log(date);
 
   function sendBackend() {
+    let oy = date.getMonth() + 1;
+    let kun = date.getDate();
+    let yil = date.getFullYear();
+    const sanas = kun + "." + oy + "." + yil;
     const sendData = {
       customer: data.customer.id,
       items: data.items,
       payments: payment,
-      date: date,
+      date: sanas,
       lifetime: selectedValue.slice(2) * 1,
       total: totalSum,
       bonus: [],
       discount: discount * 1,
       grandTotal: totalSum - discount,
     };
-    console.log(sendData);
+    console.log("222222222222222", sendData);
     axios
-      .post("apiUrl/outgoingorders", sendData)
+      .post(apiUrl.url + "/outgoingorders", sendData)
       .then((response) => alert(response));
   }
 
@@ -208,19 +212,21 @@ const Cart = () => {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row.productId}>
-                <TableCell>{row.productName}</TableCell>
+              <TableRow key={row.product}>
+                <TableCell>{row.title}</TableCell>
                 <TableCell align="right">{row.price}</TableCell>
                 <TableCell align="right">{row.quantity}</TableCell>
                 <TableCell align="right">
-                  {rowTotal(row.quantity, row.price, row.category.percent)}
+                  {rowTotal(row.quantity, row.price, row.percent)}
                 </TableCell>
               </TableRow>
             ))}
             <TableRow>
               <TableCell align="center" colSpan={4}>
                 Jami:
-                {totalSum - discount}
+                {totalSum} __________ Chegirma:
+                {discount}
+                ___________Qoldi {totalSum - discount}
               </TableCell>
             </TableRow>
           </TableBody>
