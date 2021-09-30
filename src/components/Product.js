@@ -33,13 +33,11 @@ const Product = () => {
 
   function HandleClick(data, count) {
     let orData = {
-      productId: data.product.id,
-      productName: data.product.title,
+      product: data.product.id,
+      title: data.product.title,
       price: data.price,
-      category: {
-        id: data.category.id,
-        percent: data.category.percent,
-      },
+      category: data.category.id,
+      percent: data.category.percent,
       quantity: count,
     };
     dispatch({ type: "ADD_PRODUCT", payload: { orData } });
