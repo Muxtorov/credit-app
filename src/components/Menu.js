@@ -22,6 +22,7 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import SettingsIcon from "@material-ui/icons/Settings";
+import InfoIcon from "@material-ui/icons/Info";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
@@ -125,20 +126,36 @@ export default function Menu() {
   };
 
   const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
 
+  const handleToggle1 = () => {
+    setOpen1((prevOpen1) => !prevOpen1);
+  };
+
   const handleClose = (event) => {
     setOpen(false);
+  };
+
+  const handleClose1 = (event) => {
+    setOpen1(false);
   };
 
   function handleListKeyDown(event) {
     if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
+    }
+  }
+
+  function handleListKeyDown1(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen1(false);
     }
   }
 
@@ -169,6 +186,68 @@ export default function Menu() {
           <Typography variant="h6" className={classes.title}>
             Codemy
           </Typography>
+          <div>
+            <Button
+              ref={anchorRef}
+              aria-controls={open1 ? "menu-list-grow" : undefined}
+              aria-haspopup="true"
+              onClick={handleToggle1}
+            >
+              <InfoIcon style={{ color: "white" }} />
+            </Button>
+            <Popper
+              open={open1}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === "bottom" ? "center top" : "center bottom",
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleClose1}>
+                      <MenuList
+                        autoFocusItem={open1}
+                        id="menu-list-grow"
+                        onKeyDown={handleListKeyDown1}
+                      >
+                        <MenuItem
+                          component={Link}
+                          style={{ fontSize: "26px" }}
+                          onClick={handleClose1}
+                          to={"/costs"}
+                        >
+                          Xarajatlar
+                        </MenuItem>
+                        <MenuItem
+                          component={Link}
+                          to={"/debts"}
+                          style={{ fontSize: "26px" }}
+                          onClick={handleClose1}
+                        >
+                          Qarzlar
+                        </MenuItem>
+                        <MenuItem
+                          component={Link}
+                          to={"/birthday"}
+                          style={{ fontSize: "26px" }}
+                          onClick={handleClose1}
+                        >
+                          Birthday
+                        </MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </div>
           <div>
             <Button
               ref={anchorRef}
@@ -288,7 +367,7 @@ export default function Menu() {
             );
           })}
         </List>
-        <div
+        {/* <div
           style={{
             height: "100%",
             display: "flex",
@@ -340,7 +419,7 @@ export default function Menu() {
           >
             qarzlar
           </Button>
-        </div>
+        </div> */}
       </Drawer>
     </div>
   );

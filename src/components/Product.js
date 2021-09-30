@@ -30,7 +30,7 @@ const Product = () => {
   const [count, setCount] = React.useState(1);
 
   const data = location.state.item;
-  console.log(data);
+
   function HandleClick(data, count) {
     let orData = {
       productId: data.product.id,
