@@ -33,7 +33,8 @@ const useStyles = makeStyles({
     minWidth: 500,
   },
   katta: {
-    width: "90%",
+    width: "100%",
+    marginLeft: "-60px",
   },
 });
 
@@ -52,12 +53,10 @@ const Qarzlar = () => {
   const sana = kun + "." + oy + "." + yil;
 
   useEffect(() => {
-    console.log(sana);
     axios
       .get(apiUrl.url + `/outgoingorders/debtors/${sana}`)
       .then((response) => {
         setData(response.data);
-        console.log(response.data);
       });
   }, [sana, setData]);
 
@@ -68,7 +67,7 @@ const Qarzlar = () => {
         style={{ marginTop: "30px", marginBottom: "20px" }}
         component={Paper}
       >
-        <h2 align="center">Bugun To'lov To'laydiganlar </h2>
+        {/* <h2 align="center">Bugun To'lov To'laydiganlar </h2> */}
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>

@@ -29,9 +29,6 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
   barr: {
     width: "200px",
   },
@@ -52,12 +49,8 @@ const AddCosts = () => {
   const sana = kun + "." + oy + "." + yil;
 
   useEffect(() => {
-    console.log("salom");
     axios.get(apiUrl.url + "/costs/date/" + sana).then((res) => {
-      console.log("111111111111");
-
       setData(res.data);
-      console.log(res.data);
     });
   }, [sana]);
 
@@ -68,6 +61,7 @@ const AddCosts = () => {
     >
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
+          {/* <h2 align="center">Bugungi Xarajatlar</h2> */}
           <TableRow>
             <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
               Nomi
@@ -79,7 +73,6 @@ const AddCosts = () => {
         </TableHead>
         <TableBody>
           {data.map((item) => {
-            console.log("test", item.items[0].costName);
             return (
               <StyledTableRow key={item.items[0].costName}>
                 <StyledTableCell component="th" scope="row">

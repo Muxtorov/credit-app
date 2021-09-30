@@ -40,7 +40,6 @@ const AddCustomer = () => {
   const [id, setId] = useState("");
 
   let customId = window.localStorage.getItem("customId");
-  console.log("dsadsadsadsa", customId);
 
   if (customId !== null) {
     axios.get(apiUrl.url + "/customers/id/" + customId).then((res) => {

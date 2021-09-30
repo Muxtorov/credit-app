@@ -34,6 +34,7 @@ const useStyles = makeStyles({
   },
   katta: {
     width: "90%",
+    marginLeft: "-60px",
   },
 });
 
@@ -64,7 +65,7 @@ const Tkun = () => {
         style={{ marginTop: "30px", marginBottom: "20px" }}
         component={Paper}
       >
-        <h2 align="center">Bugun Tug'ilgan Mijozlar</h2>
+        {/* <h2 align="center">Bugun Tug'ilgan Mijozlar</h2> */}
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>

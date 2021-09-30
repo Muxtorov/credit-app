@@ -44,7 +44,6 @@ const AddCosts = () => {
       date: `${sana}`,
       items: [{ costName: `${nomi}`, costPrice: narxi * 1 }],
     };
-    console.log("qushish", newcost);
 
     await axios
       .post(apiUrl.url + "/costs", newcost)

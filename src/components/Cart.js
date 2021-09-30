@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
 
-
 // const GreenRadio = withStyles({
 //   root: {
 //     color: green[400],
@@ -42,10 +41,8 @@ const Cart = () => {
   const data = useSelector((state) => {
     return state.cart;
   });
-  console.log(data);
-  console.log(selectedValue);
+
   const rows = data.items;
-  console.log(rows);
 
   function rowTotal(quan, price, percent) {
     let foiz = -1;
@@ -85,7 +82,7 @@ const Cart = () => {
   function dateHisob() {
     var now = new Date(date);
     var n = selectedValue.slice(2) * 1;
-    console.log(n);
+
     var current;
     let pay = [];
     let oylikSum = ((totalSum - discount) / n).toFixed(2) * 1;
@@ -110,10 +107,7 @@ const Cart = () => {
     }
     setPayment(pay);
   }
-  console.log("11111111111111", payment);
   // function paymentHisob() {}
-
-  console.log(date);
 
   function sendBackend() {
     let oy = date.getMonth() + 1;
@@ -131,7 +125,6 @@ const Cart = () => {
       discount: discount * 1,
       grandTotal: totalSum - discount,
     };
-    console.log("222222222222222", sendData);
     axios
       .post(apiUrl.url + "/outgoingorders", sendData)
       .then((response) => alert(response));
@@ -304,7 +297,6 @@ const Cart = () => {
         onClick={() => {
           sendBackend();
         }}
-
         style={{ margin: "20px" }}
         variant="contained"
         color="primary"
