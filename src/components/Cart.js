@@ -30,7 +30,7 @@ const Cart = () => {
   // const [state, setState] = useState(0);
   var totalSum = 0;
   const [selectedValue, setSelectedValue] = React.useState("oy0");
-  const [date, SetDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   const [discount, setDiscount] = useState(0);
   const [payment, setPayment] = useState([]);
 
@@ -110,9 +110,11 @@ const Cart = () => {
   // function paymentHisob() {}
 
   function sendBackend() {
-    let oy = date.getMonth() + 1;
-    let kun = date.getDate();
-    let yil = date.getFullYear();
+    let date1 = date.toString();
+    console.log(date1.split("-"));
+    let oy = date1[1];
+    let kun = date1[2];
+    let yil = date1[0];
     const sanas = kun + "." + oy + "." + yil;
     const sendData = {
       customer: data.customer.id,
@@ -127,6 +129,10 @@ const Cart = () => {
     };
     axios
       .post(apiUrl.url + "/outgoingorders", sendData)
+      .then(() => {
+        window.localStorage.setItem("sendData", JSON.stringify(sendData));
+        console.log("sasadsadsadasda");
+      })
       .then((response) => alert(response));
   }
 
@@ -216,10 +222,15 @@ const Cart = () => {
             ))}
             <TableRow>
               <TableCell align="center" colSpan={4}>
-                Jami:
-                {totalSum} __________ Chegirma:
-                {discount}
-                ___________Qoldi {totalSum - discount}
+                <span style={{ marginRight: "80px" }}>
+                  Jami:
+                  {totalSum}
+                </span>
+                <span style={{ marginRight: "80px" }}>
+                  Chegirma:
+                  {discount}
+                </span>
+                Qoldi {totalSum - discount}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -236,12 +247,14 @@ const Cart = () => {
           style={{ fontSize: "20px" }}
         />
 
-        <h2 style={{ display: "inline-block" }}>Sanani kiriting:</h2>
+        <h2 style={{ display: "inline-block", marginLeft: "20%" }}>
+          Sanani kiriting:
+        </h2>
         <input
           type="date"
           id="date"
           onChange={(e) => {
-            SetDate(e.target.value);
+            setDate(e.target.value);
           }}
           style={{ fontSize: "20px" }}
         />

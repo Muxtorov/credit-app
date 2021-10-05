@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -12,6 +12,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import axios from "axios";
+import apiUrl from "../config/httpConnect";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -37,7 +39,25 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomerList = ({ prod, handleEdit, handleDel }) => {
+const ProdCRUDList = ({ prod, handleEdit }) => {
+  const [liboy, setLiboy] = useState(0);
+
+  useEffect(() => {
+    setLiboy(liboy + 1);
+  }, [liboy, setLiboy]);
+
+  const handleDel = (id) => {
+    axios
+      .delete(apiUrl.url + "/products/" + id)
+      .then((res) => {
+        setLiboy(liboy + 1);
+        console.log(res.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleAdd = (item) => {
     window.localStorage.setItem("item", JSON.stringify(item));
   };
@@ -120,4 +140,4 @@ const CustomerList = ({ prod, handleEdit, handleDel }) => {
   );
 };
 
-export default CustomerList;
+export default ProdCRUDList;

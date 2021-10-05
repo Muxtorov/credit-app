@@ -1,19 +1,33 @@
-import { Grid } from "@material-ui/core";
+import { Grid, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import emblema from "../image_2021-09-20_10-17-21.png";
 import apiUrl from "../config/httpConnect";
 import axios from "axios";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const Contract = () => {
+  const data1 = window.localStorage.getItem("sendData");
+  let foo = JSON.parse(data1);
   const [shaxs, setShaxs] = useState({});
+  const data = foo;
+  const [nomer, setNomer] = useState("");
 
+  console.log("data", data);
+  console.log("data -> ", data);
   useEffect(() => {
     axios
-      .get(apiUrl.url + "/customers/jshshir/01234121254234")
+      .get(apiUrl.url + "/customers/id/" + data.customer)
       .then((response) => {
         setShaxs(response.data[0]);
+        console.log("1111111111111111", response.data);
       });
-  }, [setShaxs]);
+  }, [data.customer, setShaxs]);
 
   return (
     <div
@@ -38,15 +52,26 @@ const Contract = () => {
           }}
         >
           Shartnoma
+          <TextField
+            id="standard-helperText"
+            label="№"
+            value={nomer}
+            onChange={(v) => {
+              setNomer(v.target.value);
+            }}
+            style={{ marginLeft: "20px", width: "65px" }}
+          />
         </h1>
         <div>
           <div>
             <table width="100%">
               <tr>
-                <td width="30%">
-                  <input type="text" /> йил
-                </td>
-                <td width="100%" align="right">
+                <TextField
+                  id="standard-helperText"
+                  label="Sanani kiriting"
+                  placeholder="kun.oy.yil"
+                />
+                <td width="70%" align="right">
                   Риштон шахар Рошидоний кучаси.
                 </td>
               </tr>
@@ -56,21 +81,45 @@ const Contract = () => {
           апрел 2021 йил кунги №1383866- сон билан рўйхатдан ўтган устав асосида
           фаолият кўрсатувчи Риштон тумани ЯТТ раҳбари М,Мухожиров (кейинги
           ўринларда «Сотувчи») ва {shaxs.address} яшовчи фуқаро {shaxs.username}
-          {shaxs.surname} {shaxs.sheriff} я(шахсини тасдиқловчи ҳужжат: Паспорт
+          {shaxs.surname} {shaxs.sheriff} (шахсини тасдиқловчи ҳужжат: Паспорт
           серия {shaxs.pasSerNum} ФАРГОНА ВИЛОЯТИ РИШТОН ТУМАНИ ИИБ томонидан
           {shaxs.birthDate} да берилган) Риштон туман
-          ___________________________________ лавозимида ишловчи (кейинги
-          ўринларда «Ҳаридор») иккинчи томондан ва учинчи томондан
-          _________________________ да яшовчи фуқаро (кейинги ўринларда «Кафил»
-          ушбу шартномани тарафлар ўртасида ўзаро келишув асосида қуйидагилар
-          тўғрисида тузилди.
+          {shaxs.workplace} лавозимида ишловчи (кейинги ўринларда «Ҳаридор»)
+          иккинчи томондан ва учинчи томондан _________________________ да
+          яшовчи фуқаро (кейинги ўринларда «Кафил» ушбу шартномани тарафлар
+          ўртасида ўзаро келишув асосида қуйидагилар тўғрисида тузилди.
           <h3 align="center">1.ШАРТНОМА МАЗМУНИ</h3>
-          1.1 «Сотувчи» қуйидаги маҳсулотларни «Харидор»га ___ (____________) ой
-          муддат давомида қийматини бўлиб тўлаш шарти билан сотади.
+          1.1 «Сотувчи» қуйидаги маҳсулотларни «Харидор»га {data.lifetime}{" "}
+          (____________) ой муддат давомида қийматини бўлиб тўлаш шарти билан
+          сотади.
         </div>
-        {/* table uchun joy */}
+        <TableContainer component={Paper}>
+          <Table aria-label="spanning table">
+            <TableHead>
+              <TableRow>
+                <TableCell>T/r</TableCell>
+                <TableCell align="right">To'lov Sanasi</TableCell>
+                <TableCell align="right">To'lash kerak bo'lgan summa</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.payments.map((row, ind) => (
+                <TableRow key={ind}>
+                  <TableCell>{ind + 1}</TableCell>
+                  <TableCell align="right">
+                    {row.startDate.slice(0, 10)}
+                    {/* {row.startDate.getDate()}.{row.startDate.getMonth()}.
+                    {row.startDate.getFullYear()} */}
+                  </TableCell>
+                  <TableCell align="right">{row.paymentAmount}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <br />
         <div>
-          1.2. Шартноманинг умумий қиймати _____________________
+          1.2. Шартноманинг умумий қиймати {data.total}{" "}
           (____________________________) сўмни ташкил қилади. 2.1 Ўзбекистон
           Республикаси Фуқаролик кодексининг 422-моддасига асосан Товарни
           насияга сотиш шартномасида товар ҳақини бўлиб-бўлиб тўланади, сотиб
@@ -250,8 +299,8 @@ const Contract = () => {
         <br />
         <div>
           <h1>ЮК ХАТИ \ ХИСОБВАРАҚ-ФАКТУРА № ____________</h1>
-          ___________ йилдаги №______ -сонли муддатли тулов шарти билан тузилган
-          олди-сотди шартномасига асосан
+          ___________ йилдаги №{nomer} -сонли муддатли тулов шарти билан
+          тузилган олди-сотди шартномасига асосан
         </div>
         <br />
         <div>
