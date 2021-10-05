@@ -44,6 +44,7 @@ const Tkun = () => {
   const [data, setData] = useState([]);
 
   const hozzi = new Date();
+  console.log("adsadsads", hozzi);
   let oy = hozzi.getMonth() + 1;
   if (oy <= 9) {
     oy = "0" + oy;
