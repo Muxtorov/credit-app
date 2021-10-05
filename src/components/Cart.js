@@ -127,11 +127,11 @@ const Cart = () => {
       discount: discount * 1,
       grandTotal: totalSum - discount,
     };
+
     axios
       .post(apiUrl.url + "/outgoingorders", sendData)
       .then(() => {
         window.localStorage.setItem("sendData", JSON.stringify(sendData));
-        console.log("sasadsadsadasda");
       })
       .then((response) => alert(response));
   }
