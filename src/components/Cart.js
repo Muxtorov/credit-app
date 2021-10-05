@@ -125,9 +125,7 @@ const Cart = () => {
       discount: discount * 1,
       grandTotal: totalSum - discount,
     };
-    axios
-      .post(apiUrl.url + "/outgoingorders", sendData)
-      .then((response) => alert(response));
+    axios.post(apiUrl.url + "/outgoingorders", sendData);
   }
 
   return (
