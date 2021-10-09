@@ -1,9 +1,26 @@
 import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import CostsList from "./CostsList";
+import axios from "axios";
+import apiUrl from "../../config/httpConnect";
+import CategoryList from "./CategoryList";
 
 const Category = () => {
+  const handleDel = (id) => {
+    axios
+      .delete(apiUrl.url + "/categorys/" + id)
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleEdit = (id) => {
+    window.localStorage.setItem("categId", `${id}`);
+  };
+
   return (
     <div>
       <Grid container>
@@ -16,13 +33,13 @@ const Category = () => {
             variant="contained"
             color="primary"
             disableElevation
-            to={"/addcosts"}
+            to={"/addcategory"}
           >
-            Add
+            Qushish
           </Button>
         </Grid>
         <Grid style={{ marginLeft: "-60px" }} item md={12}>
-          <CostsList />
+          <CategoryList handleDel={handleDel} handleEdit={handleEdit} />
         </Grid>
       </Grid>
     </div>

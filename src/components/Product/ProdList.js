@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Button, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import CustomerList from "./CustomerList";
+import ProdCRUDList from "./ProdCRUDList";
+import apiUrl from "../../config/httpConnect";
 import axios from "axios";
-import apiUrl from "../config/httpConnect";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,46 +22,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Customer = () => {
+const ProdList = () => {
   const classes = useStyles();
 
-  const [jshr, setJshr] = useState("");
-  const [custom, setCustom] = useState([]);
-  const [customData, setCustomData] = useState([]);
-  const [liboy, setLiboy] = useState(true);
+  const [name, setName] = useState("");
+  const [prod, setProd] = useState([]);
+  const [prodData, setProdData] = useState([]);
 
   useEffect(() => {
-    axios.get(apiUrl.url + "/customers").then((res) => {
-      setCustom(res.data);
-      setCustomData(res.data);
+    axios.get(apiUrl.url + "/products").then((res) => {
+      setProd(res.data);
+      setProdData(res.data);
     });
-  }, [setCustom, liboy]);
+  }, [setProd]);
 
   const search_data = (value) => {
-    const newData = custom.filter((v) => {
-      let a;
-      if (v.jshshir.indexOf(value) > -1) {
-        a = v;
+    const newData = prod.filter((v) => {
+      let b;
+      if (v.title.indexOf(value) > -1) {
+        b = v;
       }
-      return a;
+      return b;
     });
 
-    setCustomData(newData);
-  };
-
-  const handleDel = async (id) => {
-    await axios
-      .delete(apiUrl.url + "/customers/id/" + id)
-      .then((res) => {
-        setLiboy(!liboy);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setProdData(newData);
   };
 
   const handleEdit = (id) => {
-    window.localStorage.setItem("customId", `${id}`);
+    window.localStorage.setItem("prodId", `${id}`);
   };
 
   return (
@@ -71,25 +59,26 @@ const Customer = () => {
           <form className={classes.root} noValidate>
             <TextField
               id="standard-full-width"
-              label="JSHSHIR"
+              label="Name:"
               style={{ margin: 8 }}
-              placeholder="JSHSHIRni 14 talik kiriting"
+              placeholder="Product Ismini Kiriting"
               className={classes.textField}
               fullWidth
-              type="number"
+              type="text"
               margin="normal"
               InputLabelProps={{
                 shrink: true,
               }}
-              value={jshr}
+              value={name}
               onChange={(e) => {
-                setJshr(e.target.value);
+                setName(e.target.value);
                 search_data(e.target.value);
               }}
             />
           </form>
         </Grid>
         <Grid item md={2} />
+
         <Grid item md={1}>
           <Button
             component={Link}
@@ -97,21 +86,17 @@ const Customer = () => {
             variant="contained"
             color="primary"
             disableElevation
-            to={"/addcustomer"}
+            to={"/addproduct"}
           >
-            Add
+            Qushish
           </Button>
         </Grid>
         <Grid style={{ marginLeft: "-60px" }} item md={12}>
-          <CustomerList
-            custom={customData}
-            handleDel={handleDel}
-            handleEdit={handleEdit}
-          />
+          <ProdCRUDList prod={prodData} handleEdit={handleEdit} />
         </Grid>
       </Grid>
     </div>
   );
 };
 
-export default Customer;
+export default ProdList;

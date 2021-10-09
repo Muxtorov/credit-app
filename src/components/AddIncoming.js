@@ -116,7 +116,7 @@ const AddIncoming = () => {
             disableElevation
             onClick={addIncom}
           >
-            Submit
+            Saqlash
           </Button>
         </Grid>
       </Grid>

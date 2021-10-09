@@ -3,24 +3,24 @@ import Menu from "./components/Menu";
 import "./index.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Grid } from "@material-ui/core";
-import Products from "./components/Products";
-import Customer from "./components/Customer";
-import AddCustomer from "./components/AddCustomer";
-import ProdCRUD from "./components/ProdList";
-import AddProd from "./components/AddProd";
+import Products from "./components/Product/Products";
+import Customer from "./components/Customer/Customer";
+import AddCustomer from "./components/Customer/AddCustomer";
+import ProdCRUD from "./components/Product/ProdList";
+import AddProd from "./components/Product/AddProd";
 import AddIncoming from "./components/AddIncoming";
-import Category from "./components/Category";
-import AddCategory from "./components/AddCategory";
+import Category from "./components/Category/Category";
+import AddCategory from "./components/Category/AddCategory";
 import axios from "axios";
 import apiUrl from "./config/httpConnect";
 import Contract from "./components/Contract";
 import Home from "./components/Home.js";
-import Product from "./components/Product";
+import Product from "./components/Product/Product";
 import Cart from "./components/Cart";
 import Tkun from "./components/Tkun.js";
 import Qarzlar from "./components/Qarzlar";
-import Costs from "./components/Costs";
-import AddCosts from "./components/AddCosts";
+import Costs from "./components/Costs/Costs";
+import AddCosts from "./components/Costs/AddCosts";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -35,7 +35,12 @@ const App = () => {
     <div className="container">
       <Switch>
         <Router>
-          <Grid container direction="row" justify="center" alignItems="center">
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
             <Grid item md={3}>
               <Menu />
             </Grid>

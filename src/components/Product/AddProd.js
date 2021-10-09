@@ -2,7 +2,7 @@ import { Button, Grid, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import apiUrl from "../config/httpConnect";
+import apiUrl from "../../config/httpConnect";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -97,7 +97,11 @@ const AddProduct = (props) => {
     <div>
       <Grid item md={12}>
         <div style={{ textAlign: "center", display: "flex" }}>
-          <h2>YANGI PRODUCT QUSHISH</h2>
+          {proId !== null ? (
+            <h2> Productni Uzgartirish </h2>
+          ) : (
+            <h2>YANGI PRODUCT QUSHISH</h2>
+          )}
         </div>
         <Grid>
           <TextField
@@ -159,7 +163,7 @@ const AddProduct = (props) => {
             disableElevation
             onClick={addPerson}
           >
-            Submit
+            Saqlash
           </Button>
         </Grid>
       </Grid>

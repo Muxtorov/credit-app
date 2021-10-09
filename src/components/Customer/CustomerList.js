@@ -83,9 +83,9 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
             <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
               Telefon Raqami
             </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              Actions
-            </StyledTableCell>
+            <StyledTableCell
+              style={{ backgroundColor: "#3F51B5" }}
+            ></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
