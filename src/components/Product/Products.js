@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
-import apiUrl from "../config/httpConnect";
+import apiUrl from "../../config/httpConnect";
 
 const useStyles = makeStyles({
   root: {

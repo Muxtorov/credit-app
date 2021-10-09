@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
+import { makeStyles, TextField } from "@material-ui/core";
 
 // const GreenRadio = withStyles({
 //   root: {
@@ -26,7 +27,16 @@ import apiUrl from "../config/httpConnect";
 //   checked: {},
 // })((props) => <Radio color="default" {...props} />);
 
+const useStyles = makeStyles((theme) => ({
+  input: {
+    width: "30%",
+    margin: "10px",
+  },
+}));
+
 const Cart = () => {
+  const classes = useStyles();
+
   // const [state, setState] = useState(0);
   var totalSum = 0;
   const [selectedValue, setSelectedValue] = React.useState("oy0");
@@ -237,17 +247,26 @@ const Cart = () => {
         </Table>
       </TableContainer>
       <div style={{ margin: "20px" }}>
-        <h2 style={{ display: "inline-block" }}>Chegirma:</h2>
-        <input
-          type="number"
-          id="discou"
+        {/* <h2 style={{ display: "inline-block" }}>Chegirma:</h2> */}
+        <TextField
+          id="outlined-textarea"
+          label="Chegirma:"
+          placeholder=""
+          multiline
+          className={classes.input}
+          variant="outlined"
           onChange={(e) => {
             discountFunc(e.target.value);
           }}
-          style={{ fontSize: "20px" }}
         />
+        {/* <input
+          type="number"
+          id="discou"
+          
+          style={{ fontSize: "20px" }}
+        /> */}
 
-        <h2 style={{ display: "inline-block", marginLeft: "20%" }}>
+        <h2 style={{ display: "inline-block", marginLeft: "5%" }}>
           Sanani kiriting:
         </h2>
         <input

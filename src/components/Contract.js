@@ -70,6 +70,9 @@ const Contract = () => {
                   id="standard-helperText"
                   label="Sanani kiriting"
                   placeholder="kun.oy.yil"
+                  onChange={(v) => {
+                    setNomer(v.target.value);
+                  }}
                 />
                 <td width="70%" align="right">
                   Риштон шахар Рошидоний кучаси.

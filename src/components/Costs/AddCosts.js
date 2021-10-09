@@ -2,7 +2,7 @@ import { Button, Grid, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import apiUrl from "../config/httpConnect";
+import apiUrl from "../../config/httpConnect";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,7 +101,7 @@ const AddCosts = () => {
             disableElevation
             onClick={addCost}
           >
-            Submit
+            Saqlash
           </Button>
         </Grid>
       </Grid>

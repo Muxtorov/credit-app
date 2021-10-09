@@ -2,7 +2,7 @@ import { Button, Grid, Switch, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import apiUrl from "../config/httpConnect";
+import apiUrl from "../../config/httpConnect";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,7 +99,11 @@ const AddCustomer = () => {
     <div>
       <Grid item md={12}>
         <div style={{ textAlign: "center", display: "flex" }}>
-          <h2>YANGI MIJOZNING MA'LUMOTLARI</h2>
+          {id !== "" ? (
+            <h2> MIJOZNI UZGARTIRISH </h2>
+          ) : (
+            <h2>YANGI MIJOZNING MA'LUMOTLARI</h2>
+          )}
         </div>
         <Grid>
           <TextField
@@ -254,7 +258,7 @@ const AddCustomer = () => {
             disableElevation
             onClick={addPerson}
           >
-            Submit
+            Saqlash
           </Button>
         </Grid>
       </Grid>

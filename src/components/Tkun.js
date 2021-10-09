@@ -1,6 +1,4 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import apiUrl from "../config/httpConnect";
+import React from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -38,64 +36,50 @@ const useStyles = makeStyles({
   },
 });
 
-const Tkun = () => {
+const Tkun = (data) => {
   const classes = useStyles();
 
-  const [data, setData] = useState([]);
-
-  const hozzi = new Date();
-  console.log("adsadsads", hozzi);
-  let oy = hozzi.getMonth() + 1;
-  if (oy <= 9) {
-    oy = "0" + oy;
-  }
-  let kun = hozzi.getDate();
-  let yil = hozzi.getFullYear();
-  const sana = kun + "." + oy + "." + yil;
-
-  useEffect(() => {
-    axios.get(apiUrl.url + `/customers/${sana}`).then((response) => {
-      setData(response.data);
-    });
-  }, [sana, setData]);
-
-  return (
-    <div>
-      <TableContainer
-        className={classes.katta}
-        style={{ marginTop: "30px", marginBottom: "20px" }}
-        component={Paper}
-      >
-        {/* <h2 align="center">Bugun Tug'ilgan Mijozlar</h2> */}
-        <Table className={classes.table} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-                Ismi
-              </StyledTableCell>
-              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-                Familiya
-              </StyledTableCell>
-              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-                Telefon
-              </StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item) => (
-              <StyledTableRow key={item.name}>
-                <StyledTableCell component="th" scope="row">
-                  {item.username}
+  if (data.length > 0) {
+    return (
+      <div>
+        <TableContainer
+          className={classes.katta}
+          style={{ marginTop: "30px", marginBottom: "20px" }}
+          component={Paper}
+        >
+          <h2 align="center">Bugun Tug'ilgan Mijozlar</h2>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                  Ismi
                 </StyledTableCell>
-                <StyledTableCell>{item.surname}</StyledTableCell>
-                <StyledTableCell>{item.phone}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-  );
+                <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                  Familiya
+                </StyledTableCell>
+                <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                  Telefon
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((item) => (
+                <StyledTableRow key={item.name}>
+                  <StyledTableCell component="th" scope="row">
+                    {item.username}
+                  </StyledTableCell>
+                  <StyledTableCell>{item.surname}</StyledTableCell>
+                  <StyledTableCell>{item.phone}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    );
+  } else {
+    return null;
+  }
 };
 
 export default Tkun;

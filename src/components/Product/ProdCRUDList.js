@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,8 +11,9 @@ import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import axios from "axios";
-import apiUrl from "../config/httpConnect";
+import apiUrl from "../../config/httpConnect";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -38,16 +39,23 @@ const useStyles = makeStyles({
   },
 });
 
-const CategoryList = ({ handleDel, handleEdit }) => {
+const ProdCRUDList = ({ prod, handleEdit }) => {
+  const handleDel = (id) => {
+    axios
+      .delete(apiUrl.url + "/products/" + id)
+      .then((res) => {
+        console.log(res.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleAdd = (item) => {
+    window.localStorage.setItem("item", JSON.stringify(item));
+  };
+
   const classes = useStyles();
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios.get(apiUrl.url + "/categorys").then((res) => {
-      setData(res.data);
-    });
-  }, []);
 
   return (
     <TableContainer
@@ -60,41 +68,28 @@ const CategoryList = ({ handleDel, handleEdit }) => {
             <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
               Nomi
             </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              0 oy
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              3 oy
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              6 oy
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              9 oy
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              12 oy
-            </StyledTableCell>
-
             <StyledTableCell
               style={{ backgroundColor: "#3F51B5" }}
               align="right"
             >
-              Actions
+              Description
             </StyledTableCell>
+            <StyledTableCell
+              style={{ backgroundColor: "#3F51B5" }}
+              align="right"
+            ></StyledTableCell>
+            <StyledTableCell
+              style={{ backgroundColor: "#3F51B5" }}
+            ></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((item) => (
-            <StyledTableRow key={item.name}>
+          {prod.map((item) => (
+            <StyledTableRow key={item.id}>
               <StyledTableCell component="th" scope="row">
                 {item.title}
               </StyledTableCell>
-              <StyledTableCell>{item.percent[0].oy0}</StyledTableCell>
-              <StyledTableCell>{item.percent[1].oy3}</StyledTableCell>
-              <StyledTableCell>{item.percent[2].oy6}</StyledTableCell>
-              <StyledTableCell>{item.percent[3].oy9}</StyledTableCell>
-              <StyledTableCell>{item.percent[4].oy12}</StyledTableCell>
+              <StyledTableCell align="right">{item.desc}</StyledTableCell>
 
               <StyledTableCell align="right">
                 <IconButton
@@ -109,12 +104,23 @@ const CategoryList = ({ handleDel, handleEdit }) => {
                     handleEdit(item.id);
                   }}
                   component={Link}
-                  to={"/addcategory"}
+                  to={"/addproduct"}
                 >
                   <EditIcon
                     fontSize="default"
                     style={{ color: "green", marginLeft: "15%" }}
                   />
+                </IconButton>
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <IconButton
+                  onClick={() => {
+                    handleAdd(item);
+                  }}
+                  component={Link}
+                  to={"/addincoming"}
+                >
+                  <AddCircleOutlineIcon fontSize="inherit" />
                 </IconButton>
               </StyledTableCell>
             </StyledTableRow>
@@ -125,4 +131,4 @@ const CategoryList = ({ handleDel, handleEdit }) => {
   );
 };
 
-export default CategoryList;
+export default ProdCRUDList;
