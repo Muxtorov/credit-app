@@ -96,6 +96,8 @@ const AddProduct = (props) => {
   return (
     <div>
       <Grid item md={12}>
+        {console.log("dsadsads")}
+
         <div style={{ textAlign: "center", display: "flex" }}>
           {proId !== null ? (
             <h2> Productni Uzgartirish </h2>

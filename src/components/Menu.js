@@ -239,7 +239,7 @@ export default function Menu() {
                           style={{ fontSize: "26px" }}
                           onClick={handleClose1}
                         >
-                          Birthday
+                          Tug'ilgan Kunlar
                         </MenuItem>
                       </MenuList>
                     </ClickAwayListener>
@@ -285,7 +285,7 @@ export default function Menu() {
                           onClick={handleClose}
                           to={"/setcustomer"}
                         >
-                          Customers
+                          Xaridorlar
                         </MenuItem>
                         <MenuItem
                           component={Link}
@@ -293,7 +293,7 @@ export default function Menu() {
                           style={{ fontSize: "26px" }}
                           onClick={handleClose}
                         >
-                          Product
+                          Maxsulotlar
                         </MenuItem>
                         <MenuItem
                           component={Link}
@@ -301,7 +301,7 @@ export default function Menu() {
                           style={{ fontSize: "26px" }}
                           onClick={handleClose}
                         >
-                          Category
+                          Kategoriyalar
                         </MenuItem>
                       </MenuList>
                     </ClickAwayListener>
@@ -367,59 +367,6 @@ export default function Menu() {
             );
           })}
         </List>
-        {/* <div
-          style={{
-            height: "100%",
-            display: "flex",
-            justifyContent: "flex-end",
-            flexDirection: "column",
-          }}
-        >
-          <Button
-            style={{
-              display: "flex",
-              position: "fixed",
-              margin: "20px",
-              backgroundColor: "#3F51B5",
-              color: "#fff",
-              width: "170px",
-              bottom: "100px",
-            }}
-            component={Link}
-            to={"/costs"}
-          >
-            Xarajatlar
-          </Button>
-          <Button
-            style={{
-              display: "flex",
-              position: "fixed",
-              margin: "20px",
-              backgroundColor: "#3F51B5",
-              color: "#fff",
-              width: "170px",
-              bottom: "50px",
-            }}
-            component={Link}
-            to={"/birthday"}
-          >
-            birthday
-          </Button>
-          <Button
-            style={{
-              display: "flex",
-              position: "fixed",
-              margin: "20px",
-              backgroundColor: "#3F51B5",
-              color: "#fff",
-              width: "170px",
-            }}
-            component={Link}
-            to={"/debts"}
-          >
-            qarzlar
-          </Button>
-        </div> */}
       </Drawer>
     </div>
   );

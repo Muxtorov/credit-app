@@ -83,8 +83,8 @@ const CategoryList = ({ handleDel, handleEdit }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((item) => (
-            <StyledTableRow key={item.name}>
+          {data.map((item, ind) => (
+            <StyledTableRow key={ind}>
               <StyledTableCell component="th" scope="row">
                 {item.title}
               </StyledTableCell>
@@ -109,10 +109,7 @@ const CategoryList = ({ handleDel, handleEdit }) => {
                   component={Link}
                   to={"/addcategory"}
                 >
-                  <EditIcon
-                    fontSize="default"
-                    style={{ color: "green", marginLeft: "15%" }}
-                  />
+                  <EditIcon style={{ color: "green", marginLeft: "15%" }} />
                 </IconButton>
               </StyledTableCell>
             </StyledTableRow>
