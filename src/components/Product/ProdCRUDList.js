@@ -72,7 +72,7 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
               style={{ backgroundColor: "#3F51B5" }}
               align="right"
             >
-              Description
+              Tavsif
             </StyledTableCell>
             <StyledTableCell
               style={{ backgroundColor: "#3F51B5" }}

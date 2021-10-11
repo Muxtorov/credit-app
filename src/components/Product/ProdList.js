@@ -59,9 +59,8 @@ const ProdList = () => {
           <form className={classes.root} noValidate>
             <TextField
               id="standard-full-width"
-              label="Name:"
               style={{ margin: 8 }}
-              placeholder="Product Ismini Kiriting"
+              placeholder="Maxsulot Nomini Kiriting"
               className={classes.textField}
               fullWidth
               type="text"

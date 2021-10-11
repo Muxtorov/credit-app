@@ -78,7 +78,7 @@ const Tkun = (data) => {
       </div>
     );
   } else {
-    return null;
+    return <h1>Bugun Tug'ilgan Mijozlar Yuq</h1>;
   }
 };
 
