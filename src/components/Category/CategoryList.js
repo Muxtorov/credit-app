@@ -88,11 +88,11 @@ const CategoryList = ({ handleDel, handleEdit }) => {
               <StyledTableCell component="th" scope="row">
                 {item.title}
               </StyledTableCell>
-              <StyledTableCell>{item.percent[0].oy0}</StyledTableCell>
-              <StyledTableCell>{item.percent[1].oy3}</StyledTableCell>
-              <StyledTableCell>{item.percent[2].oy6}</StyledTableCell>
-              <StyledTableCell>{item.percent[3].oy9}</StyledTableCell>
-              <StyledTableCell>{item.percent[4].oy12}</StyledTableCell>
+              <StyledTableCell>+{item.percent[0].oy0}%</StyledTableCell>
+              <StyledTableCell>+{item.percent[1].oy3}%</StyledTableCell>
+              <StyledTableCell>+{item.percent[2].oy6}%</StyledTableCell>
+              <StyledTableCell>+{item.percent[3].oy9}%</StyledTableCell>
+              <StyledTableCell>+{item.percent[4].oy12}%</StyledTableCell>
 
               <StyledTableCell align="right">
                 <IconButton
