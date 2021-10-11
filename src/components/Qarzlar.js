@@ -90,7 +90,7 @@ const Qarzlar = (data) => {
       </div>
     );
   } else {
-    return null;
+    return <h1>Qarzdorlar mavjud emas</h1>;
   }
 };
 
