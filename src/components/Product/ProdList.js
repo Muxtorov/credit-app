@@ -91,6 +91,8 @@ const ProdList = () => {
           </Button>
         </Grid>
         <Grid style={{ marginLeft: "-60px" }} item md={12}>
+          <h2>Maxsulotlar</h2>
+
           <ProdCRUDList prod={prodData} handleEdit={handleEdit} />
         </Grid>
       </Grid>

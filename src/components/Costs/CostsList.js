@@ -54,40 +54,44 @@ const AddCosts = () => {
     });
   }, [sana]);
 
-  return (
-    <TableContainer
-      style={{ marginTop: "30px", marginBottom: "20px" }}
-      component={Paper}
-    >
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          {/* <h2 align="center">Bugungi Xarajatlar</h2> */}
-          <TableRow>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              Nomi
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              Narxi
-            </StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((item) => {
-            return (
-              <StyledTableRow key={item.items[0].costName}>
-                <StyledTableCell component="th" scope="row">
-                  {item.items[0].costName}
-                </StyledTableCell>
-                <StyledTableCell className={classes.barr}>
-                  {item.items[0].costPrice}
-                </StyledTableCell>
-              </StyledTableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+  if (data.length > 0) {
+    return (
+      <TableContainer
+        style={{ marginTop: "30px", marginBottom: "20px" }}
+        component={Paper}
+      >
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            {/* <h2 align="center">Bugungi Xarajatlar</h2> */}
+            <TableRow>
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                Nomi
+              </StyledTableCell>
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                Narxi
+              </StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((item) => {
+              return (
+                <StyledTableRow key={item.items[0].costName}>
+                  <StyledTableCell component="th" scope="row">
+                    {item.items[0].costName}
+                  </StyledTableCell>
+                  <StyledTableCell className={classes.barr}>
+                    {item.items[0].costPrice}
+                  </StyledTableCell>
+                </StyledTableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  } else {
+    return <h1 style={{ color: "#3F51B5" }}>Bugun Xarajat Qilinmadi</h1>;
+  }
 };
 
 export default AddCosts;

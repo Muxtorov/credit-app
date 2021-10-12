@@ -39,6 +39,7 @@ const Category = () => {
           </Button>
         </Grid>
         <Grid style={{ marginLeft: "-60px" }} item md={12}>
+          <h2>Kategoriyalar</h2>
           <CategoryList handleDel={handleDel} handleEdit={handleEdit} />
         </Grid>
       </Grid>

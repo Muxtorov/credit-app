@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import apiUrl from "../config/httpConnect";
 import Qarzlar from "./Qarzlar";
 import Tkun from "./Tkun";
+import logo from "../Logo.jpg";
 
 const Home = () => {
   const [data1, setData1] = useState([]);
@@ -32,12 +33,16 @@ const Home = () => {
       });
   }, [sana, setData2]);
 
-  return (
-    <div>
-      <Tkun data={data1} />
-      <Qarzlar data={data2} />
-    </div>
-  );
+  if (data1.length > 0 || data2.length > 0) {
+    return (
+      <div>
+        <Tkun data={data1} />
+        <Qarzlar data={data2} />
+      </div>
+    );
+  } else {
+    return <img alt="b10 Savdo Uyi" style={{ marginLeft: "10%" }} src={logo} />;
+  }
 };
 
 export default Home;

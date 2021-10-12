@@ -22,6 +22,7 @@ const Category = () => {
           </Button>
         </Grid>
         <Grid style={{ marginLeft: "-60px" }} item md={12}>
+          <h2>Xarajatlar</h2>
           <CostsList />
         </Grid>
       </Grid>

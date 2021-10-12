@@ -71,9 +71,8 @@ const Customer = () => {
           <form className={classes.root} noValidate>
             <TextField
               id="standard-full-width"
-              label="JSHSHIR"
               style={{ margin: 8 }}
-              placeholder="JSHSHIRni 14 talik kiriting"
+              placeholder="JSHSHIRni kiriting"
               className={classes.textField}
               fullWidth
               type="number"
@@ -103,6 +102,7 @@ const Customer = () => {
           </Button>
         </Grid>
         <Grid style={{ marginLeft: "-60px" }} item md={12}>
+          <h2>Xaridorlar</h2>
           <CustomerList
             custom={customData}
             handleDel={handleDel}
