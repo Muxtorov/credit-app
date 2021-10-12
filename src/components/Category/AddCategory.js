@@ -175,7 +175,21 @@ const AddCategory = (props) => {
             display: "flex",
           }}
         >
-          <Grid item md={9}></Grid>
+          <Grid item md={6}></Grid>
+          <Button
+            style={{
+              display: "flex",
+              float: "end",
+            }}
+            variant="contained"
+            color="primary"
+            disableElevation
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+            Bekor Qilish
+          </Button>
           <Button
             style={{
               display: "flex",

@@ -235,7 +235,7 @@ const AddCustomer = () => {
             display: "flex",
           }}
         >
-          <Grid item md={9}>
+          <Grid item md={6}>
             <spam style={{ fontSize: "22px" }}>Faolligi:</spam>
             <Switch
               style={{ display: "flex" }}
@@ -247,6 +247,21 @@ const AddCustomer = () => {
               defaultChecked="true"
             />
           </Grid>
+
+          <Button
+            style={{
+              display: "flex",
+              float: "end",
+            }}
+            variant="contained"
+            color="primary"
+            disableElevation
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+            Bekor Qilish
+          </Button>
           <Button
             style={{
               display: "flex",
