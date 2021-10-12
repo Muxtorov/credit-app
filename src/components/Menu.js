@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Menu() {
+const Menu = () => {
   const [menuItems, setMenuItems] = useState([]);
 
   useEffect(() => {
@@ -370,4 +370,6 @@ export default function Menu() {
       </Drawer>
     </div>
   );
-}
+};
+
+export default Menu;
