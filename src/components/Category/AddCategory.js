@@ -4,6 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -35,6 +38,11 @@ const AddCategory = (props) => {
 
   if (cateId !== null) {
     axios.get(apiUrl.url + "/categorys/" + cateId).then((res) => {
+      if (res.status === 200) {
+        toast.success("kategoriyalar")
+      }else{
+        toast.error("xato buldi")
+      }
       let bar = res.data;
       setNomi(bar.title);
       setOy0(bar.percent[0].oy0);
@@ -73,6 +81,11 @@ const AddCategory = (props) => {
       await axios
         .put(apiUrl.url + "/categorys/" + id, CATEGORIYA)
         .then((res) => {
+          if (res.status === 200) {
+            toast.success("kategoriya yangilandi");
+          }else{
+            toast.error("kategoriya yangilanmadi");
+          }
           window.history.back();
         })
         .catch((err) => {});
@@ -80,6 +93,11 @@ const AddCategory = (props) => {
       await axios
         .post(apiUrl.url + "/categorys", CATEGORIYA)
         .then((res) => {
+          if (res.status === 200) {
+            toast.success("kategoriya saqlandi");
+          }else{
+            toast.error("kategoriya saqlanmadi")
+          }
           window.history.back();
           window.location.assign("http://localhost:3000/setcategory");
         })
@@ -175,7 +193,21 @@ const AddCategory = (props) => {
             display: "flex",
           }}
         >
-          <Grid item md={9}></Grid>
+          <Grid item md={6}></Grid>
+          <Button
+            style={{
+              display: "flex",
+              float: "end",
+            }}
+            variant="contained"
+            color="primary"
+            disableElevation
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+            Bekor Qilish
+          </Button>
           <Button
             style={{
               display: "flex",
@@ -191,6 +223,7 @@ const AddCategory = (props) => {
           </Button>
         </Grid>
       </Grid>
+      <ToastContainer />
     </div>
   );
 };

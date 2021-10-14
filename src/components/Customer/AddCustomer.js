@@ -4,6 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -43,6 +46,11 @@ const AddCustomer = () => {
 
   if (customId !== null) {
     axios.get(apiUrl.url + "/customers/id/" + customId).then((res) => {
+      if (res.status === 200) {
+        toast.success("mijoz yuklandi");
+      } else {
+        toast.error("xatolik yuz berdi");
+      }
       let pers = res.data;
       setIsm(pers.username);
       setFamiliya(pers.surname);
@@ -80,13 +88,27 @@ const AddCustomer = () => {
       active: true,
     };
     if (customId !== null) {
-      axios.put(apiUrl.url + "/customers/id/" + id, person).catch((err) => {
-        console.log("error Edit....", err);
-      });
+      axios
+        .put(apiUrl.url + "/customers/id/" + id, person)
+        .then((res) => {
+          if (res.status === 200) {
+            toast.success("mijoz yangilandi");
+          } else {
+            toast.error("xato");
+          }
+        })
+        .catch((err) => {
+          console.log("error Edit....", err);
+        });
     } else {
       axios
         .post(apiUrl.url + "/customers", person)
         .then((res) => {
+          if (res.status === 200) {
+            toast.success("mijoz saqlandi");
+          } else {
+            toast.error("xato saqlanmadi");
+          }
           window.history.back();
         })
         .catch((err) => {
@@ -235,7 +257,7 @@ const AddCustomer = () => {
             display: "flex",
           }}
         >
-          <Grid item md={9}>
+          <Grid item md={6}>
             <spam style={{ fontSize: "22px" }}>Faolligi:</spam>
             <Switch
               style={{ display: "flex" }}
@@ -247,6 +269,21 @@ const AddCustomer = () => {
               defaultChecked="true"
             />
           </Grid>
+
+          <Button
+            style={{
+              display: "flex",
+              float: "end",
+            }}
+            variant="contained"
+            color="primary"
+            disableElevation
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+            Bekor Qilish
+          </Button>
           <Button
             style={{
               display: "flex",
@@ -262,6 +299,7 @@ const AddCustomer = () => {
           </Button>
         </Grid>
       </Grid>
+      <ToastContainer />
     </div>
   );
 };

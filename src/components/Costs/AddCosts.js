@@ -4,6 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -48,6 +51,11 @@ const AddCosts = () => {
     await axios
       .post(apiUrl.url + "/costs", newcost)
       .then((res) => {
+        if (res.status === 200) {
+          toast.success("xarajat saqlandi");
+        } else {
+          toast.error("xarajat saqlanmadi");
+        }
         window.history.back();
       })
       .catch((err) => {
@@ -89,7 +97,21 @@ const AddCosts = () => {
             display: "flex",
           }}
         >
-          <Grid item md={9}></Grid>
+          <Grid item md={7}></Grid>
+          <Button
+            style={{
+              display: "flex",
+              float: "end",
+            }}
+            variant="contained"
+            color="primary"
+            disableElevation
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+            Bekor Qilish
+          </Button>
           <Button
             style={{
               display: "flex",
@@ -105,6 +127,7 @@ const AddCosts = () => {
           </Button>
         </Grid>
       </Grid>
+      <ToastContainer />
     </div>
   );
 };

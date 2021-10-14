@@ -10,6 +10,9 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const useStyles = makeStyles({
   root: {
     minWidth: "400px",
@@ -27,6 +30,11 @@ const Products = (props) => {
     axios
       .get(apiUrl.url + `/stockorders/category/${CatId}`)
       .then((res) => {
+        if (res.status === 200) {
+          toast.success("yuklandi");
+        } else {
+          toast.error("yuklanmadi");
+        }
         setMahsulot(res.data);
       })
       .catch((err) => {
