@@ -1,26 +1,26 @@
-import { Button, Grid, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
-import apiUrl from "../../config/httpConnect";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import { Button, Grid, TextField } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+import apiUrl from '../../config/httpConnect';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: "90%",
+    width: '90%',
   },
   input: {
-    width: "74%",
-    margin: "10px",
+    width: '74%',
+    margin: '10px',
   },
   formControl: {
     margin: theme.spacing(1),
@@ -34,32 +34,31 @@ const useStyles = makeStyles((theme) => ({
 const AddProduct = (props) => {
   const classes = useStyles();
 
-  const [categoriyasi, setCategoriyasi] = useState("");
-  const [nomi, setNomi] = useState("");
-  const [izoh, setIzoh] = useState("");
+  const [categoriyasi, setCategoriyasi] = useState('');
+  const [nomi, setNomi] = useState('');
+  const [izoh, setIzoh] = useState('');
   const [id, setId] = useState();
   const [arr, setArr] = useState([]);
 
-  let proId = window.localStorage.getItem("prodId");
-
+  let proId = window.localStorage.getItem('prodId');
   useEffect(() => {
-    let categ = window.localStorage.getItem("categoriyalar");
+    let categ = window.localStorage.getItem('categoriyalar');
     setArr(JSON.parse(categ));
-  }, [setArr]);
-
-  if (proId !== null) {
-    axios
-      .get(apiUrl.url + "/products/" + proId)
-      .then((res) => {
-        let prod = res.data;
-        setNomi(prod.title);
-        setIzoh(prod.desc);
-        setId(prod.id);
-      })
-      .then(() => {
-        window.localStorage.removeItem("prodId");
-      });
-  }
+    if (proId !== null) {
+      axios
+        .get(apiUrl.url + '/products/' + proId)
+        .then((res) => {
+          let prod = res.data;
+          setNomi(prod.title);
+          setIzoh(prod.desc);
+          setId(prod.id);
+        })
+        .then(() => {
+          // window.localStorage.removeItem('prodId');
+        });
+    }
+    //eslint-disable-next-line
+  }, []);
 
   const addPerson = async () => {
     let newprod = {
@@ -70,21 +69,21 @@ const AddProduct = (props) => {
 
     if (id !== undefined) {
       await axios
-        .put(apiUrl.url + "/products/" + id, newprod)
+        .put(apiUrl.url + '/products/' + id, newprod)
         .then((res) => {
           window.history.back();
         })
         .catch((err) => {
-          console.log("error Edit....", err);
+          console.log('error Edit....', err);
         });
     } else {
       await axios
-        .post(apiUrl.url + "/products", newprod)
+        .post(apiUrl.url + '/products', newprod)
         .then((res) => {
           window.history.back();
         })
         .catch((err) => {
-          console.log("error....", err);
+          console.log('error....', err);
         });
     }
   };
@@ -96,9 +95,9 @@ const AddProduct = (props) => {
   return (
     <div>
       <Grid item md={12}>
-        {console.log("dsadsads")}
+        {console.log('dsadsads')}
 
-        <div style={{ textAlign: "center", display: "flex" }}>
+        <div style={{ textAlign: 'center', display: 'flex' }}>
           {proId !== null ? (
             <h2> Productni Uzgartirish </h2>
           ) : (
@@ -107,32 +106,32 @@ const AddProduct = (props) => {
         </div>
         <Grid>
           <TextField
-            id="outlined-textarea"
-            label="Nomi:"
-            placeholder=""
+            id='outlined-textarea'
+            label='Nomi:'
+            placeholder=''
             multiline
             className={classes.input}
-            variant="outlined"
+            variant='outlined'
             value={nomi}
             onChange={(e) => setNomi(e.target.value)}
           />
           <TextField
-            id="outlined-textarea"
-            label="Descreption:"
-            placeholder="Izoh"
+            id='outlined-textarea'
+            label='Descreption:'
+            placeholder='Izoh'
             multiline
             className={classes.input}
-            variant="outlined"
+            variant='outlined'
             value={izoh}
             onChange={(e) => setIzoh(e.target.value)}
           />
           {proId == null ? (
             <div>
               <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                <InputLabel id='demo-simple-select-label'>Category</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
                   value={categoriyasi}
                   onChange={handleChange}
                 >
@@ -149,18 +148,18 @@ const AddProduct = (props) => {
 
         <Grid
           style={{
-            margin: "10px",
-            display: "flex",
+            margin: '10px',
+            display: 'flex',
           }}
         >
           <Grid item md={6}></Grid>
           <Button
             style={{
-              display: "flex",
-              float: "end",
+              display: 'flex',
+              float: 'end',
             }}
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             disableElevation
             onClick={() => {
               window.history.back();
@@ -170,12 +169,12 @@ const AddProduct = (props) => {
           </Button>
           <Button
             style={{
-              display: "flex",
-              marginLeft: "20px",
-              float: "end",
+              display: 'flex',
+              marginLeft: '20px',
+              float: 'end',
             }}
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             disableElevation
             onClick={addPerson}
           >
