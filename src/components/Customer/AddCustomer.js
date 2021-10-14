@@ -35,13 +35,14 @@ const AddCustomer = () => {
   const [adress, setAdress] = useState("");
   const [ishjoyi, setIshjoyi] = useState("");
   const [kafil, setKafil] = useState("");
-
+  const [test, setTest] = useState(false);
   const [activ, setActiv] = useState(true);
   const [id, setId] = useState("");
 
   let customId = window.localStorage.getItem("customId");
 
   if (customId !== null) {
+    setTest(true);
     axios.get(apiUrl.url + "/customers/id/" + customId).then((res) => {
       let pers = res.data;
       setIsm(pers.username);
@@ -54,7 +55,7 @@ const AddCustomer = () => {
       setBdata(pers.birthDate);
       setAdress(pers.address);
       setActiv(pers.active);
-      setId(pers.customId);
+      setId(pers.id);
       setIshjoyi(pers.workplace);
       setBerildi(pers.pasIssueDate);
       setKafil(pers.guarantor);
@@ -79,10 +80,15 @@ const AddCustomer = () => {
       phone2: `${telefon2.trim()}`,
       active: true,
     };
-    if (customId !== null) {
-      axios.put(apiUrl.url + "/customers/id/" + id, person).catch((err) => {
-        console.log("error Edit....", err);
-      });
+    if (test === true) {
+      axios
+        .put(apiUrl.url + "/customers/id/" + id, person)
+        .then(() => {
+          window.history.back();
+        })
+        .catch((err) => {
+          console.log("error Edit....", err);
+        });
     } else {
       axios
         .post(apiUrl.url + "/customers", person)

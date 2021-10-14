@@ -68,15 +68,7 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
             >
               Ismi
             </StyledTableCell>
-            <StyledTableCell
-              style={{ backgroundColor: "#3F51B5" }}
-              className={classes.barr}
-            >
-              Familiyasi
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              Pasport Seriyasi
-            </StyledTableCell>
+
             <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
               JSHSHIR
             </StyledTableCell>
@@ -106,12 +98,8 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
                 component="th"
                 scope="row"
               >
-                {item.username}
+                {item.username.toUpperCase()} {item.surname.toUpperCase()}
               </StyledTableCell>
-              <StyledTableCell className={classes.barr}>
-                {item.surname}
-              </StyledTableCell>
-              <StyledTableCell>{item.pasSerNum}</StyledTableCell>
               <StyledTableCell>{item.jshshir}</StyledTableCell>
               <StyledTableCell>{item.phone}</StyledTableCell>
               <StyledTableCell>

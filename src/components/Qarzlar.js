@@ -17,7 +17,6 @@ const StyledTableCell = withStyles((theme) => ({
     fontSize: 18,
   },
 }))(TableCell);
-
 const StyledTableRow = withStyles((theme) => ({
   root: {
     "&:nth-of-type(odd)": {
@@ -25,7 +24,6 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
-
 const useStyles = makeStyles({
   table: {
     minWidth: 500,
@@ -38,7 +36,6 @@ const useStyles = makeStyles({
 
 const Qarzlar = (data) => {
   const classes = useStyles();
-
   if (data.length > 0) {
     return (
       <div>
