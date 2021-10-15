@@ -11,6 +11,7 @@ import Select from '@material-ui/core/Select';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -51,11 +52,13 @@ const AddProduct = (props) => {
       axios
         .get(apiUrl.url + '/products/' + proId)
         .then((res) => {
+        
         if (res.status === 200) {
           toast.success("MAXSULOT YUKLANDI");
         } else {
           toast.error("XATOLIK YUZ BERDI");
         }
+
           let prod = res.data;
           setNomi(prod.title);
           setIzoh(prod.desc);

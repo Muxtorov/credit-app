@@ -38,13 +38,14 @@ const AddCustomer = () => {
   const [adress, setAdress] = useState("");
   const [ishjoyi, setIshjoyi] = useState("");
   const [kafil, setKafil] = useState("");
-
+  const [test, setTest] = useState(false);
   const [activ, setActiv] = useState(true);
   const [id, setId] = useState("");
 
   let customId = window.localStorage.getItem("customId");
 
   if (customId !== null) {
+    setTest(true);
     axios.get(apiUrl.url + "/customers/id/" + customId).then((res) => {
       if (res.status === 200) {
         toast.success("mijoz yuklandi");
@@ -62,7 +63,7 @@ const AddCustomer = () => {
       setBdata(pers.birthDate);
       setAdress(pers.address);
       setActiv(pers.active);
-      setId(pers.customId);
+      setId(pers.id);
       setIshjoyi(pers.workplace);
       setBerildi(pers.pasIssueDate);
       setKafil(pers.guarantor);
@@ -87,7 +88,7 @@ const AddCustomer = () => {
       phone2: `${telefon2.trim()}`,
       active: true,
     };
-    if (customId !== null) {
+    if (test === true) {
       axios
         .put(apiUrl.url + "/customers/id/" + id, person)
         .then((res) => {
@@ -96,6 +97,9 @@ const AddCustomer = () => {
           } else {
             toast.error("xato");
           }
+        
+          window.history.back();
+
         })
         .catch((err) => {
           console.log("error Edit....", err);

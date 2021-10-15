@@ -49,13 +49,19 @@ const Home = () => {
   if (data1.length > 0 || data2.length > 0) {
     return (
       <div>
-        <Tkun data={data1} />
-        <Qarzlar data={data2} />
+
+        <Tkun />
+        <Qarzlar />
         <ToastContainer />
+
       </div>
     );
   } else {
-    return <img alt="b10 Savdo Uyi" style={{ marginLeft: "10%" }} src={logo} />;
+    return (
+      <div>
+        <img alt="b10 Savdo Uyi" style={{ marginLeft: "10%" }} src={logo} />
+      </div>
+    );
   }
 };
 

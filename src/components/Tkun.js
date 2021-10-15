@@ -1,4 +1,6 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import apiUrl from "../config/httpConnect";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -7,7 +9,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -17,7 +18,6 @@ const StyledTableCell = withStyles((theme) => ({
     fontSize: 18,
   },
 }))(TableCell);
-
 const StyledTableRow = withStyles((theme) => ({
   root: {
     "&:nth-of-type(odd)": {
@@ -25,7 +25,6 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
-
 const useStyles = makeStyles({
   table: {
     minWidth: 500,
@@ -35,9 +34,23 @@ const useStyles = makeStyles({
     marginLeft: "-60px",
   },
 });
-
-const Tkun = (data) => {
+const Tkun = () => {
   const classes = useStyles();
+  const [data, setData] = useState([]);
+  const hozzi = new Date();
+  console.log("adsadsads", hozzi);
+  let oy = hozzi.getMonth() + 1;
+  if (oy <= 9) {
+    oy = "0" + oy;
+  }
+  let kun = hozzi.getDate();
+  let yil = hozzi.getFullYear();
+  const sana = kun + "." + oy + "." + yil;
+  useEffect(() => {
+    axios.get(apiUrl.url + `/customers/${sana}`).then((response) => {
+      setData(response.data);
+    });
+  }, [sana, setData]);
 
   if (data.length > 0) {
     return (
@@ -47,7 +60,7 @@ const Tkun = (data) => {
           style={{ marginTop: "30px", marginBottom: "20px" }}
           component={Paper}
         >
-          <h2 align="center">Bugun Tug'ilgan Mijozlar</h2>
+          {/* <h2 align="center">Bugun Tug'ilgan Mijozlar</h2> */}
           <Table className={classes.table} aria-label="customized table">
             <TableHead>
               <TableRow>
@@ -78,8 +91,7 @@ const Tkun = (data) => {
       </div>
     );
   } else {
-    return <h1>Bugun Tug'ilgan Mijozlar Yuq</h1>;
+    return <h1>Mavjud emas</h1>;
   }
 };
-
 export default Tkun;
