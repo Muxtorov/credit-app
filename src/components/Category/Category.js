@@ -5,11 +5,19 @@ import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 import CategoryList from "./CategoryList";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Category = () => {
   const handleDel = (id) => {
     axios
       .delete(apiUrl.url + "/categorys/" + id)
       .then((res) => {
+        if (res.status === 200) {
+          toast.success("kategoriya o'chirildi");
+        } else {
+          toast.error("kategoriya o'chirilmadi");
+        }
         window.location.reload();
       })
       .catch((err) => {
@@ -43,6 +51,7 @@ const Category = () => {
           <CategoryList handleDel={handleDel} handleEdit={handleEdit} />
         </Grid>
       </Grid>
+      <ToastContainer />
     </div>
   );
 };

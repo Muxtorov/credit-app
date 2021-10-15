@@ -8,6 +8,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -48,6 +52,13 @@ const AddProduct = (props) => {
       axios
         .get(apiUrl.url + '/products/' + proId)
         .then((res) => {
+        
+        if (res.status === 200) {
+          toast.success("MAXSULOT YUKLANDI");
+        } else {
+          toast.error("XATOLIK YUZ BERDI");
+        }
+
           let prod = res.data;
           setNomi(prod.title);
           setIzoh(prod.desc);
@@ -71,6 +82,11 @@ const AddProduct = (props) => {
       await axios
         .put(apiUrl.url + '/products/' + id, newprod)
         .then((res) => {
+          if (res.status === 200) {
+            toast.info("MAXSULOT YANGILANDI");
+          } else {
+            toast.error("XATOLIK YUZ BERDI");
+          }
           window.history.back();
         })
         .catch((err) => {
@@ -80,6 +96,11 @@ const AddProduct = (props) => {
       await axios
         .post(apiUrl.url + '/products', newprod)
         .then((res) => {
+          if (res.status === 200) {
+            toast.success("maxsulot saqlandi");
+          } else {
+            toast.error("xatolik yuz berdi");
+          }
           window.history.back();
         })
         .catch((err) => {
@@ -182,6 +203,7 @@ const AddProduct = (props) => {
           </Button>
         </Grid>
       </Grid>
+      <ToastContainer />
     </div>
   );
 };

@@ -4,6 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -44,6 +47,11 @@ const AddCustomer = () => {
   if (customId !== null) {
     setTest(true);
     axios.get(apiUrl.url + "/customers/id/" + customId).then((res) => {
+      if (res.status === 200) {
+        toast.success("mijoz yuklandi");
+      } else {
+        toast.error("xatolik yuz berdi");
+      }
       let pers = res.data;
       setIsm(pers.username);
       setFamiliya(pers.surname);
@@ -83,8 +91,15 @@ const AddCustomer = () => {
     if (test === true) {
       axios
         .put(apiUrl.url + "/customers/id/" + id, person)
-        .then(() => {
+        .then((res) => {
+          if (res.status === 200) {
+            toast.success("mijoz yangilandi");
+          } else {
+            toast.error("xato");
+          }
+        
           window.history.back();
+
         })
         .catch((err) => {
           console.log("error Edit....", err);
@@ -93,6 +108,11 @@ const AddCustomer = () => {
       axios
         .post(apiUrl.url + "/customers", person)
         .then((res) => {
+          if (res.status === 200) {
+            toast.success("mijoz saqlandi");
+          } else {
+            toast.error("xato saqlanmadi");
+          }
           window.history.back();
         })
         .catch((err) => {
@@ -283,6 +303,7 @@ const AddCustomer = () => {
           </Button>
         </Grid>
       </Grid>
+      <ToastContainer />
     </div>
   );
 };
