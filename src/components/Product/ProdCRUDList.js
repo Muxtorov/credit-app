@@ -66,77 +66,79 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
   const classes = useStyles();
 
   return (
-    <TableContainer
-      style={{ marginTop: "30px", marginBottom: "20px" }}
-      component={Paper}
-    >
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              Nomi
-            </StyledTableCell>
-            <StyledTableCell
-              style={{ backgroundColor: "#3F51B5" }}
-              align="right"
-            >
-              Tavsif
-            </StyledTableCell>
-            <StyledTableCell
-              style={{ backgroundColor: "#3F51B5" }}
-              align="right"
-            ></StyledTableCell>
-            <StyledTableCell
-              style={{ backgroundColor: "#3F51B5" }}
-            ></StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {prod.map((item) => (
-            <StyledTableRow key={item.id}>
-              <StyledTableCell component="th" scope="row">
-                {item.title}
+    <div>
+      <TableContainer
+        style={{ marginTop: "30px", marginBottom: "20px" }}
+        component={Paper}
+      >
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                Nomi
               </StyledTableCell>
-              <StyledTableCell align="right">{item.desc}</StyledTableCell>
+              <StyledTableCell
+                style={{ backgroundColor: "#3F51B5" }}
+                align="right"
+              >
+                Tavsif
+              </StyledTableCell>
+              <StyledTableCell
+                style={{ backgroundColor: "#3F51B5" }}
+                align="right"
+              ></StyledTableCell>
+              <StyledTableCell
+                style={{ backgroundColor: "#3F51B5" }}
+              ></StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {prod.map((item) => (
+              <StyledTableRow key={item.id}>
+                <StyledTableCell component="th" scope="row">
+                  {item.title}
+                </StyledTableCell>
+                <StyledTableCell align="right">{item.desc}</StyledTableCell>
 
-              <StyledTableCell align="right">
-                <IconButton
-                  onClick={() => {
-                    handleDel(item.id);
-                  }}
-                >
-                  <DeleteIcon fontSize="inherit" color="error" />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    handleEdit(item.id);
-                  }}
-                  component={Link}
-                  to={"/addproduct"}
-                >
-                  <EditIcon
-                    fontSize="default"
-                    style={{ color: "green", marginLeft: "15%" }}
-                  />
-                </IconButton>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <IconButton
-                  onClick={() => {
-                    handleAdd(item);
-                  }}
-                  component={Link}
-                  to={"/addincoming"}
-                >
-                  <AddCircleOutlineIcon fontSize="inherit" />
-                </IconButton>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    <ToastContainer />
+                <StyledTableCell align="right">
+                  <IconButton
+                    onClick={() => {
+                      handleDel(item.id);
+                    }}
+                  >
+                    <DeleteIcon fontSize="inherit" color="error" />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      handleEdit(item.id);
+                    }}
+                    component={Link}
+                    to={"/addproduct"}
+                  >
+                    <EditIcon
+                      fontSize="default"
+                      style={{ color: "green", marginLeft: "15%" }}
+                    />
+                  </IconButton>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <IconButton
+                    onClick={() => {
+                      handleAdd(item);
+                    }}
+                    component={Link}
+                    to={"/addincoming"}
+                  >
+                    <AddCircleOutlineIcon fontSize="inherit" />
+                  </IconButton>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <ToastContainer />
+    </div>
   );
 };
 
