@@ -58,74 +58,76 @@ const CategoryList = ({ handleDel, handleEdit }) => {
   }, []);
 
   return (
-    <TableContainer
-      style={{ marginTop: "30px", marginBottom: "20px" }}
-      component={Paper}
-    >
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              Nomi
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              0 oy
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              3 oy
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              6 oy
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              9 oy
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              12 oy
-            </StyledTableCell>
-
-            <StyledTableCell
-              style={{ backgroundColor: "#3F51B5" }}
-              align="right"
-            ></StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((item, ind) => (
-            <StyledTableRow key={ind}>
-              <StyledTableCell component="th" scope="row">
-                {item.title}
+    <div>
+      <TableContainer
+        style={{ marginTop: "30px", marginBottom: "20px" }}
+        component={Paper}
+      >
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                Nomi
               </StyledTableCell>
-              <StyledTableCell>+{item.percent[0].oy0}%</StyledTableCell>
-              <StyledTableCell>+{item.percent[1].oy3}%</StyledTableCell>
-              <StyledTableCell>+{item.percent[2].oy6}%</StyledTableCell>
-              <StyledTableCell>+{item.percent[3].oy9}%</StyledTableCell>
-              <StyledTableCell>+{item.percent[4].oy12}%</StyledTableCell>
-
-              <StyledTableCell align="right">
-                <IconButton
-                  onClick={() => {
-                    handleDel(item.id);
-                  }}
-                >
-                  <DeleteIcon fontSize="inherit" color="error" />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    handleEdit(item.id);
-                  }}
-                  component={Link}
-                  to={"/addcategory"}
-                >
-                  <EditIcon style={{ color: "green", marginLeft: "15%" }} />
-                </IconButton>
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                0 oy
               </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    <ToastContainer />
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                3 oy
+              </StyledTableCell>
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                6 oy
+              </StyledTableCell>
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                9 oy
+              </StyledTableCell>
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                12 oy
+              </StyledTableCell>
+
+              <StyledTableCell
+                style={{ backgroundColor: "#3F51B5" }}
+                align="right"
+              ></StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((item, ind) => (
+              <StyledTableRow key={ind}>
+                <StyledTableCell component="th" scope="row">
+                  {item.title}
+                </StyledTableCell>
+                <StyledTableCell>+{item.percent[0].oy0}%</StyledTableCell>
+                <StyledTableCell>+{item.percent[1].oy3}%</StyledTableCell>
+                <StyledTableCell>+{item.percent[2].oy6}%</StyledTableCell>
+                <StyledTableCell>+{item.percent[3].oy9}%</StyledTableCell>
+                <StyledTableCell>+{item.percent[4].oy12}%</StyledTableCell>
+
+                <StyledTableCell align="right">
+                  <IconButton
+                    onClick={() => {
+                      handleDel(item.id);
+                    }}
+                  >
+                    <DeleteIcon fontSize="inherit" color="error" />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      handleEdit(item.id);
+                    }}
+                    component={Link}
+                    to={"/addcategory"}
+                  >
+                    <EditIcon style={{ color: "green", marginLeft: "15%" }} />
+                  </IconButton>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <ToastContainer />
+    </div>
   );
 };
 

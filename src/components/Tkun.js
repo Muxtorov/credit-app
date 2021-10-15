@@ -44,8 +44,7 @@ const Tkun = () => {
     oy = "0" + oy;
   }
   let kun = hozzi.getDate();
-  let yil = hozzi.getFullYear();
-  const sana = kun + "." + oy + "." + yil;
+  const sana = kun + "." + oy;
   useEffect(() => {
     axios.get(apiUrl.url + `/customers/${sana}`).then((response) => {
       setData(response.data);
