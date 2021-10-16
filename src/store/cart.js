@@ -1,17 +1,23 @@
 const initialState = {
   customer: null,
   items: [],
+  prodID: undefined,
 };
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "INIT":
+    case 'INIT':
       return { ...initialState, customer: action.payload.userId };
 
-    case "ADD_CUSTOMER":
+    case 'ADD_CUSTOMER':
       let customer = action.payload.data;
       return { ...state, customer };
-    case "ADD_PRODUCT":
+    case 'EDIT_PRODUCT':
+      let prodID = action.payload;
+      return { ...state, prodID };
+    case 'COMPLETE_EDIT_PRODUCT':
+      return { ...state, prodID: undefined };
+    case 'ADD_PRODUCT':
       // tekshirib qushish kerak, duplikate larni oldini olish.
       const items = state.items;
       let product = action.payload.orData;
@@ -20,17 +26,17 @@ const cartReducer = (state = initialState, action) => {
       items.push(product);
 
       return { ...state, items };
-    case "DELETE_PRODUCT":
+    case 'DELETE_PRODUCT':
       // uchirish kk
       return { ...state, items };
 
-    case "INCREASE_PRODUCT_BY_ONE":
+    case 'INCREASE_PRODUCT_BY_ONE':
       return 0;
 
-    case "DECREASE_PRODUCT_BY_ONE":
+    case 'DECREASE_PRODUCT_BY_ONE':
       return 0;
 
-    case "RESET":
+    case 'RESET':
       return {
         agent: null,
         items: [],

@@ -8,9 +8,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearProdId } from '../../store/actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,39 +38,40 @@ const useStyles = makeStyles((theme) => ({
 
 const AddProduct = (props) => {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   const [categoriyasi, setCategoriyasi] = useState('');
   const [nomi, setNomi] = useState('');
   const [izoh, setIzoh] = useState('');
   const [id, setId] = useState();
   const [arr, setArr] = useState([]);
-
-  let proId = window.localStorage.getItem('prodId');
+  const { prodID } = useSelector((state) => state.cart);
+  // let proId = window.localStorage.getItem('prodId');
   useEffect(() => {
     let categ = window.localStorage.getItem('categoriyalar');
     setArr(JSON.parse(categ));
-    if (proId !== null) {
+    console.log(prodID);
+    if (prodID) {
       axios
-        .get(apiUrl.url + '/products/' + proId)
+        .get(apiUrl.url + '/products/' + prodID)
         .then((res) => {
-        
-        if (res.status === 200) {
-          toast.success("MAXSULOT YUKLANDI");
-        } else {
-          toast.error("XATOLIK YUZ BERDI");
-        }
+          if (res.status === 200) {
+            toast.success('MAXSULOT YUKLANDI');
+          } else {
+            toast.error('XATOLIK YUZ BERDI');
+          }
 
           let prod = res.data;
           setNomi(prod.title);
+          setCategoriyasi(prod.category?.id);
           setIzoh(prod.desc);
           setId(prod.id);
         })
         .then(() => {
           // window.localStorage.removeItem('prodId');
         });
+      return () => dispatch(clearProdId());
     }
-    //eslint-disable-next-line
-  }, []);
+  }, [prodID]);
 
   const addPerson = async () => {
     let newprod = {
@@ -83,10 +85,11 @@ const AddProduct = (props) => {
         .put(apiUrl.url + '/products/' + id, newprod)
         .then((res) => {
           if (res.status === 200) {
-            toast.info("MAXSULOT YANGILANDI");
+            toast.info('MAXSULOT YANGILANDI');
           } else {
-            toast.error("XATOLIK YUZ BERDI");
+            toast.error('XATOLIK YUZ BERDI');
           }
+          dispatch({ type: 'COMPLETE_EDIT_PRODUCT' });
           window.history.back();
         })
         .catch((err) => {
@@ -97,9 +100,9 @@ const AddProduct = (props) => {
         .post(apiUrl.url + '/products', newprod)
         .then((res) => {
           if (res.status === 200) {
-            toast.success("maxsulot saqlandi");
+            toast.success('maxsulot saqlandi');
           } else {
-            toast.error("xatolik yuz berdi");
+            toast.error('xatolik yuz berdi');
           }
           window.history.back();
         })
@@ -119,7 +122,7 @@ const AddProduct = (props) => {
         {console.log('dsadsads')}
 
         <div style={{ textAlign: 'center', display: 'flex' }}>
-          {proId !== null ? (
+          {prodID ? (
             <h2> Productni Uzgartirish </h2>
           ) : (
             <h2>YANGI PRODUCT QUSHISH</h2>
@@ -146,25 +149,25 @@ const AddProduct = (props) => {
             value={izoh}
             onChange={(e) => setIzoh(e.target.value)}
           />
-          {proId == null ? (
-            <div>
-              <FormControl className={classes.formControl}>
-                <InputLabel id='demo-simple-select-label'>Category</InputLabel>
-                <Select
-                  labelId='demo-simple-select-label'
-                  id='demo-simple-select'
-                  value={categoriyasi}
-                  onChange={handleChange}
-                >
-                  {arr.map((item) => {
-                    return <MenuItem value={item.id}>{item.title}</MenuItem>;
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-          ) : (
+          {/* {proId == null ? ( */}
+          <div>
+            <FormControl className={classes.formControl}>
+              <InputLabel id='demo-simple-select-label'>Category</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={categoriyasi}
+                onChange={handleChange}
+              >
+                {arr.map((item) => {
+                  return <MenuItem value={item.id}>{item.title}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          {/* ) : (
             <h1> </h1>
-          )}
+          )} */}
         </Grid>
 
         <Grid
