@@ -5,8 +5,8 @@ import Qarzlar from "./Qarzlar";
 import Tkun from "./Tkun";
 import logo from "../Logo.jpg";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [data1, setData1] = useState([]);
@@ -19,15 +19,14 @@ const Home = () => {
     oy = "0" + oy;
   }
   let kun = hozzi.getDate();
-  let yil = hozzi.getFullYear();
-  const sana = kun + "." + oy + "." + yil;
+  const sana = kun + "." + oy;
 
   useEffect(() => {
     axios.get(apiUrl.url + `/customers/${sana}`).then((response) => {
       if (response.status === 200) {
         toast.success("TUG'ILGAN KUN");
-      }else{
-        toast.error("XATOLIK YUZ BERDI")
+      } else {
+        toast.error("XATOLIK YUZ BERDI");
       }
       setData1(response.data);
     });
@@ -39,8 +38,8 @@ const Home = () => {
       .then((response) => {
         if (response.status === 200) {
           toast.success("QARZDORLAR YUKLANDI");
-        }else{
-          toast.error("XATOLIK YUZ BERDI")
+        } else {
+          toast.error("XATOLIK YUZ BERDI");
         }
         setData2(response.data);
       });
@@ -49,11 +48,9 @@ const Home = () => {
   if (data1.length > 0 || data2.length > 0) {
     return (
       <div>
-
         <Tkun />
         <Qarzlar />
         <ToastContainer />
-
       </div>
     );
   } else {

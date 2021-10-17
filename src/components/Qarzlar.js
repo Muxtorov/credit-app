@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -7,6 +7,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import axios from "axios";
+import apiUrl from "../config/httpConnect";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -34,7 +38,31 @@ const useStyles = makeStyles({
   },
 });
 
-const Qarzlar = (data) => {
+const Qarzlar = () => {
+  const [data, setData] = useState([]);
+
+  const hozzi = new Date();
+  console.log("adsadsads", hozzi);
+  let oy = hozzi.getMonth() + 1;
+  if (oy <= 9) {
+    oy = "0" + oy;
+  }
+  let kun = hozzi.getDate();
+  const sana = kun + "." + oy;
+
+  useEffect(() => {
+    axios
+      .get(apiUrl.url + `/outgoingorders/debtors/${sana}`)
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success("QARZDORLAR YUKLANDI");
+        } else {
+          toast.error("XATOLIK YUZ BERDI");
+        }
+        setData(response.data);
+      });
+  }, [sana]);
+
   const classes = useStyles();
   if (data.length > 0) {
     return (

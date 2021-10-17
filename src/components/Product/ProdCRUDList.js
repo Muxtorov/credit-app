@@ -66,6 +66,7 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
 
   const classes = useStyles();
 
+
   const [open, setOpen] = React.useState(false);
   const [item, setItem] = React.useState(0);
 
@@ -77,8 +78,10 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
     setOpen(false);
   };
 
+ 
   return (
-    <>
+    <div>
+
       <TableContainer
         style={{ marginTop: "30px", marginBottom: "20px" }}
         component={Paper}
@@ -115,8 +118,10 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
                 <StyledTableCell align="right">
                   <IconButton
                     onClick={() => {
+
                       handleOpen();
                       setItem(item.id);
+
                     }}
                   >
                     <DeleteIcon fontSize="inherit" color="error" />
@@ -151,6 +156,7 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
         </Table>
       </TableContainer>
       <ToastContainer />
+
       <ModalComponent
         open={open}
         onClose={handleClose}
@@ -159,7 +165,10 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
         handleDel={handleDel}
         setOpen={setOpen}
       />
-    </>
+    
+
+    </div>
+
   );
 };
 
