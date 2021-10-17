@@ -17,6 +17,7 @@ import apiUrl from "../../config/httpConnect";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ModalComponent from "../Modal/ModalComponent";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -65,8 +66,22 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
 
   const classes = useStyles();
 
+
+  const [open, setOpen] = React.useState(false);
+  const [item, setItem] = React.useState(0);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+ 
   return (
     <div>
+
       <TableContainer
         style={{ marginTop: "30px", marginBottom: "20px" }}
         component={Paper}
@@ -103,7 +118,10 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
                 <StyledTableCell align="right">
                   <IconButton
                     onClick={() => {
-                      handleDel(item.id);
+
+                      handleOpen();
+                      setItem(item.id);
+
                     }}
                   >
                     <DeleteIcon fontSize="inherit" color="error" />
@@ -138,7 +156,19 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
         </Table>
       </TableContainer>
       <ToastContainer />
+
+      <ModalComponent
+        open={open}
+        onClose={handleClose}
+        item={item}
+        handleClose={handleClose}
+        handleDel={handleDel}
+        setOpen={setOpen}
+      />
+    
+
     </div>
+
   );
 };
 

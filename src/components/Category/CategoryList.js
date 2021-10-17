@@ -16,6 +16,7 @@ import apiUrl from "../../config/httpConnect";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ModalComponent from "../Modal/ModalComponent";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -50,6 +51,7 @@ const CategoryList = ({ handleDel, handleEdit }) => {
     axios.get(apiUrl.url + "/categorys").then((res) => {
       if (res.status === 200) {
         toast.success("kategoriyalar yuklandi");
+        console.log("000000000");
       } else {
         toast.error("kategoriya yuklanmadi");
       }
@@ -57,8 +59,22 @@ const CategoryList = ({ handleDel, handleEdit }) => {
     });
   }, []);
 
+
+  const [open, setOpen] = React.useState(false);
+  const [item, setItem] = React.useState(0);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  
   return (
     <div>
+
       <TableContainer
         style={{ marginTop: "30px", marginBottom: "20px" }}
         component={Paper}
@@ -74,11 +90,13 @@ const CategoryList = ({ handleDel, handleEdit }) => {
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
                 3 oy
+
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
                 6 oy
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+
                 9 oy
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
@@ -106,7 +124,10 @@ const CategoryList = ({ handleDel, handleEdit }) => {
                 <StyledTableCell align="right">
                   <IconButton
                     onClick={() => {
-                      handleDel(item.id);
+
+                      setItem(item.id);
+                      handleOpen();
+
                     }}
                   >
                     <DeleteIcon fontSize="inherit" color="error" />
@@ -127,7 +148,19 @@ const CategoryList = ({ handleDel, handleEdit }) => {
         </Table>
       </TableContainer>
       <ToastContainer />
+
+      <ModalComponent
+        open={open}
+        onClose={handleClose}
+        item={item}
+        handleClose={handleClose}
+        handleDel={handleDel}
+        setOpen={setOpen}
+      />
+    
+
     </div>
+
   );
 };
 
