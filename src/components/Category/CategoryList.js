@@ -50,6 +50,7 @@ const CategoryList = ({ handleDel, handleEdit }) => {
     axios.get(apiUrl.url + "/categorys").then((res) => {
       if (res.status === 200) {
         toast.success("kategoriyalar yuklandi");
+        console.log("000000000");
       } else {
         toast.error("kategoriya yuklanmadi");
       }
@@ -58,6 +59,7 @@ const CategoryList = ({ handleDel, handleEdit }) => {
   }, []);
 
   return (
+    <>
     <TableContainer
       style={{ marginTop: "30px", marginBottom: "20px" }}
       component={Paper}
@@ -126,6 +128,7 @@ const CategoryList = ({ handleDel, handleEdit }) => {
       </Table>
     </TableContainer>
     <ToastContainer />
+    </>
   );
 };
 

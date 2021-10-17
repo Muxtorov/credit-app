@@ -13,6 +13,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import Modal from "@material-ui/core/Modal";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -37,97 +38,152 @@ const useStyles = makeStyles({
     // minWidth: 700,
     width: "100%",
   },
+  paper: {
+    top: `50%`,
+    left: `50%`,
+    transform: `translate(-50%,   -50%)`,
+    position: "absolute",
+    width: 400,
+    height: 200,
+    backgroundColor: "#2E7EF6",
+    color: "#fff",
+    padding: "30px",
+  },
 });
 
 const CustomerList = ({ custom, handleDel, handleEdit }) => {
   const classes = useStyles();
-
+  const [open, setOpen] = React.useState(false);
+  const [item, setItem] = React.useState(0);
   const dispatch = useDispatch();
 
   function AddCustomer(data) {
     dispatch({ type: "ADD_CUSTOMER", payload: { data } });
   }
 
-  return (
-    <TableContainer
-      style={{
-        marginTop: "30px",
-        marginBottom: "20px",
-      }}
-      component={Paper}
-    >
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell
-              style={{ backgroundColor: "#3F51B5" }}
-            ></StyledTableCell>
-            <StyledTableCell
-              style={{ backgroundColor: "#3F51B5" }}
-              className={classes.barr}
-            >
-              Ismi
-            </StyledTableCell>
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              JSHSHIR
-            </StyledTableCell>
-            <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-              Telefon Raqami
-            </StyledTableCell>
-            <StyledTableCell
-              style={{ backgroundColor: "#3F51B5" }}
-            ></StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {custom.map((item) => (
-            <StyledTableRow key={item.name}>
-              <StyledTableCell>
-                <Button
-                  onClick={() => {
-                    AddCustomer(item);
-                    alert("Xaridor tanlandi");
-                  }}
-                >
-                  <CheckCircleIcon style={{ color: "#3F51B5" }} />
-                </Button>
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const ModalBox = (
+    <div className={classes.paper}>
+      <h2 id="simple-modal-title">O'chirishni xoxlaysizmi?</h2>
+      <Button
+        style={{ margin: "5px" }}
+        variant="contained"
+        onClick={handleClose}
+      >
+        Bekor qilish
+      </Button>
+      <Button
+        style={{ margin: "5px" }}
+        variant="contained"
+        color="secondary"
+        onClick={() => {
+          handleDel(item);
+          setOpen(false);
+        }}
+      >
+        O'chirish
+      </Button>
+    </div>
+  );
+
+  return (
+    <>
+      <TableContainer
+        style={{
+          marginTop: "30px",
+          marginBottom: "20px",
+        }}
+        component={Paper}
+      >
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell
+                style={{ backgroundColor: "#3F51B5" }}
+              ></StyledTableCell>
+              <StyledTableCell
+                style={{ backgroundColor: "#3F51B5" }}
+                className={classes.barr}
+              >
+                Ismi
+              </StyledTableCell>
+
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                JSHSHIR
+              </StyledTableCell>
+              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+                Telefon Raqami
               </StyledTableCell>
               <StyledTableCell
-                className={classes.barr}
-                component="th"
-                scope="row"
-              >
-                {item.username.toUpperCase()} {item.surname.toUpperCase()}
-              </StyledTableCell>
-              <StyledTableCell>{item.jshshir}</StyledTableCell>
-              <StyledTableCell>{item.phone}</StyledTableCell>
-              <StyledTableCell>
-                <IconButton
-                  onClick={() => {
-                    handleDel(item.id);
-                  }}
+                style={{ backgroundColor: "#3F51B5" }}
+              ></StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {custom.map((item) => (
+              <StyledTableRow key={item.name}>
+                <StyledTableCell>
+                  <Button
+                    onClick={() => {
+                      AddCustomer(item);
+                      alert("Xaridor tanlandi");
+                    }}
+                  >
+                    <CheckCircleIcon style={{ color: "#3F51B5" }} />
+                  </Button>
+                </StyledTableCell>
+                <StyledTableCell
+                  className={classes.barr}
+                  component="th"
+                  scope="row"
                 >
-                  <DeleteIcon fontSize="inherit" color="error" />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    handleEdit(item.id);
-                  }}
-                  component={Link}
-                  to={"/addcustomer"}
-                >
-                  <EditIcon
-                    fontSize="default"
-                    style={{ color: "green", marginLeft: "15%" }}
-                  />
-                </IconButton>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                  {item.username.toUpperCase()} {item.surname.toUpperCase()}
+                </StyledTableCell>
+                <StyledTableCell>{item.jshshir}</StyledTableCell>
+                <StyledTableCell>{item.phone}</StyledTableCell>
+                <StyledTableCell>
+                  <IconButton
+                    onClick={() => {
+                      handleOpen();
+                      setItem(item.id);
+                    }}
+                  >
+                    <DeleteIcon fontSize="inherit" color="error" />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      handleEdit(item.id);
+                    }}
+                    component={Link}
+                    to={"/addcustomer"}
+                  >
+                    <EditIcon
+                      fontSize="default"
+                      style={{ color: "green", marginLeft: "15%" }}
+                    />
+                  </IconButton>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {ModalBox}
+      </Modal>
+    </>
   );
 };
 
