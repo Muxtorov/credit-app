@@ -110,7 +110,7 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
           </TableHead>
           <TableBody>
             {custom.map((item) => (
-              <StyledTableRow key={item.name}>
+              <StyledTableRow key={item.id}>
                 <StyledTableCell>
                   <Button
                     onClick={() => {

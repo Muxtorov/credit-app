@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import { IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import apiUrl from "../../config/httpConnect";
+import React from 'react';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import { Link } from 'react-router-dom';
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import ModalComponent from "../Modal/ModalComponent";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ModalComponent from '../Modal/ModalComponent';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -30,7 +28,7 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    "&:nth-of-type(odd)": {
+    '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
   },
@@ -42,23 +40,8 @@ const useStyles = makeStyles({
   },
 });
 
-const CategoryList = ({ handleDel, handleEdit }) => {
+const CategoryList = ({ handleDel, handleEdit, data }) => {
   const classes = useStyles();
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios.get(apiUrl.url + "/categorys").then((res) => {
-      if (res.status === 200) {
-        toast.success("kategoriyalar yuklandi");
-        console.log("000000000");
-      } else {
-        toast.error("kategoriya yuklanmadi");
-      }
-      setData(res.data);
-    });
-  }, []);
-
 
   const [open, setOpen] = React.useState(false);
   const [item, setItem] = React.useState(0);
@@ -70,49 +53,44 @@ const CategoryList = ({ handleDel, handleEdit }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  
   return (
     <div>
-
       <TableContainer
-        style={{ marginTop: "30px", marginBottom: "20px" }}
+        style={{ marginTop: '30px', marginBottom: '20px' }}
         component={Paper}
       >
-        <Table className={classes.table} aria-label="customized table">
+        <Table className={classes.table} aria-label='customized table'>
           <TableHead>
             <TableRow>
-              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              <StyledTableCell style={{ backgroundColor: '#3F51B5' }}>
                 Nomi
               </StyledTableCell>
-              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              <StyledTableCell style={{ backgroundColor: '#3F51B5' }}>
                 0 oy
               </StyledTableCell>
-              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              <StyledTableCell style={{ backgroundColor: '#3F51B5' }}>
                 3 oy
-
               </StyledTableCell>
-              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              <StyledTableCell style={{ backgroundColor: '#3F51B5' }}>
                 6 oy
               </StyledTableCell>
-              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-
+              <StyledTableCell style={{ backgroundColor: '#3F51B5' }}>
                 9 oy
               </StyledTableCell>
-              <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+              <StyledTableCell style={{ backgroundColor: '#3F51B5' }}>
                 12 oy
               </StyledTableCell>
 
               <StyledTableCell
-                style={{ backgroundColor: "#3F51B5" }}
-                align="right"
+                style={{ backgroundColor: '#3F51B5' }}
+                align='right'
               ></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((item, ind) => (
               <StyledTableRow key={ind}>
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell component='th' scope='row'>
                   {item.title}
                 </StyledTableCell>
                 <StyledTableCell>+{item.percent[0].oy0}%</StyledTableCell>
@@ -121,25 +99,23 @@ const CategoryList = ({ handleDel, handleEdit }) => {
                 <StyledTableCell>+{item.percent[3].oy9}%</StyledTableCell>
                 <StyledTableCell>+{item.percent[4].oy12}%</StyledTableCell>
 
-                <StyledTableCell align="right">
+                <StyledTableCell align='right'>
                   <IconButton
                     onClick={() => {
-
                       setItem(item.id);
                       handleOpen();
-
                     }}
                   >
-                    <DeleteIcon fontSize="inherit" color="error" />
+                    <DeleteIcon fontSize='inherit' color='error' />
                   </IconButton>
                   <IconButton
                     onClick={() => {
                       handleEdit(item.id);
                     }}
                     component={Link}
-                    to={"/addcategory"}
+                    to={'/addcategory'}
                   >
-                    <EditIcon style={{ color: "green", marginLeft: "15%" }} />
+                    <EditIcon style={{ color: 'green', marginLeft: '15%' }} />
                   </IconButton>
                 </StyledTableCell>
               </StyledTableRow>
@@ -157,10 +133,7 @@ const CategoryList = ({ handleDel, handleEdit }) => {
         handleDel={handleDel}
         setOpen={setOpen}
       />
-    
-
     </div>
-
   );
 };
 

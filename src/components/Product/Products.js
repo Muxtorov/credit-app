@@ -66,7 +66,7 @@ const Products = (props) => {
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {item.product.title}
+                      {item.product?.title}
                     </Typography>
                     <Typography gutterBottom variant="h5" component="h2">
                       Narxi: {item.price}

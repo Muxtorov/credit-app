@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearProdId } from '../../store/actions';
+import Loading from '../Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,12 +46,14 @@ const AddProduct = (props) => {
   const [id, setId] = useState();
   const [arr, setArr] = useState([]);
   const { prodID } = useSelector((state) => state.cart);
+  const [loading, setLoading] = useState(false);
   // let proId = window.localStorage.getItem('prodId');
   useEffect(() => {
     let categ = window.localStorage.getItem('categoriyalar');
     setArr(JSON.parse(categ));
     console.log(prodID);
     if (prodID) {
+      setLoading(true);
       axios
         .get(apiUrl.url + '/products/' + prodID)
         .then((res) => {
@@ -66,9 +69,7 @@ const AddProduct = (props) => {
           setIzoh(prod.desc);
           setId(prod.id);
         })
-        .then(() => {
-          // window.localStorage.removeItem('prodId');
-        });
+        .finally(() => setLoading(false));
       return () => dispatch(clearProdId());
     }
   }, [prodID]);
@@ -81,6 +82,7 @@ const AddProduct = (props) => {
     };
 
     if (id !== undefined) {
+      setLoading(true);
       await axios
         .put(apiUrl.url + '/products/' + id, newprod)
         .then((res) => {
@@ -92,10 +94,12 @@ const AddProduct = (props) => {
           dispatch({ type: 'COMPLETE_EDIT_PRODUCT' });
           window.history.back();
         })
+        .finally(() => setLoading(false))
         .catch((err) => {
           console.log('error Edit....', err);
         });
     } else {
+      setLoading(true);
       await axios
         .post(apiUrl.url + '/products', newprod)
         .then((res) => {
@@ -106,6 +110,7 @@ const AddProduct = (props) => {
           }
           window.history.back();
         })
+        .finally(() => setLoading(true))
         .catch((err) => {
           console.log('error....', err);
         });
@@ -116,6 +121,7 @@ const AddProduct = (props) => {
     setCategoriyasi(event.target.value);
   };
 
+  if (loading) return <Loading />;
   return (
     <div>
       <Grid item md={12}>

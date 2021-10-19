@@ -88,7 +88,6 @@ const Cart = () => {
     totalSum += s;
   }
 
-  
   function dateHisob() {
     var now = new Date(date);
     var n = selectedValue.slice(2) * 1;

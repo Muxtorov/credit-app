@@ -1,48 +1,53 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Button, TextField } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import CustomerList from "./CustomerList";
-import axios from "axios";
-import apiUrl from "../../config/httpConnect";
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Button, TextField } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import CustomerList from './CustomerList';
+import axios from 'axios';
+import apiUrl from '../../config/httpConnect';
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Loading from '../../components/Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: "90%",
+    width: '90%',
   },
   input: {
-    width: "74%",
-    margin: "10px",
+    width: '74%',
+    margin: '10px',
   },
 }));
 
 const Customer = () => {
   const classes = useStyles();
 
-  const [jshr, setJshr] = useState("");
+  const [jshr, setJshr] = useState('');
   const [custom, setCustom] = useState([]);
   const [customData, setCustomData] = useState([]);
   const [liboy, setLiboy] = useState(true);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    axios.get(apiUrl.url + "/customers").then((res) => {
-      if (res.status === 200) {
-        toast.success("mijozlar yuklandi");
-      } else {
-        toast.error("mijozlar yuklanmadi");
-      }
-      setCustom(res.data);
-      setCustomData(res.data);
-    });
+    setLoading(true);
+    axios
+      .get(apiUrl.url + '/customers')
+      .finally(() => setLoading(false))
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success('mijozlar yuklandi');
+        } else {
+          toast.error('mijozlar yuklanmadi');
+        }
+        setCustom(res.data);
+        setCustomData(res.data);
+      });
   }, [setCustom, liboy]);
 
   const search_data = (value) => {
@@ -59,7 +64,7 @@ const Customer = () => {
 
   const handleDel = async (id) => {
     await axios
-      .delete(apiUrl.url + "/customers/id/" + id)
+      .delete(apiUrl.url + '/customers/id/' + id)
       .then((res) => {
         if (res.status === 200) {
           toast.success("mijoz o'chirildi");
@@ -72,22 +77,23 @@ const Customer = () => {
   };
 
   const handleEdit = (id) => {
-    window.localStorage.setItem("customId", `${id}`);
+    window.localStorage.setItem('customId', `${id}`);
   };
 
+  if (loading) return <Loading />;
   return (
     <div>
       <Grid container>
         <Grid item md={8}>
           <form className={classes.root} noValidate>
             <TextField
-              id="standard-full-width"
+              id='standard-full-width'
               style={{ margin: 8 }}
-              placeholder="JSHSHIRni kiriting"
+              placeholder='JSHSHIRni kiriting'
               className={classes.textField}
               fullWidth
-              type="number"
-              margin="normal"
+              type='number'
+              margin='normal'
               InputLabelProps={{
                 shrink: true,
               }}
@@ -103,16 +109,16 @@ const Customer = () => {
         <Grid item md={1}>
           <Button
             component={Link}
-            style={{ display: "flex", marginTop: "20px" }}
-            variant="contained"
-            color="primary"
+            style={{ display: 'flex', marginTop: '20px' }}
+            variant='contained'
+            color='primary'
             disableElevation
-            to={"/addcustomer"}
+            to={'/addcustomer'}
           >
             Qushish
           </Button>
         </Grid>
-        <Grid style={{ marginLeft: "-60px" }} item md={12}>
+        <Grid style={{ marginLeft: '-60px' }} item md={12}>
           <h2>Xaridorlar</h2>
           <CustomerList
             custom={customData}
