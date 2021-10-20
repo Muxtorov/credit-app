@@ -6,11 +6,6 @@ import ProdCRUDList from './ProdCRUDList';
 import apiUrl from '../../config/httpConnect';
 import axios from 'axios';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch } from 'react-redux';
-import { setProdId } from '../../store/actions';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -35,12 +30,7 @@ const ProdList = () => {
   const [prodData, setProdData] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
-    axios.get(apiUrl.url + '/products').then((res) => {
-      if (res.status === 200) {
-        toast.success('maxsulotlar yuklandi');
-      } else {
-        toast.error('maxsulotlar yuklanmadi');
-      }
+    axios.get(apiUrl.url + "/products").then((res) => {
       setProd(res.data);
       setProdData(res.data);
     });
@@ -107,7 +97,6 @@ const ProdList = () => {
           <ProdCRUDList prod={prodData} handleEdit={handleEdit} />
         </Grid>
       </Grid>
-      <ToastContainer />
     </div>
   );
 };

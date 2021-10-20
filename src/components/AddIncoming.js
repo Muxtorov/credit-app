@@ -4,9 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -55,11 +52,6 @@ const AddIncoming = () => {
     await axios
       .post(apiUrl.url + "/incomingorders", newIco)
       .then((res) => {
-        if (res.status === 200) {
-          toast.success("saqlandi");          
-        }else{
-          toast.error("XATOLIK YUZ BERDI");
-        }
         window.history.back();
       })
       .catch((err) => {
@@ -128,7 +120,6 @@ const AddIncoming = () => {
           </Button>
         </Grid>
       </Grid>
-      <ToastContainer />
     </div>
   );
 };

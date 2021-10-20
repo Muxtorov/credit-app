@@ -8,24 +8,19 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearProdId } from '../../store/actions';
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '90%',
+    width: "90%",
   },
   input: {
-    width: '74%',
-    margin: '10px',
+    width: "74%",
+    margin: "10px",
   },
   formControl: {
     margin: theme.spacing(1),
@@ -38,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AddProduct = (props) => {
   const classes = useStyles();
+
   const dispatch = useDispatch();
   const [categoriyasi, setCategoriyasi] = useState('');
   const [nomi, setNomi] = useState('');
@@ -46,20 +42,15 @@ const AddProduct = (props) => {
   const [arr, setArr] = useState([]);
   const { prodID } = useSelector((state) => state.cart);
   // let proId = window.localStorage.getItem('prodId');
+
   useEffect(() => {
-    let categ = window.localStorage.getItem('categoriyalar');
+    let categ = window.localStorage.getItem("categoriyalar");
     setArr(JSON.parse(categ));
     console.log(prodID);
     if (prodID) {
       axios
-        .get(apiUrl.url + '/products/' + prodID)
+        .get(apiUrl.url + "/products/" + proId)
         .then((res) => {
-          if (res.status === 200) {
-            toast.success('MAXSULOT YUKLANDI');
-          } else {
-            toast.error('XATOLIK YUZ BERDI');
-          }
-
           let prod = res.data;
           setNomi(prod.title);
           setCategoriyasi(prod.category?.id);
@@ -82,32 +73,21 @@ const AddProduct = (props) => {
 
     if (id !== undefined) {
       await axios
-        .put(apiUrl.url + '/products/' + id, newprod)
+        .put(apiUrl.url + "/products/" + id, newprod)
         .then((res) => {
-          if (res.status === 200) {
-            toast.info('MAXSULOT YANGILANDI');
-          } else {
-            toast.error('XATOLIK YUZ BERDI');
-          }
-          dispatch({ type: 'COMPLETE_EDIT_PRODUCT' });
           window.history.back();
         })
         .catch((err) => {
-          console.log('error Edit....', err);
+          console.log("error Edit....", err);
         });
     } else {
       await axios
-        .post(apiUrl.url + '/products', newprod)
+        .post(apiUrl.url + "/products", newprod)
         .then((res) => {
-          if (res.status === 200) {
-            toast.success('maxsulot saqlandi');
-          } else {
-            toast.error('xatolik yuz berdi');
-          }
           window.history.back();
         })
         .catch((err) => {
-          console.log('error....', err);
+          console.log("error....", err);
         });
     }
   };
@@ -119,8 +99,6 @@ const AddProduct = (props) => {
   return (
     <div>
       <Grid item md={12}>
-        {console.log('dsadsads')}
-
         <div style={{ textAlign: 'center', display: 'flex' }}>
           {prodID ? (
             <h2> Productni Uzgartirish </h2>
@@ -130,26 +108,25 @@ const AddProduct = (props) => {
         </div>
         <Grid>
           <TextField
-            id='outlined-textarea'
-            label='Nomi:'
-            placeholder=''
+            id="outlined-textarea"
+            label="Nomi:"
+            placeholder=""
             multiline
             className={classes.input}
-            variant='outlined'
+            variant="outlined"
             value={nomi}
             onChange={(e) => setNomi(e.target.value)}
           />
           <TextField
-            id='outlined-textarea'
-            label='Descreption:'
-            placeholder='Izoh'
+            id="outlined-textarea"
+            label="Descreption:"
+            placeholder="Izoh"
             multiline
             className={classes.input}
-            variant='outlined'
+            variant="outlined"
             value={izoh}
             onChange={(e) => setIzoh(e.target.value)}
           />
-          {/* {proId == null ? ( */}
           <div>
             <FormControl className={classes.formControl}>
               <InputLabel id='demo-simple-select-label'>Category</InputLabel>
@@ -165,25 +142,22 @@ const AddProduct = (props) => {
               </Select>
             </FormControl>
           </div>
-          {/* ) : (
-            <h1> </h1>
-          )} */}
         </Grid>
 
         <Grid
           style={{
-            margin: '10px',
-            display: 'flex',
+            margin: "10px",
+            display: "flex",
           }}
         >
           <Grid item md={6}></Grid>
           <Button
             style={{
-              display: 'flex',
-              float: 'end',
+              display: "flex",
+              float: "end",
             }}
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             disableElevation
             onClick={() => {
               window.history.back();
@@ -193,12 +167,12 @@ const AddProduct = (props) => {
           </Button>
           <Button
             style={{
-              display: 'flex',
-              marginLeft: '20px',
-              float: 'end',
+              display: "flex",
+              marginLeft: "20px",
+              float: "end",
             }}
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             disableElevation
             onClick={addPerson}
           >
@@ -206,7 +180,6 @@ const AddProduct = (props) => {
           </Button>
         </Grid>
       </Grid>
-      <ToastContainer />
     </div>
   );
 };

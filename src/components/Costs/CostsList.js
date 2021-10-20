@@ -10,9 +10,6 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -53,11 +50,6 @@ const AddCosts = () => {
 
   useEffect(() => {
     axios.get(apiUrl.url + "/costs/date/" + sana).then((res) => {
-      if (res.status === 200) {
-        toast.success("xarajat yuklandi");
-      } else {
-        toast.error("xarajat yuklanmadi");
-      }
       setData(res.data);
     });
   }, [sana]);

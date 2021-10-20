@@ -17,9 +17,6 @@ import axios from 'axios';
 import apiUrl from '../config/httpConnect';
 import { makeStyles, TextField } from '@material-ui/core';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 // const GreenRadio = withStyles({
 //   root: {
 //     color: green[400],
@@ -141,12 +138,7 @@ const Cart = () => {
     axios
       .post(apiUrl.url + '/outgoingorders', sendData)
       .then((res) => {
-        if (res.status === 200) {
-          toast.success('save');
-        } else {
-          toast.error('XATOLIK YUZ BERDI');
-        }
-        window.localStorage.setItem('sendData', JSON.stringify(sendData));
+        window.localStorage.setItem("sendData", JSON.stringify(sendData));
       })
       .then((response) => alert(response));
   }
@@ -343,7 +335,6 @@ const Cart = () => {
       >
         chop etish
       </Button>
-      <ToastContainer />
     </div>
   );
 };

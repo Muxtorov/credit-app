@@ -10,32 +10,21 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 
 const Contract = () => {
   const data1 = window.localStorage.getItem("sendData");
   let foo = JSON.parse(data1);
-  const [shaxs, setShaxs] = useState({});
+
   const data = foo;
   const [nomer, setNomer] = useState("");
 
+  const shaxs = useSelector((state) => {
+    return state.cart;
+  });
+
   console.log("data", data);
   console.log("data -> ", data);
-  useEffect(() => {
-    axios
-      .get(apiUrl.url + "/customers/id/" + data.customer)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success("MIJOZ YUKLANDI");          
-        }else{
-          toast.error("XATOLIK YUZ BERDI")
-        }
-        setShaxs(response.data[0]);
-        console.log("1111111111111111", response.data);
-      });
-  }, [data.customer, setShaxs]);
 
   return (
     <div
@@ -375,7 +364,6 @@ const Contract = () => {
           </Grid>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
