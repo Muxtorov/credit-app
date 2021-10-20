@@ -1,12 +1,13 @@
-import { Button, Grid, TextField } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import apiUrl from '../../config/httpConnect';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { Button, Grid, TextField } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
+import apiUrl from "../../config/httpConnect";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,9 +36,9 @@ const AddProduct = (props) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  const [categoriyasi, setCategoriyasi] = useState('');
-  const [nomi, setNomi] = useState('');
-  const [izoh, setIzoh] = useState('');
+  const [categoriyasi, setCategoriyasi] = useState("");
+  const [nomi, setNomi] = useState("");
+  const [izoh, setIzoh] = useState("");
   const [id, setId] = useState();
   const [arr, setArr] = useState([]);
   const { prodID } = useSelector((state) => state.cart);
@@ -49,7 +50,7 @@ const AddProduct = (props) => {
     console.log(prodID);
     if (prodID) {
       axios
-        .get(apiUrl.url + "/products/" + proId)
+        .get(apiUrl.url + "/products/" + prodID)
         .then((res) => {
           let prod = res.data;
           setNomi(prod.title);
@@ -60,7 +61,7 @@ const AddProduct = (props) => {
         .then(() => {
           // window.localStorage.removeItem('prodId');
         });
-      return () => dispatch(clearProdId());
+      // return () => dispatch(clearProdId());
     }
   }, [prodID]);
 
@@ -99,7 +100,7 @@ const AddProduct = (props) => {
   return (
     <div>
       <Grid item md={12}>
-        <div style={{ textAlign: 'center', display: 'flex' }}>
+        <div style={{ textAlign: "center", display: "flex" }}>
           {prodID ? (
             <h2> Productni Uzgartirish </h2>
           ) : (
@@ -129,10 +130,10 @@ const AddProduct = (props) => {
           />
           <div>
             <FormControl className={classes.formControl}>
-              <InputLabel id='demo-simple-select-label'>Category</InputLabel>
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
               <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
                 value={categoriyasi}
                 onChange={handleChange}
               >

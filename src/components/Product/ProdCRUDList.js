@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
+import ModalComponent from "../Modal/ModalComponent";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -57,7 +58,6 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
 
   const classes = useStyles();
 
-
   const [open, setOpen] = React.useState(false);
   const [item, setItem] = React.useState(0);
 
@@ -69,10 +69,8 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
     setOpen(false);
   };
 
- 
   return (
     <div>
-
       <TableContainer
         style={{ marginTop: "30px", marginBottom: "20px" }}
         component={Paper}
@@ -109,10 +107,8 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
                 <StyledTableCell align="right">
                   <IconButton
                     onClick={() => {
-
                       handleOpen();
                       setItem(item.id);
-
                     }}
                   >
                     <DeleteIcon fontSize="inherit" color="error" />
@@ -155,7 +151,6 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
         setOpen={setOpen}
       />
     </div>
-
   );
 };
 

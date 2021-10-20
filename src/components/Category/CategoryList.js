@@ -13,6 +13,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
+import ModalComponent from "../Modal/ModalComponent";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -49,7 +50,6 @@ const CategoryList = ({ handleDel, handleEdit }) => {
     });
   }, []);
 
-
   const [open, setOpen] = React.useState(false);
   const [item, setItem] = React.useState(0);
 
@@ -61,10 +61,8 @@ const CategoryList = ({ handleDel, handleEdit }) => {
     setOpen(false);
   };
 
-  
   return (
     <div>
-
       <TableContainer
         style={{ marginTop: "30px", marginBottom: "20px" }}
         component={Paper}
@@ -80,13 +78,11 @@ const CategoryList = ({ handleDel, handleEdit }) => {
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
                 3 oy
-
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
                 6 oy
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
-
                 9 oy
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
@@ -114,10 +110,8 @@ const CategoryList = ({ handleDel, handleEdit }) => {
                 <StyledTableCell align="right">
                   <IconButton
                     onClick={() => {
-
                       setItem(item.id);
                       handleOpen();
-
                     }}
                   >
                     <DeleteIcon fontSize="inherit" color="error" />
@@ -146,7 +140,6 @@ const CategoryList = ({ handleDel, handleEdit }) => {
         setOpen={setOpen}
       />
     </div>
-
   );
 };
 
