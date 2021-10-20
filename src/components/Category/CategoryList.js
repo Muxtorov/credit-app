@@ -49,8 +49,22 @@ const CategoryList = ({ handleDel, handleEdit }) => {
     });
   }, []);
 
+
+  const [open, setOpen] = React.useState(false);
+  const [item, setItem] = React.useState(0);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  
   return (
     <div>
+
       <TableContainer
         style={{ marginTop: "30px", marginBottom: "20px" }}
         component={Paper}
@@ -66,11 +80,13 @@ const CategoryList = ({ handleDel, handleEdit }) => {
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
                 3 oy
+
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
                 6 oy
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
+
                 9 oy
               </StyledTableCell>
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
@@ -98,7 +114,10 @@ const CategoryList = ({ handleDel, handleEdit }) => {
                 <StyledTableCell align="right">
                   <IconButton
                     onClick={() => {
-                      handleDel(item.id);
+
+                      setItem(item.id);
+                      handleOpen();
+
                     }}
                   >
                     <DeleteIcon fontSize="inherit" color="error" />
@@ -118,7 +137,16 @@ const CategoryList = ({ handleDel, handleEdit }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <ModalComponent
+        open={open}
+        onClose={handleClose}
+        item={item}
+        handleClose={handleClose}
+        handleDel={handleDel}
+        setOpen={setOpen}
+      />
     </div>
+
   );
 };
 

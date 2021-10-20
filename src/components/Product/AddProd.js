@@ -1,12 +1,12 @@
-import { Button, Grid, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
-import apiUrl from "../../config/httpConnect";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import { Button, Grid, TextField } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+import apiUrl from '../../config/httpConnect';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,31 +34,35 @@ const useStyles = makeStyles((theme) => ({
 const AddProduct = (props) => {
   const classes = useStyles();
 
-  const [categoriyasi, setCategoriyasi] = useState("");
-  const [nomi, setNomi] = useState("");
-  const [izoh, setIzoh] = useState("");
+  const dispatch = useDispatch();
+  const [categoriyasi, setCategoriyasi] = useState('');
+  const [nomi, setNomi] = useState('');
+  const [izoh, setIzoh] = useState('');
   const [id, setId] = useState();
   const [arr, setArr] = useState([]);
+  const { prodID } = useSelector((state) => state.cart);
+  // let proId = window.localStorage.getItem('prodId');
 
-  let proId = window.localStorage.getItem("prodId");
   useEffect(() => {
     let categ = window.localStorage.getItem("categoriyalar");
     setArr(JSON.parse(categ));
-    if (proId !== null) {
+    console.log(prodID);
+    if (prodID) {
       axios
         .get(apiUrl.url + "/products/" + proId)
         .then((res) => {
           let prod = res.data;
           setNomi(prod.title);
+          setCategoriyasi(prod.category?.id);
           setIzoh(prod.desc);
           setId(prod.id);
         })
         .then(() => {
           // window.localStorage.removeItem('prodId');
         });
+      return () => dispatch(clearProdId());
     }
-    //eslint-disable-next-line
-  }, []);
+  }, [prodID]);
 
   const addPerson = async () => {
     let newprod = {
@@ -95,10 +99,8 @@ const AddProduct = (props) => {
   return (
     <div>
       <Grid item md={12}>
-        {console.log("dsadsads")}
-
-        <div style={{ textAlign: "center", display: "flex" }}>
-          {proId !== null ? (
+        <div style={{ textAlign: 'center', display: 'flex' }}>
+          {prodID ? (
             <h2> Productni Uzgartirish </h2>
           ) : (
             <h2>YANGI PRODUCT QUSHISH</h2>
@@ -125,25 +127,21 @@ const AddProduct = (props) => {
             value={izoh}
             onChange={(e) => setIzoh(e.target.value)}
           />
-          {proId == null ? (
-            <div>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={categoriyasi}
-                  onChange={handleChange}
-                >
-                  {arr.map((item) => {
-                    return <MenuItem value={item.id}>{item.title}</MenuItem>;
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-          ) : (
-            <h1> </h1>
-          )}
+          <div>
+            <FormControl className={classes.formControl}>
+              <InputLabel id='demo-simple-select-label'>Category</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={categoriyasi}
+                onChange={handleChange}
+              >
+                {arr.map((item) => {
+                  return <MenuItem value={item.id}>{item.title}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+          </div>
         </Grid>
 
         <Grid
