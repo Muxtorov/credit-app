@@ -15,9 +15,6 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -47,11 +44,6 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
     axios
       .delete(apiUrl.url + "/products/" + id)
       .then((res) => {
-        if (res.status === 200) {
-          toast.success("maxsulot o'chirildi");
-        } else {
-          toast.error("maxsulot o'chirilmadi");
-        }
         console.log(res.status);
       })
       .catch((err) => {
@@ -137,7 +129,6 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <ToastContainer />
     </div>
   );
 };

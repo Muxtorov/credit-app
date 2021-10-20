@@ -5,9 +5,6 @@ import Qarzlar from "./Qarzlar";
 import Tkun from "./Tkun";
 import logo from "../Logo.jpg";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 const Home = () => {
   const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
@@ -23,11 +20,6 @@ const Home = () => {
 
   useEffect(() => {
     axios.get(apiUrl.url + `/customers/${sana}`).then((response) => {
-      if (response.status === 200) {
-        toast.success("TUG'ILGAN KUN");
-      } else {
-        toast.error("XATOLIK YUZ BERDI");
-      }
       setData1(response.data);
     });
   }, [sana, setData1]);
@@ -36,11 +28,6 @@ const Home = () => {
     axios
       .get(apiUrl.url + `/outgoingorders/debtors/${sana}`)
       .then((response) => {
-        if (response.status === 200) {
-          toast.success("QARZDORLAR YUKLANDI");
-        } else {
-          toast.error("XATOLIK YUZ BERDI");
-        }
         setData2(response.data);
       });
   }, [sana, setData2]);
@@ -50,7 +37,6 @@ const Home = () => {
       <div>
         <Tkun />
         <Qarzlar />
-        <ToastContainer />
       </div>
     );
   } else {

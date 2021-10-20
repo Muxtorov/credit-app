@@ -14,9 +14,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -48,11 +45,6 @@ const CategoryList = ({ handleDel, handleEdit }) => {
 
   useEffect(() => {
     axios.get(apiUrl.url + "/categorys").then((res) => {
-      if (res.status === 200) {
-        toast.success("kategoriyalar yuklandi");
-      } else {
-        toast.error("kategoriya yuklanmadi");
-      }
       setData(res.data);
     });
   }, []);
@@ -126,7 +118,6 @@ const CategoryList = ({ handleDel, handleEdit }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <ToastContainer />
     </div>
   );
 };
