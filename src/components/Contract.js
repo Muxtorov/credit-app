@@ -1,8 +1,6 @@
 import { Grid, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import emblema from "../image_2021-09-20_10-17-21.png";
-import apiUrl from "../config/httpConnect";
-import axios from "axios";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -20,7 +18,7 @@ const Contract = () => {
   const [nomer, setNomer] = useState("");
 
   const shaxs = useSelector((state) => {
-    return state.cart;
+    return state.cart.customer;
   });
 
   console.log("data", data);
@@ -80,7 +78,7 @@ const Contract = () => {
           Бир томондан Риштон тумани Давлат хизматлари маркази томонидан 23
           апрел 2021 йил кунги №1383866- сон билан рўйхатдан ўтган устав асосида
           фаолият кўрсатувчи Риштон тумани ЯТТ раҳбари М,Мухожиров (кейинги
-          ўринларда «Сотувчи») ва {shaxs.address} яшовчи фуқаро {shaxs.username}
+          ўринларда «Сотувчи») ва {shaxs.address} яшовчи фуқаро {shaxs.username}{" "}
           {shaxs.surname} {shaxs.sheriff} (шахсини тасдиқловчи ҳужжат: Паспорт
           серия {shaxs.pasSerNum} ФАРГОНА ВИЛОЯТИ РИШТОН ТУМАНИ ИИБ томонидан
           {shaxs.birthDate} да берилган) Риштон туман
@@ -98,20 +96,22 @@ const Contract = () => {
             <TableHead>
               <TableRow>
                 <TableCell>T/r</TableCell>
-                <TableCell align="right">To'lov Sanasi</TableCell>
-                <TableCell align="right">To'lash kerak bo'lgan summa</TableCell>
+                <TableCell align="right">Махсулот номи</TableCell>
+                <TableCell align="right">Сони</TableCell>
+                <TableCell align="right">Махсулот нархи</TableCell>
+                <TableCell align="right">Махсулотни бўлиб тўлаш</TableCell>
+                <TableCell align="right">Умумий киймати</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.payments.map((row, ind) => (
+              {data.items.map((item, ind) => (
                 <TableRow key={ind}>
                   <TableCell>{ind + 1}</TableCell>
-                  <TableCell align="right">
-                    {row.startDate.slice(0, 10)}
-                    {/* {row.startDate.getDate()}.{row.startDate.getMonth()}.
-                    {row.startDate.getFullYear()} */}
-                  </TableCell>
-                  <TableCell align="right">{row.paymentAmount}</TableCell>
+                  <TableCell align="right">{item.title}</TableCell>
+                  <TableCell align="right">{item.quantity}</TableCell>
+                  <TableCell align="right">{item.price}</TableCell>
+                  <TableCell align="right">{data.lifetime}</TableCell>
+                  <TableCell align="right">{data.total}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -358,6 +358,57 @@ const Contract = () => {
                 </tr>
                 <tr>
                   <td>Тел 2:</td>
+                </tr>
+              </table>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <TableContainer component={Paper}>
+              <Table aria-label="spanning table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>T/r</TableCell>
+                    <TableCell align="right">Махсулот номи</TableCell>
+                    <TableCell align="right">Сони</TableCell>
+                    <TableCell align="right">Махсулот нархи</TableCell>
+                    <TableCell align="right">Умумий киймати</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.items.map((item, ind) => (
+                    <TableRow key={ind}>
+                      <TableCell>{ind + 1}</TableCell>
+                      <TableCell align="right">{item.title}</TableCell>
+                      <TableCell align="right">{item.quantity}</TableCell>
+                      <TableCell align="right">{item.price}</TableCell>
+                      <TableCell align="right">{data.total}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+          <br />
+          (____________________________)
+          <br />
+          <Grid container>
+            <Grid item md={6}>
+              <table>
+                <tr>
+                  <td>Топширдим</td>
+                </tr>
+                <tr>
+                  <td>Рахбар ___________ Мухожиров Мухсинхўжа</td>
+                </tr>
+              </table>
+            </Grid>
+            <Grid item md={6}>
+              <table>
+                <tr>
+                  <td>Олдим</td>
+                </tr>
+                <tr>
+                  <td>___________ ____________________________</td>
                 </tr>
               </table>
             </Grid>
