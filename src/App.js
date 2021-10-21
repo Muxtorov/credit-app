@@ -21,6 +21,8 @@ import Tkun from "./components/Tkun.js";
 import Qarzlar from "./components/Qarzlar";
 import Costs from "./components/Costs/Costs";
 import AddCosts from "./components/Costs/AddCosts";
+import Calculator from "./components/Calculator/Calculator";
+import CalculatorPrint from "./components/Calculator/CalculatorPrint";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -59,6 +61,12 @@ const App = () => {
               </Route>
               <Route exact path="/debts">
                 <Qarzlar />
+              </Route>
+              <Route exact path="/calc">
+                <Calculator />
+              </Route>
+              <Route path="/calcprint">
+                <CalculatorPrint />
               </Route>
               <Route path="/setcustomer">
                 <Customer />
