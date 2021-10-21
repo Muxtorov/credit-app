@@ -186,6 +186,19 @@ const Menu = () => {
           <Typography variant="h6" className={classes.title}>
             Codemy
           </Typography>
+          <Typography
+            variant="h6"
+            component={Link}
+            to={"/calc"}
+            style={{
+              fontSize: "26px",
+              color: "#fff",
+              textDecoration: "none",
+              marginRight: "15px",
+            }}
+          >
+            Kalkulyator
+          </Typography>
           <div>
             <Button
               ref={anchorRef}
