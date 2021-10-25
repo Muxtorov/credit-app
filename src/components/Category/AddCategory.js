@@ -1,53 +1,44 @@
-
-import { Button, Grid, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import apiUrl from '../../config/httpConnect';
-import Loading from '../Loading';
-
-
+import { Button, Grid, TextField } from "@material-ui/core";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
+import apiUrl from "../../config/httpConnect";
+import Loading from "../Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '90%',
+    width: "90%",
   },
   input: {
-    width: '74%',
-    margin: '10px',
+    width: "74%",
+    margin: "10px",
   },
 }));
 
 const AddCategory = (props) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
-  const [nomi, setNomi] = useState('');
-  const [oy0, setOy0] = useState('');
-  const [oy3, setOy3] = useState('');
-  const [oy6, setOy6] = useState('');
-  const [oy9, setOy9] = useState('');
-  const [oy12, setOy12] = useState('');
-  const [id, setId] = useState('');
+  const [nomi, setNomi] = useState("");
+  const [oy0, setOy0] = useState("");
+  const [oy3, setOy3] = useState("");
+  const [oy6, setOy6] = useState("");
+  const [oy9, setOy9] = useState("");
+  const [oy12, setOy12] = useState("");
+  const [id, setId] = useState("");
 
-  let cateId = window.localStorage.getItem('categId');
+  let cateId = window.localStorage.getItem("categId");
 
   if (cateId !== null) {
-
     setLoading(true);
     axios
-      .get(apiUrl.url + '/categorys/' + cateId)
+      .get(apiUrl.url + "/categorys/" + cateId)
       .then((res) => {
-        if (res.status === 200) {
-          toast.success('kategoriyalar');
-        } else {
-          toast.error('xato buldi');
-        }
         let bar = res.data;
         setNomi(bar.title);
         setOy0(bar.percent[0].oy0);
@@ -59,8 +50,7 @@ const AddCategory = (props) => {
       })
       .finally(() => setLoading(false));
 
-
-    window.localStorage.removeItem('categId');
+    window.localStorage.removeItem("categId");
   }
 
   const addCategory = async () => {
@@ -87,36 +77,22 @@ const AddCategory = (props) => {
     if (id.length !== 0) {
       setLoading(true);
       await axios
-        .put(apiUrl.url + '/categorys/' + id, CATEGORIYA)
+        .put(apiUrl.url + "/categorys/" + id, CATEGORIYA)
         .then((res) => {
-
-          if (res.status === 200) {
-            toast.success('kategoriya yangilandi');
-          } else {
-            toast.error('kategoriya yangilanmadi');
-          }
-
           window.history.back();
         })
         .finally(() => setLoading(false))
         .catch((err) => {});
     } else {
       await axios
-        .post(apiUrl.url + '/categorys', CATEGORIYA)
+        .post(apiUrl.url + "/categorys", CATEGORIYA)
         .then((res) => {
-
-          if (res.status === 200) {
-            toast.success('kategoriya saqlandi');
-          } else {
-            toast.error('kategoriya saqlanmadi');
-          }
-
           window.history.back();
-          window.location.assign('http://localhost:3000/setcategory');
+          window.location.assign("http://localhost:3000/setcategory");
         })
         .finally(() => setLoading(false))
         .catch((err) => {
-          console.log('error....', err);
+          console.log("error....", err);
         });
     }
   };
@@ -124,77 +100,77 @@ const AddCategory = (props) => {
   return (
     <div>
       <Grid item md={12}>
-        <div style={{ textAlign: 'center', display: 'flex' }}>
+        <div style={{ textAlign: "center", display: "flex" }}>
           <h2>YANGI CATEGORIYA QUSHISH</h2>
         </div>
         <Grid>
           <TextField
-            id='outlined-textarea'
-            label='Nomi:'
-            placeholder='Velosiped'
+            id="outlined-textarea"
+            label="Nomi:"
+            placeholder="Velosiped"
             multiline
             className={classes.input}
-            variant='outlined'
+            variant="outlined"
             value={nomi}
             onChange={(e) => {
               setNomi(e.target.value);
             }}
           />
           <TextField
-            id='outlined-textarea'
-            label='0 oyga:'
-            placeholder='Foizini kiriting'
+            id="outlined-textarea"
+            label="0 oyga:"
+            placeholder="Foizini kiriting"
             multiline
             className={classes.input}
-            variant='outlined'
+            variant="outlined"
             value={oy0}
             onChange={(e) => {
               setOy0(e.target.value);
             }}
           />
           <TextField
-            id='outlined-textarea'
-            label='3 oyga:'
-            placeholder='Foizini kiriting'
+            id="outlined-textarea"
+            label="3 oyga:"
+            placeholder="Foizini kiriting"
             multiline
             className={classes.input}
-            variant='outlined'
+            variant="outlined"
             value={oy3}
             onChange={(e) => {
               setOy3(e.target.value);
             }}
           />
           <TextField
-            id='outlined-textarea'
-            label='6 oyga:'
-            placeholder='Foizini kiriting'
+            id="outlined-textarea"
+            label="6 oyga:"
+            placeholder="Foizini kiriting"
             multiline
             className={classes.input}
-            variant='outlined'
+            variant="outlined"
             value={oy6}
             onChange={(e) => {
               setOy6(e.target.value);
             }}
           />
           <TextField
-            id='outlined-textarea'
-            label='9 oyga:'
-            placeholder='Foizini kiriting'
+            id="outlined-textarea"
+            label="9 oyga:"
+            placeholder="Foizini kiriting"
             multiline
             className={classes.input}
-            variant='outlined'
+            variant="outlined"
             value={oy9}
             onChange={(e) => {
               setOy9(e.target.value);
             }}
           />
           <TextField
-            id='outlined-textarea'
-            label='12 oyga:'
-            placeholder='Foizini kiriting'
+            id="outlined-textarea"
+            label="12 oyga:"
+            placeholder="Foizini kiriting"
             multiline
             className={classes.input}
-            variant='outlined'
+            variant="outlined"
             value={oy12}
             onChange={(e) => {
               setOy12(e.target.value);
@@ -203,18 +179,18 @@ const AddCategory = (props) => {
         </Grid>
         <Grid
           style={{
-            margin: '10px',
-            display: 'flex',
+            margin: "10px",
+            display: "flex",
           }}
         >
           <Grid item md={6}></Grid>
           <Button
             style={{
-              display: 'flex',
-              float: 'end',
+              display: "flex",
+              float: "end",
             }}
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             disableElevation
             onClick={() => {
               window.history.back();
@@ -224,12 +200,12 @@ const AddCategory = (props) => {
           </Button>
           <Button
             style={{
-              display: 'flex',
-              marginLeft: '20px',
-              float: 'end',
+              display: "flex",
+              marginLeft: "20px",
+              float: "end",
             }}
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             disableElevation
             onClick={addCategory}
           >
