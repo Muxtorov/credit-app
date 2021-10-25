@@ -24,48 +24,45 @@ import AddCosts from "./components/Costs/AddCosts";
 import Calculator from "./components/Calculator/Calculator";
 import CalculatorPrint from "./components/Calculator/CalculatorPrint";
 
-
 const App = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get(apiUrl.url + '/categorys').then((res) => {
-      console.log('Categoriyalar yuklanmoqda');
+    axios.get(apiUrl.url + "/categorys").then((res) => {
+      console.log("Categoriyalar yuklanmoqda");
       setData(res.data);
     });
   }, [setData]);
 
   return (
-    <div className='container'>
+    <div className="container">
       <Switch>
         <Router>
           <Grid
             container
-            direction='row'
-            justifyContent='center'
-            alignItems='center'
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
           >
             <Grid item md={3}>
               <Menu />
             </Grid>
-            <Grid item md={9} style={{ marginTop: '80px', textAlign: 'start' }}>
-              <Route exact path='/'>
+            <Grid item md={9} style={{ marginTop: "80px", textAlign: "start" }}>
+              <Route exact path="/">
                 <Home />
               </Route>
-              <Route exact path='/birthday'>
+              <Route exact path="/birthday">
                 <Tkun />
               </Route>
-              <Route exact path='/addcosts'>
+              <Route exact path="/addcosts">
                 <AddCosts />
               </Route>
-              <Route exact path='/costs'>
+              <Route exact path="/costs">
                 <Costs />
               </Route>
-              <Route exact path='/debts'>
+              <Route exact path="/debts">
                 <Qarzlar />
               </Route>
-
-              <Route path='/setcustomer'>
 
               <Route exact path="/calc">
                 <Calculator />
@@ -74,40 +71,39 @@ const App = () => {
                 <CalculatorPrint />
               </Route>
               <Route path="/setcustomer">
-
                 <Customer />
               </Route>
-              <Route path='/setproduct'>
+              <Route path="/setproduct">
                 <ProdCRUD />
               </Route>
-              <Route path='/setcategory'>
+              <Route path="/setcategory">
                 <Category />
               </Route>
-              <Route path='/addcategory'>
+              <Route path="/addcategory">
                 <AddCategory />
               </Route>
-              <Route path='/addcustomer'>
+              <Route path="/addcustomer">
                 <AddCustomer />
               </Route>
-              <Route path='/addproduct'>
+              <Route path="/addproduct">
                 <AddProd />
               </Route>
-              <Route path='/addincoming'>
+              <Route path="/addincoming">
                 <AddIncoming />
               </Route>
-              <Route path='/contract'>
+              <Route path="/contract">
                 <Contract />
               </Route>
-              <Route path='/product'>
+              <Route path="/product">
                 <Product />
               </Route>
-              <Route path='/cart'>
+              <Route path="/cart">
                 <Cart />
               </Route>
 
               {data.map((item, index) => {
                 return (
-                  <Route path={'/' + item.title} key={`${index + 1}`}>
+                  <Route path={"/" + item.title} key={`${index + 1}`}>
                     <Products locId={item.title} />
                   </Route>
                 );
