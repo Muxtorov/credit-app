@@ -6,9 +6,10 @@ import CustomerList from './CustomerList';
 import axios from 'axios';
 import apiUrl from '../../config/httpConnect';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 import Loading from '../../components/Loading';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,7 @@ const Customer = () => {
   const [liboy, setLiboy] = useState(true);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
+
     setLoading(true);
     axios
       .get(apiUrl.url + '/customers')
@@ -48,6 +50,7 @@ const Customer = () => {
         setCustom(res.data);
         setCustomData(res.data);
       });
+
   }, [setCustom, liboy]);
 
   const search_data = (value) => {
@@ -66,9 +69,6 @@ const Customer = () => {
     await axios
       .delete(apiUrl.url + '/customers/id/' + id)
       .then((res) => {
-        if (res.status === 200) {
-          toast.success("mijoz o'chirildi");
-        }
         setLiboy(!liboy);
       })
       .catch((err) => {
@@ -127,7 +127,6 @@ const Customer = () => {
           />
         </Grid>
       </Grid>
-      <ToastContainer />
     </div>
   );
 };

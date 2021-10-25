@@ -1,11 +1,12 @@
+
 import { Button, Grid, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import apiUrl from '../../config/httpConnect';
 import Loading from '../Loading';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,7 @@ const AddCategory = (props) => {
   let cateId = window.localStorage.getItem('categId');
 
   if (cateId !== null) {
+
     setLoading(true);
     axios
       .get(apiUrl.url + '/categorys/' + cateId)
@@ -56,6 +58,7 @@ const AddCategory = (props) => {
         setId(bar.id);
       })
       .finally(() => setLoading(false));
+
 
     window.localStorage.removeItem('categId');
   }
@@ -86,11 +89,13 @@ const AddCategory = (props) => {
       await axios
         .put(apiUrl.url + '/categorys/' + id, CATEGORIYA)
         .then((res) => {
+
           if (res.status === 200) {
             toast.success('kategoriya yangilandi');
           } else {
             toast.error('kategoriya yangilanmadi');
           }
+
           window.history.back();
         })
         .finally(() => setLoading(false))
@@ -99,11 +104,13 @@ const AddCategory = (props) => {
       await axios
         .post(apiUrl.url + '/categorys', CATEGORIYA)
         .then((res) => {
+
           if (res.status === 200) {
             toast.success('kategoriya saqlandi');
           } else {
             toast.error('kategoriya saqlanmadi');
           }
+
           window.history.back();
           window.location.assign('http://localhost:3000/setcategory');
         })
@@ -230,7 +237,6 @@ const AddCategory = (props) => {
           </Button>
         </Grid>
       </Grid>
-      <ToastContainer />
     </div>
   );
 };

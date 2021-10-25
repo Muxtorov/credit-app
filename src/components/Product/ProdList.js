@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Button, TextField } from '@material-ui/core';
@@ -12,32 +13,34 @@ import { useDispatch } from 'react-redux';
 import { setProdId } from '../../store/actions';
 import Loading from '../Loading';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '90%',
+    width: "90%",
   },
   input: {
-    width: '74%',
-    margin: '10px',
+    width: "74%",
+    margin: "10px",
   },
 }));
 
 const ProdList = () => {
   const classes = useStyles();
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [prod, setProd] = useState([]);
   const [prodData, setProdData] = useState([]);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+
     setLoading(true);
     axios
       .get(apiUrl.url + '/products')
@@ -51,6 +54,7 @@ const ProdList = () => {
         setProdData(res.data);
       })
       .finally(() => setLoading(false));
+
   }, [setProd]);
 
   const search_data = (value) => {
@@ -66,8 +70,8 @@ const ProdList = () => {
   };
 
   const handleEdit = (id) => {
-    dispatch(setProdId(id));
-    // window.localStorage.setItem("prodId", `${id}`);
+    // dispatch(setProdId(id));
+    window.localStorage.setItem("prodId", `${id}`);
   };
   if (loading) return <Loading />;
   return (
@@ -76,13 +80,13 @@ const ProdList = () => {
         <Grid item md={8}>
           <form className={classes.root} noValidate>
             <TextField
-              id='standard-full-width'
+              id="standard-full-width"
               style={{ margin: 8 }}
-              placeholder='Maxsulot Nomini Kiriting'
+              placeholder="Maxsulot Nomini Kiriting"
               className={classes.textField}
               fullWidth
-              type='text'
-              margin='normal'
+              type="text"
+              margin="normal"
               InputLabelProps={{
                 shrink: true,
               }}
@@ -99,22 +103,21 @@ const ProdList = () => {
         <Grid item md={1}>
           <Button
             component={Link}
-            style={{ display: 'flex', marginTop: '20px' }}
-            variant='contained'
-            color='primary'
+            style={{ display: "flex", marginTop: "20px" }}
+            variant="contained"
+            color="primary"
             disableElevation
-            to={'/addproduct'}
+            to={"/addproduct"}
           >
             Qushish
           </Button>
         </Grid>
-        <Grid style={{ marginLeft: '-60px' }} item md={12}>
+        <Grid style={{ marginLeft: "-60px" }} item md={12}>
           <h2>Maxsulotlar</h2>
 
           <ProdCRUDList prod={prodData} handleEdit={handleEdit} />
         </Grid>
       </Grid>
-      <ToastContainer />
     </div>
   );
 };

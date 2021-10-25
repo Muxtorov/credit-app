@@ -4,9 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import apiUrl from '../../config/httpConnect';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 import Loading from '../../components/Loading';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +48,7 @@ const AddCustomer = () => {
 
   if (customId !== null) {
     setTest(true);
+
     setLoading(true);
     axios
       .get(apiUrl.url + '/customers/id/' + customId)
@@ -75,6 +77,7 @@ const AddCustomer = () => {
       })
       .finally(() => setLoading(false));
 
+
     window.localStorage.removeItem('customId');
   }
 
@@ -99,11 +102,13 @@ const AddCustomer = () => {
       axios
         .put(apiUrl.url + '/customers/id/' + id, person)
         .then((res) => {
+
           if (res.status === 200) {
             toast.success('mijoz yangilandi');
           } else {
             toast.error('xato');
           }
+
 
           window.history.back();
         })
@@ -116,11 +121,13 @@ const AddCustomer = () => {
       axios
         .post(apiUrl.url + '/customers', person)
         .then((res) => {
+
           if (res.status === 200) {
             toast.success('mijoz saqlandi');
           } else {
             toast.error('xato saqlanmadi');
           }
+
           window.history.back();
         })
         .finally(() => setLoading(false))
@@ -312,7 +319,6 @@ const AddCustomer = () => {
           </Button>
         </Grid>
       </Grid>
-      <ToastContainer />
     </div>
   );
 };

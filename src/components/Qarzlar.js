@@ -9,8 +9,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -54,11 +52,6 @@ const Qarzlar = () => {
     axios
       .get(apiUrl.url + `/outgoingorders/debtors/${sana}`)
       .then((response) => {
-        if (response.status === 200) {
-          toast.success("QARZDORLAR YUKLANDI");
-        } else {
-          toast.error("XATOLIK YUZ BERDI");
-        }
         setData(response.data);
       });
   }, [sana]);

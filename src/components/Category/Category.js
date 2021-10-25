@@ -5,9 +5,11 @@ import axios from 'axios';
 import apiUrl from '../../config/httpConnect';
 import CategoryList from './CategoryList';
 
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loading from '../Loading';
+
 
 const Category = () => {
   const [loading, setLoading] = useState(false);
@@ -33,11 +35,6 @@ const Category = () => {
     axios
       .delete(apiUrl.url + '/categorys/' + id)
       .then((res) => {
-        if (res.status === 200) {
-          toast.success("kategoriya o'chirildi");
-        } else {
-          toast.error("kategoriya o'chirilmadi");
-        }
         window.location.reload();
       })
       .finally(() => setLoading(true))
@@ -76,7 +73,6 @@ const Category = () => {
           />
         </Grid>
       </Grid>
-      <ToastContainer />
     </div>
   );
 };
