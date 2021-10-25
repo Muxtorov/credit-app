@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -59,7 +60,7 @@ const Calculator = () => {
     }
   }, [category]);
 
-  const handleClick = (item) => {
+  const handleClickPrint = (item) => {
     history.push({ pathname: "/calcprint", state: { item } });
   };
 
@@ -93,6 +94,23 @@ const Calculator = () => {
             </ListItemText>
           );
         })}
+        <ListItemText style={{ marginRight: "20px" }}>
+          <Button
+            onClick={() => {
+              handleClickPrint();
+            }}
+          >
+            <ListItemText
+              style={{
+                marginLeft: "15px",
+                display: "inline-block",
+                border: "5 solid blue",
+              }}
+            >
+              Chop etish
+            </ListItemText>
+          </Button>
+        </ListItemText>
       </List>
 
       <Grid container>
@@ -104,7 +122,7 @@ const Calculator = () => {
             >
               <Grid item md={6} lg={6} container justifyContent="center">
                 <Card className={classes.root}>
-                  <CardActionArea onClick={() => handleClick(item)}>
+                  <CardActionArea onClick={() => handleClickPrint(item)}>
                     <CardMedia
                       component="img"
                       alt="Rasm"
