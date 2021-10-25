@@ -121,7 +121,7 @@ const ProdCRUDList = ({ prod, handleEdit }) => {
                     to={"/addproduct"}
                   >
                     <EditIcon
-                      fontSize="default"
+                      fontSize="medium"
                       style={{ color: "green", marginLeft: "15%" }}
                     />
                   </IconButton>

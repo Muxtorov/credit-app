@@ -1,13 +1,20 @@
-import { Button, Grid, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
-import apiUrl from "../../config/httpConnect";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import { useDispatch, useSelector } from "react-redux";
+
+import { Button, Grid, TextField } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+import apiUrl from '../../config/httpConnect';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearProdId } from '../../store/actions';
+import Loading from '../Loading';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +49,7 @@ const AddProduct = (props) => {
   const [id, setId] = useState();
   const [arr, setArr] = useState([]);
   const { prodID } = useSelector((state) => state.cart);
+  const [loading, setLoading] = useState(false);
   // let proId = window.localStorage.getItem('prodId');
 
   useEffect(() => {
@@ -49,6 +57,7 @@ const AddProduct = (props) => {
     setArr(JSON.parse(categ));
     console.log(prodID);
     if (prodID) {
+      setLoading(true);
       axios
         .get(apiUrl.url + "/products/" + prodID)
         .then((res) => {
@@ -58,10 +67,10 @@ const AddProduct = (props) => {
           setIzoh(prod.desc);
           setId(prod.id);
         })
-        .then(() => {
-          // window.localStorage.removeItem('prodId');
-        });
-      // return () => dispatch(clearProdId());
+
+        .finally(() => setLoading(false));
+      return () => dispatch(clearProdId());
+
     }
   }, [prodID]);
 
@@ -73,20 +82,24 @@ const AddProduct = (props) => {
     };
 
     if (id !== undefined) {
+      setLoading(true);
       await axios
         .put(apiUrl.url + "/products/" + id, newprod)
         .then((res) => {
           window.history.back();
         })
+        .finally(() => setLoading(false))
         .catch((err) => {
           console.log("error Edit....", err);
         });
     } else {
+      setLoading(true);
       await axios
         .post(apiUrl.url + "/products", newprod)
         .then((res) => {
           window.history.back();
         })
+        .finally(() => setLoading(true))
         .catch((err) => {
           console.log("error....", err);
         });
@@ -97,6 +110,7 @@ const AddProduct = (props) => {
     setCategoriyasi(event.target.value);
   };
 
+  if (loading) return <Loading />;
   return (
     <div>
       <Grid item md={12}>
