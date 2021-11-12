@@ -1,17 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 import CategoryList from "./CategoryList";
+import Loading from "../Loading";
 
 const Category = () => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(apiUrl.url + "/categorys")
+      .then((res) => {
+        setData(res.data);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   const handleDel = (id) => {
+    setLoading(true);
     axios
       .delete(apiUrl.url + "/categorys/" + id)
       .then((res) => {
         window.location.reload();
       })
+      .finally(() => setLoading(true))
       .catch((err) => {
         console.log(err);
       });
@@ -20,7 +35,7 @@ const Category = () => {
   const handleEdit = (id) => {
     window.localStorage.setItem("categId", `${id}`);
   };
-
+  if (loading) return <Loading />;
   return (
     <div>
       <Grid container>
@@ -40,7 +55,11 @@ const Category = () => {
         </Grid>
         <Grid style={{ marginLeft: "-60px" }} item md={12}>
           <h2>Kategoriyalar</h2>
-          <CategoryList handleDel={handleDel} handleEdit={handleEdit} />
+          <CategoryList
+            data={data}
+            handleDel={handleDel}
+            handleEdit={handleEdit}
+          />
         </Grid>
       </Grid>
     </div>

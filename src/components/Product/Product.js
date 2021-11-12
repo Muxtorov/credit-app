@@ -34,11 +34,11 @@ const Product = () => {
 
   function HandleClick(data, count) {
     let orData = {
-      product: data.product.id,
-      title: data.product.title,
+      product: data.product?.id,
+      title: data.product?.title,
       price: data.price,
-      category: data.category.id,
-      percent: data.category.percent,
+      category: data.category?.id,
+      percent: data.category?.percent,
       quantity: count,
     };
     dispatch({ type: 'ADD_PRODUCT', payload: { orData } });
@@ -80,7 +80,7 @@ const Product = () => {
               component='p'
               style={{ margin: '15px' }}
             >
-              {data.product.desc}
+              {data.product?.desc}
             </Typography>
             <Button
               color='primary'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,8 +11,6 @@ import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import apiUrl from "../../config/httpConnect";
 import ModalComponent from "../Modal/ModalComponent";
 
 const StyledTableCell = withStyles((theme) => ({
@@ -39,19 +37,11 @@ const useStyles = makeStyles({
   },
 });
 
-const CategoryList = ({ handleDel, handleEdit }) => {
+const CategoryList = ({ handleDel, handleEdit, data }) => {
   const classes = useStyles();
 
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios.get(apiUrl.url + "/categorys").then((res) => {
-      setData(res.data);
-    });
-  }, []);
-
-  const [open, setOpen] = React.useState(false);
-  const [item, setItem] = React.useState(0);
+  const [open, setOpen] = useState(false);
+  const [item, setItem] = useState(0);
 
   const handleOpen = () => {
     setOpen(true);
@@ -82,6 +72,7 @@ const CategoryList = ({ handleDel, handleEdit }) => {
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
                 6 oy
               </StyledTableCell>
+
               <StyledTableCell style={{ backgroundColor: "#3F51B5" }}>
                 9 oy
               </StyledTableCell>

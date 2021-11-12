@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
+import Loading from "../Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AddCategory = (props) => {
   const classes = useStyles();
-
+  const [loading, setLoading] = useState(false);
   const [nomi, setNomi] = useState("");
   const [oy0, setOy0] = useState("");
   const [oy3, setOy3] = useState("");
@@ -34,16 +35,20 @@ const AddCategory = (props) => {
   let cateId = window.localStorage.getItem("categId");
 
   if (cateId !== null) {
-    axios.get(apiUrl.url + "/categorys/" + cateId).then((res) => {
-      let bar = res.data;
-      setNomi(bar.title);
-      setOy0(bar.percent[0].oy0);
-      setOy3(bar.percent[1].oy3);
-      setOy6(bar.percent[2].oy6);
-      setOy9(bar.percent[3].oy9);
-      setOy12(bar.percent[4].oy12);
-      setId(bar.id);
-    });
+    setLoading(true);
+    axios
+      .get(apiUrl.url + "/categorys/" + cateId)
+      .then((res) => {
+        let bar = res.data;
+        setNomi(bar.title);
+        setOy0(bar.percent[0].oy0);
+        setOy3(bar.percent[1].oy3);
+        setOy6(bar.percent[2].oy6);
+        setOy9(bar.percent[3].oy9);
+        setOy12(bar.percent[4].oy12);
+        setId(bar.id);
+      })
+      .finally(() => setLoading(false));
 
     window.localStorage.removeItem("categId");
   }
@@ -70,11 +75,13 @@ const AddCategory = (props) => {
       ],
     };
     if (id.length !== 0) {
+      setLoading(true);
       await axios
         .put(apiUrl.url + "/categorys/" + id, CATEGORIYA)
         .then((res) => {
           window.history.back();
         })
+        .finally(() => setLoading(false))
         .catch((err) => {});
     } else {
       await axios
@@ -83,12 +90,13 @@ const AddCategory = (props) => {
           window.history.back();
           window.location.assign("http://localhost:3000/setcategory");
         })
+        .finally(() => setLoading(false))
         .catch((err) => {
           console.log("error....", err);
         });
     }
   };
-
+  if (loading) return <Loading />;
   return (
     <div>
       <Grid item md={12}>

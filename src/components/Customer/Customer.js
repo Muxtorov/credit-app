@@ -6,6 +6,8 @@ import CustomerList from "./CustomerList";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 
+import Loading from "../../components/Loading";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -29,12 +31,16 @@ const Customer = () => {
   const [custom, setCustom] = useState([]);
   const [customData, setCustomData] = useState([]);
   const [liboy, setLiboy] = useState(true);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    axios.get(apiUrl.url + "/customers").then((res) => {
-      setCustom(res.data);
-      setCustomData(res.data);
-    });
+    setLoading(true);
+    axios
+      .get(apiUrl.url + "/customers")
+      .finally(() => setLoading(false))
+      .then((res) => {
+        setCustom(res.data);
+        setCustomData(res.data);
+      });
   }, [setCustom, liboy]);
 
   const search_data = (value) => {
@@ -64,6 +70,7 @@ const Customer = () => {
     window.localStorage.setItem("customId", `${id}`);
   };
 
+  if (loading) return <Loading />;
   return (
     <div>
       <Grid container>

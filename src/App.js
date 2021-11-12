@@ -22,12 +22,16 @@ import Qarzlar from "./components/Qarzlar";
 import Costs from "./components/Costs/Costs";
 import AddCosts from "./components/Costs/AddCosts";
 import ContDocument from "./components/PDFDocument";
+import Calculator from "./components/Calculator/Calculator";
+import CalculatorPrint from "./components/Calculator/CalculatorPrint";
+
 
 const App = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     axios.get(apiUrl.url + "/categorys").then((res) => {
+      console.log("Categoriyalar yuklanmoqda");
       setData(res.data);
     });
   }, [setData]);
@@ -60,6 +64,13 @@ const App = () => {
               </Route>
               <Route exact path="/debts">
                 <Qarzlar />
+              </Route>
+
+              <Route exact path="/calc">
+                <Calculator />
+              </Route>
+              <Route path="/calcprint">
+                <CalculatorPrint />
               </Route>
               <Route path="/setcustomer">
                 <Customer />
@@ -97,7 +108,7 @@ const App = () => {
 
               {data.map((item, index) => {
                 return (
-                  <Route path={"/" + item.title} key={index + 1}>
+                  <Route path={"/" + item.title} key={`${index + 1}`}>
                     <Products locId={item.title} />
                   </Route>
                 );

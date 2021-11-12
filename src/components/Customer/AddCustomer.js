@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import apiUrl from "../../config/httpConnect";
 
+import Loading from "../../components/Loading";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -38,28 +40,34 @@ const AddCustomer = () => {
   const [test, setTest] = useState(false);
   const [activ, setActiv] = useState(true);
   const [id, setId] = useState("");
-
+  const [loading, setLoading] = useState(false);
   let customId = window.localStorage.getItem("customId");
 
   if (customId !== null) {
     setTest(true);
-    axios.get(apiUrl.url + "/customers/id/" + customId).then((res) => {
-      let pers = res.data;
-      setIsm(pers.username);
-      setFamiliya(pers.surname);
-      setSharif(pers.sheriff);
-      setPasport(pers.pasSerNum);
-      setJshshir(pers.jshshir);
-      setTelefon(pers.phone);
-      setTelefon2(pers.phone2);
-      setBdata(pers.birthDate);
-      setAdress(pers.address);
-      setActiv(pers.active);
-      setId(pers.id);
-      setIshjoyi(pers.workplace);
-      setBerildi(pers.pasIssueDate);
-      setKafil(pers.guarantor);
-    });
+
+    setLoading(true);
+    axios
+      .get(apiUrl.url + "/customers/id/" + customId)
+
+      .then((res) => {
+        let pers = res.data;
+        setIsm(pers.username);
+        setFamiliya(pers.surname);
+        setSharif(pers.sheriff);
+        setPasport(pers.pasSerNum);
+        setJshshir(pers.jshshir);
+        setTelefon(pers.phone);
+        setTelefon2(pers.phone2);
+        setBdata(pers.birthDate);
+        setAdress(pers.address);
+        setActiv(pers.active);
+        setId(pers.id);
+        setIshjoyi(pers.workplace);
+        setBerildi(pers.pasIssueDate);
+        setKafil(pers.guarantor);
+      })
+      .finally(() => setLoading(false));
 
     window.localStorage.removeItem("customId");
   }
@@ -81,26 +89,30 @@ const AddCustomer = () => {
       active: true,
     };
     if (test === true) {
+      setLoading(true);
       axios
         .put(apiUrl.url + "/customers/id/" + id, person)
         .then((res) => {
           window.history.back();
         })
+        .finally(() => setLoading(false))
         .catch((err) => {
           console.log("error Edit....", err);
         });
     } else {
+      setLoading(true);
       axios
         .post(apiUrl.url + "/customers", person)
         .then((res) => {
           window.history.back();
         })
+        .finally(() => setLoading(false))
         .catch((err) => {
           console.log("error....", err);
         });
     }
   };
-
+  if (loading) return <Loading />;
   return (
     <div>
       <Grid item md={12}>
