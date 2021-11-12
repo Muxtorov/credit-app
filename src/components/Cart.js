@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
 import { makeStyles, TextField } from "@material-ui/core";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 // const GreenRadio = withStyles({
 //   root: {
@@ -37,12 +38,13 @@ const useStyles = makeStyles((theme) => ({
 const Cart = () => {
   const classes = useStyles();
 
-  // const [state, setState] = useState(0);
+  let history = useHistory();
   var totalSum = 0;
   const [selectedValue, setSelectedValue] = React.useState("oy0");
   const [date, setDate] = useState(new Date());
   const [discount, setDiscount] = useState(0);
   const [payment, setPayment] = useState([]);
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -117,7 +119,6 @@ const Cart = () => {
 
   function sendBackend() {
     let date1 = date.toString();
-    console.log(date1.split("-"));
     let oy = date1[1];
     let kun = date1[2];
     let yil = date1[0];
@@ -134,9 +135,14 @@ const Cart = () => {
       grandTotal: totalSum - discountSumma(),
     };
 
-    axios.post(apiUrl.url + "/outgoingorders", sendData).then((res) => {
-      window.localStorage.setItem("sendData", JSON.stringify(sendData));
-    });
+    axios
+      .post(apiUrl.url + "/outgoingorders", sendData)
+      .then((res) => {
+        dispatch({ type: "SET_CARD", payload: { res } });
+      })
+      .then(() => {
+        history.push({ pathname: "/contract" });
+      });
   }
   function discountSumma() {
     return ((totalSum / 100) * discount).toFixed() * 1;
@@ -288,12 +294,6 @@ const Cart = () => {
         <Table aria-label="spanning table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" colSpan={3}>
-                foo
-              </TableCell>
-              <TableCell align="right">Narxi</TableCell>
-            </TableRow>
-            <TableRow>
               <TableCell>T/r</TableCell>
               <TableCell align="right">To'lov Sanasi</TableCell>
               <TableCell align="right">To'lash kerak bo'lgan summa</TableCell>
@@ -320,8 +320,8 @@ const Cart = () => {
         </Table>
       </TableContainer>
       <Button
-        component={Link}
-        to={"/contract"}
+        // component={Link}
+        // to={"/contract"}
         onClick={() => {
           sendBackend();
         }}
@@ -329,7 +329,7 @@ const Cart = () => {
         variant="contained"
         color="primary"
       >
-        chop etish
+        Tasdiqlash
       </Button>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Grid, TextField } from "@material-ui/core";
+import { Button, Grid, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import emblema from "../image_2021-09-20_10-17-21.png";
 import Table from "@material-ui/core/Table";
@@ -8,21 +8,57 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import apiUrl from "../config/httpConnect";
+import { useHistory } from "react-router-dom";
 
 const Contract = () => {
-  const data1 = window.localStorage.getItem("sendData");
-  let foo = JSON.parse(data1);
+  let history = useHistory();
 
-  const data = foo;
-  const [nomer, setNomer] = useState("");
+  const data = useSelector((state) => state.cart.data);
 
   const shaxs = useSelector((state) => {
     return state.cart.customer;
   });
 
-  console.log("data", data);
-  console.log("data -> ", data);
+  const dispatch = useDispatch();
+
+  const [nomer, setNomer] = useState("");
+  const [time, setTime] = useState("");
+  const [qiymat, setQiymat] = useState("");
+
+  const [sana, setSana] = useState("");
+  const [yuknomer, setYuknomer] = useState("");
+
+  const becksend = () => {
+    let malumot = {
+      customer: `${shaxs.id}`,
+      outgoingOrder: `${data.id}`,
+      contract: [
+        {
+          contNum: `${nomer}`,
+          contDate: `${sana}`,
+          lifetime: `${time}`,
+          contTotal: `${qiymat}`,
+          shippingNum: `${yuknomer}`,
+        },
+      ],
+    };
+
+    axios
+      .post(apiUrl.url + "/contracts", malumot)
+      .then(() => {
+        dispatch({ type: "SET_CONTRACT", payload: { malumot } });
+      })
+      .then(() => {
+        history.push({
+          pathname: "/pdf",
+        });
+      });
+  };
+
+  const bulibTulash = data.total / data.lifetime;
 
   return (
     <div
@@ -49,7 +85,7 @@ const Contract = () => {
           Shartnoma
           <TextField
             id="standard-helperText"
-            label="№"
+            placeholder="№"
             value={nomer}
             onChange={(v) => {
               setNomer(v.target.value);
@@ -63,10 +99,9 @@ const Contract = () => {
               <tr>
                 <TextField
                   id="standard-helperText"
-                  label="Sanani kiriting"
-                  placeholder="kun.oy.yil"
+                  placeholder="Sanani kiriting"
                   onChange={(v) => {
-                    setNomer(v.target.value);
+                    setSana(v.target.value);
                   }}
                 />
                 <td width="70%" align="right">
@@ -80,16 +115,24 @@ const Contract = () => {
           фаолият кўрсатувчи Риштон тумани ЯТТ раҳбари М,Мухожиров (кейинги
           ўринларда «Сотувчи») ва {shaxs.address} яшовчи фуқаро {shaxs.username}{" "}
           {shaxs.surname} {shaxs.sheriff} (шахсини тасдиқловчи ҳужжат: Паспорт
-          серия {shaxs.pasSerNum} ФАРГОНА ВИЛОЯТИ РИШТОН ТУМАНИ ИИБ томонидан
-          {shaxs.birthDate} да берилган) Риштон туман
-          {shaxs.workplace} лавозимида ишловчи (кейинги ўринларда «Ҳаридор»)
-          иккинчи томондан ва учинчи томондан _________________________ да
-          яшовчи фуқаро (кейинги ўринларда «Кафил» ушбу шартномани тарафлар
-          ўртасида ўзаро келишув асосида қуйидагилар тўғрисида тузилди.
+          серия {shaxs.pasSerNum} ФАРГОНА ВИЛОЯТИ РИШТОН ТУМАНИ ИИБ томонидан{" "}
+          {shaxs.birthDate} да берилган) Риштон туман {shaxs.workplace}{" "}
+          лавозимида ишловчи (кейинги ўринларда «Ҳаридор») иккинчи томондан ва
+          учинчи томондан {shaxs.guarantor} да яшовчи фуқаро (кейинги ўринларда
+          «Кафил» ушбу шартномани тарафлар ўртасида ўзаро келишув асосида
+          қуйидагилар тўғрисида тузилди.
           <h3 align="center">1.ШАРТНОМА МАЗМУНИ</h3>
-          1.1 «Сотувчи» қуйидаги маҳсулотларни «Харидор»га {data.lifetime}{" "}
-          (____________) ой муддат давомида қийматини бўлиб тўлаш шарти билан
-          сотади.
+          1.1 «Сотувчи» қуйидаги маҳсулотларни «Харидор»га {data.lifetime} (
+          <TextField
+            id="standard-helperText"
+            placeholder="Муддат"
+            value={qiymat}
+            onChange={(v) => {
+              setQiymat(v.target.value);
+            }}
+            style={{ width: "150px" }}
+          />
+          ) ой муддат давомида қийматини бўлиб тўлаш шарти билан сотади.
         </div>
         <TableContainer component={Paper}>
           <Table aria-label="spanning table">
@@ -110,7 +153,7 @@ const Contract = () => {
                   <TableCell align="right">{item.title}</TableCell>
                   <TableCell align="right">{item.quantity}</TableCell>
                   <TableCell align="right">{item.price}</TableCell>
-                  <TableCell align="right">{data.lifetime}</TableCell>
+                  <TableCell align="right"> {bulibTulash} </TableCell>
                   <TableCell align="right">{data.total}</TableCell>
                 </TableRow>
               ))}
@@ -119,27 +162,36 @@ const Contract = () => {
         </TableContainer>
         <br />
         <div>
-          1.2. Шартноманинг умумий қиймати {data.total}{" "}
-          (____________________________) сўмни ташкил қилади. 2.1 Ўзбекистон
-          Республикаси Фуқаролик кодексининг 422-моддасига асосан Товарни
-          насияга сотиш шартномасида товар ҳақини бўлиб-бўлиб тўланади, сотиб
-          олинаётган махсулот(лар) қийматининг қолган қисмини «Харидор» ўз ойлик
-          иш хақисидан ёки бошқа даромадлари ҳисобидан ҳар ойининг 25 кунига
-          қадар мазкур шартноманинг ажралмас қисми бўлган жадвал –илова асосида
-          тўлаб боради. 2.2. Харидор кейинги тўловни шартнома шартларида назарда
-          тутилганидан кўра кўпроқ миқдорда тўловни амалга ошириш хуқуқига эга.
-          2.3. Харидор қолган сўммани тўлов графиги бўйича тўлаши шарт. 2.4.
-          Харидор олган товарни ой муддатга олгандан сўнг қарзини тўламагунча
-          ижара сифатида фойдаланиб туради. Қарзини тўлиқ тўлагандан сўнг
-          олинган товар харидорники хисобланади. Сотувчи томонидан тақдим
-          этилган тўлов жадвали бўйича тўловларни вақтида амалга оширмаса
-          сотувчи томонидан берилган товарларни қайтариб олиш хуқуқига эга бўлиб
-          ва олдинги тўловлар қайтариб берилмайди. (ижара сифатида ушлаб
-          қолинади). 2.5. Олувчи 2 ой давомида ҳеч кандай тўлов килмаса
-          огоҳлантириш хати билан огоҳлантирилади. Шундан кейин ҳам тўлов амалга
-          оширилмаса, сотувчи шартномани 100% суммасини ундириш учун иқтисодий
-          ёки фуқаролик судларига мурожаат килиш ҳуқуқига эгадир. 2.6. «Харидор»
-          сотиб олган махсулот(лар)нинг қийматини мазкур шартноманинг 1.1. ва
+          1.2. Шартноманинг умумий қиймати {data.total} (
+          <TextField
+            id="standard-helperText"
+            placeholder="қиймат"
+            value={time}
+            onChange={(v) => {
+              setTime(v.target.value);
+            }}
+            style={{ width: "250px" }}
+          />
+          ) сўмни ташкил қилади. <br /> 2.1 Ўзбекистон Республикаси Фуқаролик
+          кодексининг 422-моддасига асосан Товарни насияга сотиш шартномасида
+          товар ҳақини бўлиб-бўлиб тўланади, сотиб олинаётган махсулот(лар)
+          қийматининг қолган қисмини «Харидор» ўз ойлик иш хақисидан ёки бошқа
+          даромадлари ҳисобидан ҳар ойининг 25 кунига қадар мазкур шартноманинг
+          ажралмас қисми бўлган жадвал –илова асосида тўлаб боради. 2.2. Харидор
+          кейинги тўловни шартнома шартларида назарда тутилганидан кўра кўпроқ
+          миқдорда тўловни амалга ошириш хуқуқига эга. 2.3. Харидор қолган
+          сўммани тўлов графиги бўйича тўлаши шарт. 2.4. Харидор олган товарни
+          ой муддатга олгандан сўнг қарзини тўламагунча ижара сифатида
+          фойдаланиб туради. Қарзини тўлиқ тўлагандан сўнг олинган товар
+          харидорники хисобланади. Сотувчи томонидан тақдим этилган тўлов
+          жадвали бўйича тўловларни вақтида амалга оширмаса сотувчи томонидан
+          берилган товарларни қайтариб олиш хуқуқига эга бўлиб ва олдинги
+          тўловлар қайтариб берилмайди. (ижара сифатида ушлаб қолинади). 2.5.
+          Олувчи 2 ой давомида ҳеч кандай тўлов килмаса огоҳлантириш хати билан
+          огоҳлантирилади. Шундан кейин ҳам тўлов амалга оширилмаса, сотувчи
+          шартномани 100% суммасини ундириш учун иқтисодий ёки фуқаролик
+          судларига мурожаат килиш ҳуқуқига эгадир. 2.6. «Харидор» сотиб олган
+          махсулот(лар)нинг қийматини мазкур шартноманинг 1.1. ва
           2.1.-бандларида кўрсатилган муддатдан олдин тўлиқ тўласа, шартнома
           қийматини «Сотувчи» томонидан чегирма килинади. 2.7 «Харидор»
           томонидан мазкур шартноманинг 1.1-бандида кўрсатилган махсулот(лар)
@@ -233,25 +285,25 @@ const Contract = () => {
                   <td align="center">«СОТУВЧИ»</td>
                 </tr>
                 <tr>
+                  <td>ЯТТ МУХОЖИРОВ МУХСИНХЎЖА</td>
+                </tr>
+                <tr>
+                  <td>Манзил: Риштон шахар Рошидоний кучаси</td>
+                </tr>
+                <tr>
                   <td>ЯТТ Мухожиров Мухсинхўжа</td>
                 </tr>
                 <tr>
-                  <td>Манзил: Риштон шахар Рошидоний</td>
+                  <td>20218000005384518001</td>
                 </tr>
                 <tr>
-                  <td>Х/р: 20218000005384518001</td>
-                </tr>
-                <tr>
-                  <td>ИНН: 607615106 ; МФО: 00520</td>
-                </tr>
-                <tr>
-                  <td>Телефон: +998 886616066 +998 91 1120025</td>
+                  <td>Телефон: 97 036 10 10; Тел2: 97 037 10 10</td>
                 </tr>
                 <tr>
                   <td> Клик рақами : 8600053219297666</td>
                 </tr>
                 <tr>
-                  <td>Рахбар: М,Мухожиров ___________________</td>
+                  <td>Рахбар: М.Мухожиров </td>
                 </tr>
                 <tr>
                   <td>(имзо)____________</td>
@@ -275,18 +327,16 @@ const Contract = () => {
                   <td>Паспорт: {shaxs.pasSerNum}</td>
                 </tr>
                 <tr>
-                  <td>Иш жойи:</td>
+                  <td>Иш жойи:{shaxs.workplace}</td>
                 </tr>
                 <tr>
                   <td>Тел 1: {shaxs.phone}</td>
                 </tr>
                 <tr>
-                  <td>Тел 2:</td>
+                  <td>Тел 2: {shaxs.phone2}</td>
                 </tr>
                 <tr>
-                  <td>
-                    Фуқаро: {shaxs.username} {shaxs.surname}
-                  </td>
+                  <td>Фуқаро: {shaxs.guarantor}</td>
                 </tr>
                 <tr>
                   <td>(имзо)____________</td>
@@ -295,12 +345,92 @@ const Contract = () => {
             </Grid>
           </Grid>
         </div>
+        <div style={{ margin: "50px" }} />
+        <Grid container>
+          <Grid item md={6}>
+            <table>
+              <tr>
+                <td>ТЎЛОВ ЖАДВАЛИ</td>
+              </tr>
+            </table>
+          </Grid>
+          <Grid item md={6}>
+            <table>
+              <tr>
+                <td>Шартнома № {nomer} га илова </td>
+              </tr>
+            </table>
+          </Grid>
+        </Grid>
+        <br />
+        <Grid container>
+          <TableContainer component={Paper}>
+            <Table aria-label="spanning table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Махсулот(лар) нархи</TableCell>
+                  <TableCell align="right">Олдиндан тўлов сўммаси</TableCell>
+                  <TableCell align="right">Қарздорлик сўммаси</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.items.map((item, ind) => (
+                  <TableRow key={ind}>
+                    <TableCell>{data.total}</TableCell>
+                    <TableCell align="right">Oldindan tulov</TableCell>
+                    <TableCell align="right">Qarzdorlik</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+        <br />
+        <br />
+        <br />
+        <Grid container>
+          <TableContainer component={Paper}>
+            <Table aria-label="spanning table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>T/r</TableCell>
+                  <TableCell align="right">Тўлов санаси</TableCell>
+                  <TableCell align="right">Олдиндан тўлов суммаси</TableCell>
+                  <TableCell align="right">Қарздорлик сўммаси</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.payments.map((item, ind) => (
+                  <TableRow key={ind}>
+                    <TableCell>{ind + 1}</TableCell>
+                    <TableCell align="right">
+                      {item.startDate.slice(0, 10)}
+                    </TableCell>
+                    <TableCell align="right">Oldindan tulov summasi</TableCell>
+                    <TableCell align="right">{item.paymentAmount}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
         <br />
         <br />
         <div>
-          <h1>ЮК ХАТИ \ ХИСОБВАРАҚ-ФАКТУРА № ____________</h1>
-          ___________ йилдаги №{nomer} -сонли муддатли тулов шарти билан
-          тузилган олди-сотди шартномасига асосан
+          <p style={{ fontSize: "30px" }}>
+            ЮК ХАТИ \ ХИСОБВАРАҚ-ФАКТУРА №{" "}
+            <TextField
+              id="standard-helperText"
+              placeholder="№"
+              value={yuknomer}
+              onChange={(v) => {
+                setYuknomer(v.target.value);
+              }}
+              style={{ marginLeft: "20px", width: "65px" }}
+            />
+          </p>
+          {sana} йилдаги №{nomer}-сонли муддатли тулов шарти билан тузилган
+          олди-сотди шартномасига асосан
         </div>
         <br />
         <div>
@@ -318,7 +448,7 @@ const Contract = () => {
                   <td border="none">ЯТТ Мухожиров Мухсинхўжа</td>
                 </tr>
                 <tr>
-                  <td>Манзил: Риштон шахар Рошидоний</td>
+                  <td>Манзил: Риштон шахар Рошидоний кучаси</td>
                 </tr>
                 <tr>
                   <td>Х/р: 20218000005384518001</td>
@@ -330,7 +460,7 @@ const Contract = () => {
                   <td>Банк:</td>
                 </tr>
                 <tr>
-                  <td>Телефон: +998 886616066; +998 91 1120025</td>
+                  <td>Телефон: 97 036 10 10; Тел2: 97 037 10 10</td>
                 </tr>
               </table>
             </Grid>
@@ -354,10 +484,14 @@ const Contract = () => {
                 </tr>
 
                 <tr>
+                  <td>Хужжат : {shaxs.pasSerNum}</td>
+                </tr>
+
+                <tr>
                   <td>Тел 1: {shaxs.phone}</td>
                 </tr>
                 <tr>
-                  <td>Тел 2:</td>
+                  <td>Тел 2: {shaxs.phone2}</td>
                 </tr>
               </table>
             </Grid>
@@ -400,6 +534,10 @@ const Contract = () => {
                 <tr>
                   <td>Рахбар ___________ Мухожиров Мухсинхўжа</td>
                 </tr>
+                <tr>
+                  <br />
+                </tr>
+                <tr></tr>
               </table>
             </Grid>
             <Grid item md={6}>
@@ -410,10 +548,32 @@ const Contract = () => {
                 <tr>
                   <td>___________ ____________________________</td>
                 </tr>
+                <tr>
+                  <br />
+                </tr>
+                <tr></tr>
               </table>
             </Grid>
           </Grid>
+          <div>Ишончнома бўйича</div>
+          <div>Махсулотни бериб юбордим _______________________</div>
         </div>
+        <Button
+          style={{
+            display: "flex",
+            marginTop: "30px",
+            float: "end",
+            marginBottom: "30px",
+          }}
+          variant="contained"
+          color="primary"
+          disableElevation
+          onClick={() => {
+            becksend();
+          }}
+        >
+          Chop etish
+        </Button>
       </div>
     </div>
   );
