@@ -21,8 +21,10 @@ import Tkun from "./components/Tkun.js";
 import Qarzlar from "./components/Qarzlar";
 import Costs from "./components/Costs/Costs";
 import AddCosts from "./components/Costs/AddCosts";
+import ContDocument from "./components/PDFDocument";
 import Calculator from "./components/Calculator/Calculator";
 import CalculatorPrint from "./components/Calculator/CalculatorPrint";
+
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -99,6 +101,9 @@ const App = () => {
               </Route>
               <Route path="/cart">
                 <Cart />
+              </Route>
+              <Route path="/pdf">
+                <ContDocument />
               </Route>
 
               {data.map((item, index) => {
