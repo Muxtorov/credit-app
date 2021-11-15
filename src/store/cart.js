@@ -1,13 +1,23 @@
 const initialState = {
-  customer: null,
+  customer: {},
   items: [],
   prodID: undefined,
+  data: {},
+  contract: {},
 };
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "INIT":
       return { ...initialState, customer: action.payload.userId };
+
+
+    case "SET_CARD":
+      return { ...state, data: action.payload.res.data };
+
+    case "SET_CONTRACT":
+      return { ...state, contract: action.payload.malumot };
+
 
     case "ADD_CUSTOMER":
       let customer = action.payload.data;
@@ -25,7 +35,10 @@ const cartReducer = (state = initialState, action) => {
       //   const newItem = action.payload.product;
       // items.push(product);
 
+
       return { items };
+
+     
     case "DELETE_PRODUCT":
       // uchirish kk
       return { ...state, items };
@@ -37,7 +50,9 @@ const cartReducer = (state = initialState, action) => {
       return 0;
 
     case "RESET":
+
       return { ...state, agent: null, items: [] };
+
 
     default:
       return state;

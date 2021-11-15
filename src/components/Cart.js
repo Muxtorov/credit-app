@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
+
 import {
   Checkbox,
   ListItemText,
@@ -20,6 +21,7 @@ import {
   TextField,
   List,
 } from "@material-ui/core";
+
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -31,14 +33,16 @@ const useStyles = makeStyles((theme) => ({
 const Cart = () => {
   const classes = useStyles();
 
-  // const [state, setState] = useState(0);
+  let history = useHistory();
   var totalSum = 0;
   const [selectedValue, setSelectedValue] = React.useState("oy0");
   const [date, setDate] = useState(new Date());
   const [discount, setDiscount] = useState(0);
   const [prepayment, setPrePayment] = useState(0);
   const [payment, setPayment] = useState([]);
+
   const [cashCard, setCashCard] = useState("cash");
+
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
@@ -113,10 +117,12 @@ const Cart = () => {
   // function paymentHisob() {}
 
   function sendBackend() {
+
     let date1 = date;
     let oy = date1.getMonth() + 1;
     let kun = date1.getDate();
     let yil = date1.getFullYear();
+
     const sanas = kun + "." + oy + "." + yil;
     const sendData = {
       customer: data.customer.id,
@@ -131,9 +137,14 @@ const Cart = () => {
       grandTotal: totalSum - discountSumma() - prepayment,
     };
 
-    axios.post(apiUrl.url + "/outgoingorders", sendData).then((res) => {
-      window.localStorage.setItem("sendData", JSON.stringify(sendData));
-    });
+    axios
+      .post(apiUrl.url + "/outgoingorders", sendData)
+      .then((res) => {
+        dispatch({ type: "SET_CARD", payload: { res } });
+      })
+      .then(() => {
+        history.push({ pathname: "/contract" });
+      });
   }
   function discountSumma() {
     return ((totalSum / 100) * discount).toFixed() * 1;
@@ -439,16 +450,9 @@ const Cart = () => {
                 setPrePayment(e.target.value * 1);
               }}
             />
-            {/* <input
-          type="number"
-          id="discou"
-          
-          style={{ fontSize: "20px" }}
-        /> */}
+            
 
-            {/* <h2 style={{ display: "inline-block", marginLeft: "5%" }}>
-              Sanani kiriting:
-            </h2> */}
+            
 
             <TextField
               type="date"
