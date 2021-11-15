@@ -40,7 +40,7 @@ const Qarzlar = () => {
   const [data, setData] = useState([]);
 
   const hozzi = new Date();
-  console.log("adsadsads", hozzi);
+
   let oy = hozzi.getMonth() + 1;
   if (oy <= 9) {
     oy = "0" + oy;
@@ -87,8 +87,8 @@ const Qarzlar = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((item) => (
-                <StyledTableRow key={item.name}>
+              {data.map((item, ind) => (
+                <StyledTableRow key={ind + 1}>
                   <StyledTableCell component="th" scope="row">
                     {item.customer.username}
                   </StyledTableCell>

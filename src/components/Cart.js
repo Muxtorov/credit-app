@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -7,29 +7,23 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-// import { withStyles } from "@material-ui/core/styles";
-// import { green } from "@material-ui/core/colors";
+
 import Radio from "@material-ui/core/Radio";
-// import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import apiUrl from "../config/httpConnect";
-import { makeStyles, TextField } from "@material-ui/core";
-
-// const GreenRadio = withStyles({
-//   root: {
-//     color: green[400],
-//     "&$checked": {
-//       color: green[600],
-//     },
-//   },
-//   checked: {},
-// })((props) => <Radio color="default" {...props} />);
+import {
+  Checkbox,
+  ListItemText,
+  makeStyles,
+  TextField,
+  List,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   input: {
-    width: "30%",
+    width: "25%",
     margin: "10px",
   },
 }));
@@ -42,7 +36,10 @@ const Cart = () => {
   const [selectedValue, setSelectedValue] = React.useState("oy0");
   const [date, setDate] = useState(new Date());
   const [discount, setDiscount] = useState(0);
+  const [prepayment, setPrePayment] = useState(0);
   const [payment, setPayment] = useState([]);
+  const [cashCard, setCashCard] = useState("cash");
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -116,22 +113,22 @@ const Cart = () => {
   // function paymentHisob() {}
 
   function sendBackend() {
-    let date1 = date.toString();
-    console.log(date1.split("-"));
-    let oy = date1[1];
-    let kun = date1[2];
-    let yil = date1[0];
+    let date1 = date;
+    let oy = date1.getMonth() + 1;
+    let kun = date1.getDate();
+    let yil = date1.getFullYear();
     const sanas = kun + "." + oy + "." + yil;
     const sendData = {
       customer: data.customer.id,
       items: data.items,
       payments: payment,
+      prepayment: prepayment,
       date: sanas,
       lifetime: selectedValue.slice(2) * 1,
       total: totalSum,
       bonus: [],
       discount: discountSumma() * 1,
-      grandTotal: totalSum - discountSumma(),
+      grandTotal: totalSum - discountSumma() - prepayment,
     };
 
     axios.post(apiUrl.url + "/outgoingorders", sendData).then((res) => {
@@ -140,6 +137,36 @@ const Cart = () => {
   }
   function discountSumma() {
     return ((totalSum / 100) * discount).toFixed() * 1;
+  }
+
+  function Naqd() {
+    let products = rows.map((item) => {
+      return { productId: item.product, quantity: item.quantity };
+    });
+    let sendCashData = {
+      product: products,
+      total: totalSum - discountSumma(),
+      cash: cashCard === "cash" ? totalSum - discountSumma() : 0,
+      card: cashCard === "card" ? totalSum - discountSumma() : 0,
+      date: dateNow(),
+    };
+
+    axios
+      .post(apiUrl.url + "/cashSales", sendCashData)
+      .then((res) => {
+        console.log(res.status);
+      })
+      .then(() => {
+        dispatch({ type: "RESET" });
+      });
+  }
+  function dateNow() {
+    let date1 = date;
+    let oy = date1.getMonth() + 1;
+    let kun = date1.getDate();
+    let yil = date1.getFullYear();
+
+    return yil + "-" + oy + "-" + kun;
   }
 
   return (
@@ -151,11 +178,10 @@ const Cart = () => {
           value="oy0"
           name="radio-button-demo"
           label="0 oy"
-          labelPlacement="start"
           inputProps={{ "aria-label": "A" }}
           style={{ marginLeft: "40px" }}
         />
-        <span>0 oy</span>
+        <span>Naqd</span>
         <Radio
           checked={selectedValue === "oy3"}
           onChange={handleChange}
@@ -193,144 +219,313 @@ const Cart = () => {
         />
         <span>12 oy</span>
       </div>
-      <TableContainer component={Paper}>
-        <Table aria-label="spanning table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" colSpan={3}>
-                {data.customer == null ? (
-                  ""
-                ) : (
-                  <h2 style={{ color: "blue" }}>
-                    {data.customer.surname + " " + data.customer.username}{" "}
-                  </h2>
-                )}
-              </TableCell>
-              <TableCell align="right">Narxi</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>maxsulot nomi</TableCell>
-              <TableCell align="right">Maxsulot narxi</TableCell>
-              <TableCell align="right">Maxsulot soni</TableCell>
-              <TableCell align="right">Sum</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.product}>
-                <TableCell>{row.title}</TableCell>
-                <TableCell align="right">{row.price}</TableCell>
-                <TableCell align="right">{row.quantity}</TableCell>
-                <TableCell align="right">
-                  {rowTotal(row.quantity, row.price, row.percent)}
-                </TableCell>
-              </TableRow>
-            ))}
-            <TableRow>
-              <TableCell align="center" colSpan={4}>
-                <span style={{ marginRight: "80px" }}>
-                  Jami:
-                  {totalSum}
-                </span>
-                <span style={{ marginRight: "80px" }}>
-                  Chegirma:
-                  {discountSumma()}
-                </span>
-                Qoldi {totalSum - discountSumma()}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <div style={{ margin: "20px" }}>
-        {/* <h2 style={{ display: "inline-block" }}>Chegirma:</h2> */}
-        <TextField
-          id="outlined-textarea"
-          label="Chegirma:"
-          placeholder=""
-          multiline
-          className={classes.input}
-          variant="outlined"
-          onChange={(e) => {
-            setDiscount(e.target.value);
-          }}
-        />
-        {/* <input
+      {selectedValue === "oy0" ? (
+        <div>
+          <TableContainer component={Paper}>
+            <Table aria-label="spanning table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" colSpan={3}>
+                    {data.customer == null ? (
+                      ""
+                    ) : (
+                      <h2 style={{ color: "blue" }}>
+                        {data.customer.surname + " " + data.customer.username}{" "}
+                      </h2>
+                    )}
+                  </TableCell>
+                  <TableCell align="right">Narxi</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>maxsulot nomi</TableCell>
+                  <TableCell align="right">Maxsulot narxi</TableCell>
+                  <TableCell align="right">Maxsulot soni</TableCell>
+                  <TableCell align="right">Sum</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow key={row.product}>
+                    <TableCell>{row.title}</TableCell>
+                    <TableCell align="right">{row.price}</TableCell>
+                    <TableCell align="right">{row.quantity}</TableCell>
+                    <TableCell align="right">
+                      {rowTotal(row.quantity, row.price, row.percent)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow>
+                  <TableCell align="center" colSpan={4}>
+                    <span style={{ marginRight: "80px" }}>
+                      Jami:
+                      {totalSum}
+                    </span>
+                    <span style={{ marginRight: "80px" }}>
+                      Chegirma:
+                      {discountSumma()}
+                    </span>
+                    Qoldi {totalSum - discountSumma()}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <div style={{ margin: "20px" }}>
+            {/* <h2 style={{ display: "inline-block" }}>Chegirma:</h2> */}
+            <TextField
+              id="outlined-textarea"
+              label="Chegirma:"
+              placeholder=""
+              multiline
+              className={classes.input}
+              variant="outlined"
+              onChange={(e) => {
+                setDiscount(e.target.value);
+              }}
+            />
+
+            <TextField
+              type="date"
+              label="Sana :"
+              placeholder=""
+              id="date"
+              defaultValue={dateNow()}
+              onChange={(e) => {
+                setDate(e.target.value);
+              }}
+              style={{ fontSize: "20px", marginLeft: "20px" }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </div>
+
+          <div>
+            <List
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                textAlign: "center",
+              }}
+            >
+              <ListItemText style={{ marginRight: "20px" }}>
+                <Checkbox
+                  checked={cashCard === "cash"}
+                  onChange={() => setCashCard("cash")}
+                  inputProps={{
+                    "aria-label": "blue checkbox",
+                  }}
+                  color="primary"
+                  size="medium"
+                />
+                <ListItemText
+                  style={{
+                    marginLeft: "15px",
+                    display: "inline-block",
+                  }}
+                >
+                  Naqd pul
+                </ListItemText>
+              </ListItemText>
+              <ListItemText style={{ marginRight: "20px" }}>
+                <Checkbox
+                  checked={cashCard === "card"}
+                  onChange={() => setCashCard("card")}
+                  inputProps={{
+                    "aria-label": "blue checkbox",
+                  }}
+                  color="primary"
+                  size="medium"
+                />
+                <ListItemText
+                  style={{
+                    marginLeft: "15px",
+                    display: "inline-block",
+                  }}
+                >
+                  Plastik
+                </ListItemText>
+              </ListItemText>
+            </List>
+          </div>
+
+          <Button
+            onClick={() => {
+              Naqd();
+            }}
+            style={{ margin: "20px" }}
+            variant="contained"
+            color="primary"
+          >
+            tugatish
+          </Button>
+        </div>
+      ) : (
+        <div>
+          <TableContainer component={Paper}>
+            <Table aria-label="spanning table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" colSpan={3}>
+                    {data.customer == null ? (
+                      ""
+                    ) : (
+                      <h2 style={{ color: "blue" }}>
+                        {data.customer.surname + " " + data.customer.username}{" "}
+                      </h2>
+                    )}
+                  </TableCell>
+                  <TableCell align="right">Narxi</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>maxsulot nomi</TableCell>
+                  <TableCell align="right">Maxsulot narxi</TableCell>
+                  <TableCell align="right">Maxsulot soni</TableCell>
+                  <TableCell align="right">Sum</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row, index) => (
+                  <TableRow key={index + 1}>
+                    <TableCell>{row.title}</TableCell>
+                    <TableCell align="right">{row.price}</TableCell>
+                    <TableCell align="right">{row.quantity}</TableCell>
+                    <TableCell align="right">
+                      {rowTotal(row.quantity, row.price, row.percent)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow>
+                  <TableCell align="center" colSpan={4}>
+                    <span style={{ marginRight: "80px" }}>
+                      Jami:
+                      {totalSum}
+                    </span>
+                    <span style={{ marginRight: "80px" }}>
+                      Chegirma:
+                      {discountSumma()}
+                    </span>
+                    <span style={{ marginRight: "80px" }}>
+                      Oldindan to'lov:
+                      {prepayment}
+                    </span>
+                    Qoldi {totalSum - discountSumma() - prepayment}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <div style={{ margin: "20px" }}>
+            {/* <h2 style={{ display: "inline-block" }}>Chegirma:</h2> */}
+            <TextField
+              id="outlined-textarea"
+              label="Chegirma:"
+              placeholder=""
+              multiline
+              className={classes.input}
+              variant="outlined"
+              onChange={(e) => {
+                setDiscount(e.target.value);
+              }}
+            />
+            <TextField
+              id="outlined-textarea"
+              label="Oldindan to'lov:"
+              placeholder=""
+              multiline
+              className={classes.input}
+              variant="outlined"
+              onChange={(e) => {
+                setPrePayment(e.target.value * 1);
+              }}
+            />
+            {/* <input
           type="number"
           id="discou"
           
           style={{ fontSize: "20px" }}
         /> */}
 
-        <h2 style={{ display: "inline-block", marginLeft: "5%" }}>
-          Sanani kiriting:
-        </h2>
-        <input
-          type="date"
-          id="date"
-          onChange={(e) => {
-            setDate(e.target.value);
-          }}
-          style={{ fontSize: "20px" }}
-        />
-        <Button
-          style={{ margin: "20px" }}
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            dateHisob();
-          }}
-        >
-          ok
-        </Button>
-      </div>
-      <TableContainer component={Paper}>
-        <Table aria-label="spanning table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" colSpan={3}>
-                foo
-              </TableCell>
-              <TableCell align="right">Narxi</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>T/r</TableCell>
-              <TableCell align="right">To'lov Sanasi</TableCell>
-              <TableCell align="right">To'lash kerak bo'lgan summa</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {payment.map((row, ind) => (
-              <TableRow key={ind}>
-                <TableCell>{ind + 1}</TableCell>
-                <TableCell align="right">
-                  {row.startDate.getDate()}.{row.startDate.getMonth() + 1}.
-                  {row.startDate.getFullYear()}
-                </TableCell>
-                <TableCell align="right">{row.paymentAmount}</TableCell>
-              </TableRow>
-            ))}
-            <TableRow>
-              <TableCell align="center" colSpan={4}>
-                Jami:
-                {totalSum - discountSumma()}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Button
-        component={Link}
-        to={"/contract"}
-        onClick={() => {
-          sendBackend();
-        }}
-        style={{ margin: "20px" }}
-        variant="contained"
-        color="primary"
-      >
-        chop etish
-      </Button>
+            {/* <h2 style={{ display: "inline-block", marginLeft: "5%" }}>
+              Sanani kiriting:
+            </h2> */}
+
+            <TextField
+              type="date"
+              label="Sana :"
+              placeholder=""
+              id="date"
+              defaultValue={dateNow()}
+              onChange={(e) => {
+                setDate(e.target.value);
+              }}
+              style={{ fontSize: "20px" }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <Button
+              style={{ margin: "20px" }}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                dateHisob();
+              }}
+            >
+              ok
+            </Button>
+          </div>
+          <TableContainer component={Paper}>
+            <Table aria-label="spanning table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" colSpan={3}>
+                    foo
+                  </TableCell>
+                  <TableCell align="right">Narxi</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>T/r</TableCell>
+                  <TableCell align="right">To'lov Sanasi</TableCell>
+                  <TableCell align="right">
+                    To'lash kerak bo'lgan summa
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {payment.map((row, ind) => (
+                  <TableRow key={ind}>
+                    <TableCell>{ind + 1}</TableCell>
+                    <TableCell align="right">
+                      {row.startDate.getDate()}.{row.startDate.getMonth() + 1}.
+                      {row.startDate.getFullYear()}
+                    </TableCell>
+                    <TableCell align="right">{row.paymentAmount}</TableCell>
+                  </TableRow>
+                ))}
+                <TableRow>
+                  <TableCell align="center" colSpan={4}>
+                    Jami:
+                    {totalSum - discountSumma()}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Button
+            component={Link}
+            to={"/contract"}
+            onClick={() => {
+              sendBackend();
+            }}
+            style={{ margin: "20px" }}
+            variant="contained"
+            color="primary"
+          >
+            chop etish
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

@@ -10,7 +10,7 @@ const Home = () => {
   const [data2, setData2] = useState([]);
 
   const hozzi = new Date();
-  console.log("adsadsads", hozzi);
+
   let oy = hozzi.getMonth() + 1;
   if (oy <= 9) {
     oy = "0" + oy;

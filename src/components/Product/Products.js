@@ -35,7 +35,9 @@ const Products = (props) => {
   }, [CatId, props.page, setMahsulot]);
 
   const handleClick = (item) => {
-    history.push({ pathname: "/product", state: { item } });
+    if (item.quantity > 0) {
+      history.push({ pathname: "/product", state: { item } });
+    }
   };
 
   const classes = useStyles();
@@ -64,7 +66,7 @@ const Products = (props) => {
                       Narxi: {item.price}
                     </Typography>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Soni: {item.quantity}
+                      Soni: {item.quantity > 0 ? item.quantity : "Mavjud emas"}
                     </Typography>
                   </CardContent>
                 </CardActionArea>

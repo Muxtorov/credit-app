@@ -254,7 +254,7 @@ const AddCustomer = () => {
           }}
         >
           <Grid item md={6}>
-            <spam style={{ fontSize: "22px" }}>Faolligi:</spam>
+            <span style={{ fontSize: "22px" }}>Faolligi:</span>
             <Switch
               style={{ display: "flex" }}
               color="primary"
@@ -262,7 +262,7 @@ const AddCustomer = () => {
               inputProps={{ "aria-label": "primary checkbox" }}
               value={activ}
               onChange={(e) => setActiv(e.target.checked)}
-              defaultChecked="true"
+              defaultChecked={true}
             />
           </Grid>
 

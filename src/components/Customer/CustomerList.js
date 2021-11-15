@@ -148,10 +148,7 @@ const CustomerList = ({ custom, handleDel, handleEdit }) => {
                     component={Link}
                     to={"/addcustomer"}
                   >
-                    <EditIcon
-                      fontSize="default"
-                      style={{ color: "green", marginLeft: "15%" }}
-                    />
+                    <EditIcon style={{ color: "green", marginLeft: "15%" }} />
                   </IconButton>
                 </StyledTableCell>
               </StyledTableRow>
