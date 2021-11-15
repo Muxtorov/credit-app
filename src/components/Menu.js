@@ -354,7 +354,7 @@ const Menu = () => {
                 <Button
                   component={Link}
                   to={`/${title}`}
-                  style={{ marginLeft: "10px" }}
+                  style={{ marginLeft: "10px", width: "90%" }}
                   onClick={() => {
                     setOpen(false);
                   }}

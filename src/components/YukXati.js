@@ -14,7 +14,7 @@ Font.register({
   src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf",
 });
 
-const MyDocument = ({ contract, shaxs, data }) => {
+const YukXati = ({ contract, shaxs, data }) => {
   const foo = contract.contract[0];
   const bulibTulash = data.total / data.lifetime;
   return (
@@ -105,10 +105,11 @@ const MyDocument = ({ contract, shaxs, data }) => {
                 яшовчи фуқаро {shaxs.username} {shaxs.surname} {shaxs.sheriff}{" "}
                 (шахсини тасдиқловчи ҳужжат: Паспорт серия {shaxs.pasSerNum}{" "}
                 ФАРГОНА ВИЛОЯТИ РИШТОН ТУМАНИ ИИБ томонидан {shaxs.birthDate}{" "}
-                берилган) Риштон туман {shaxs.workplace} лавозимида ишловчи
-                (кейинги ўринларда «Ҳаридор») иккинчи томондан ва учинчи
-                томондан {shaxs.guarantor} да яшовчи фуқаро (кейинги ўринларда
-                «Кафил» ушбу шартномани тарафлар ўртасида ўзаро келишув асосида
+                берилган) Риштон туман
+                {shaxs.workplace} лавозимида ишловчи (кейинги ўринларда
+                «Ҳаридор») иккинчи томондан ва учинчи томондан
+                {shaxs.guarantor} да яшовчи фуқаро (кейинги ўринларда «Кафил»
+                ушбу шартномани тарафлар ўртасида ўзаро келишув асосида
                 қуйидагилар тўғрисида тузилди.
               </Text>
             </View>
@@ -118,8 +119,8 @@ const MyDocument = ({ contract, shaxs, data }) => {
             <View>
               <Text style={styles.textlar}>
                 1.1 «Сотувчи» қуйидаги маҳсулотларни «Харидор»га {data.lifetime}
-                ( {foo.lifetime} ) ой муддат давомида қийматини бўлиб тўлаш
-                шарти билан сотади.
+                ( {foo.qitmat} ) ой муддат давомида қийматини бўлиб тўлаш шарти
+                билан сотади.
               </Text>
             </View>
 
@@ -170,7 +171,7 @@ const MyDocument = ({ contract, shaxs, data }) => {
             </View>
             <View style={{ marginTop: 19 }}>
               <Text style={styles.textlar}>
-                1.2. Шартноманинг умумий қиймати {data.total} ({contract.time})
+                1.2. Шартноманинг умумий қиймати {data.total}({contract.time})
                 сўмни ташкил қилади.
               </Text>
             </View>
@@ -471,35 +472,77 @@ const MyDocument = ({ contract, shaxs, data }) => {
               </View>
             </View>
 
-            <View wrap={false}>
-              <View
-                style={{
-                  marginTop: 60,
-                  flex: 0,
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                }}
-              >
-                <Text style={{ fontFamily: "Roboto", fontSize: 11 }}>
-                  ТЎЛОВ ЖАДВАЛИ
-                </Text>
-                <Text style={{ fontFamily: "Roboto", fontSize: 11 }}>
-                  Шартнома № {foo.nomer} га илова
-                </Text>
+            <View
+              style={{
+                marginTop: 60,
+                flex: 0,
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Text style={{ fontFamily: "Roboto", fontSize: 11 }}>
+                ТЎЛОВ ЖАДВАЛИ
+              </Text>
+              <Text style={{ fontFamily: "Roboto", fontSize: 11 }}>
+                Шартнома № {foo.nomer} га илова
+              </Text>
+            </View>
+            <View
+              style={{
+                display: "table",
+                width: "auto",
+                height: "auto",
+                borderStyle: "solid",
+                borderWidth: 1,
+                borderRightWidth: 0,
+                borderBottomWidth: 0,
+                marginTop: 27,
+              }}
+            >
+              <View style={styles.tableRow}>
+                <View
+                  style={{
+                    width: "34%",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={styles.tableCell}>Махсулот(лар) нархи</Text>
+                </View>
+                <View
+                  style={{
+                    width: "33% ",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={styles.tableCell}>Олдиндан тўлов сўммаси</Text>
+                </View>
+                <View
+                  style={{
+                    width: "33%",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={styles.tableCell}>Қарздорлик сўммаси</Text>
+                </View>
               </View>
-              <View
-                style={{
-                  display: "table",
-                  width: "auto",
-                  height: "auto",
-                  borderStyle: "solid",
-                  borderWidth: 1,
-                  borderRightWidth: 0,
-                  borderBottomWidth: 0,
-                  marginTop: 27,
-                }}
-              >
-                <View style={styles.tableRow}>
+
+              {data.items.map((item, ind) => (
+                <View key={ind} style={styles.tableRow}>
                   <View
                     style={{
                       width: "34%",
@@ -511,20 +554,7 @@ const MyDocument = ({ contract, shaxs, data }) => {
                       borderTopWidth: 0,
                     }}
                   >
-                    <Text style={styles.tableCell}>Махсулот(лар) нархи</Text>
-                  </View>
-                  <View
-                    style={{
-                      width: "33% ",
-                      fontFamily: "Roboto",
-                      borderStyle: "solid",
-                      height: "auto",
-                      borderWidth: 1,
-                      borderLeftWidth: 0,
-                      borderTopWidth: 0,
-                    }}
-                  >
-                    <Text style={styles.tableCell}>Олдиндан тўлов сўммаси</Text>
+                    <Text style={styles.tableCell}>{data.total}</Text>
                   </View>
                   <View
                     style={{
@@ -537,218 +567,248 @@ const MyDocument = ({ contract, shaxs, data }) => {
                       borderTopWidth: 0,
                     }}
                   >
-                    <Text style={styles.tableCell}>Қарздорлик сўммаси</Text>
+                    <Text style={styles.tableCell}> Oldindan tulov </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "33%",
+                      fontFamily: "Roboto",
+                      borderStyle: "solid",
+                      height: "auto",
+                      borderWidth: 1,
+                      borderLeftWidth: 0,
+                      borderTopWidth: 0,
+                    }}
+                  >
+                    <Text style={styles.tableCell}> Qarzdorlik </Text>
                   </View>
                 </View>
-
-                {data.items.map((item, ind) => (
-                  <View key={ind} style={styles.tableRow}>
-                    <View
-                      style={{
-                        width: "34%",
-                        fontFamily: "Roboto",
-                        borderStyle: "solid",
-                        height: "auto",
-                        borderWidth: 1,
-                        borderLeftWidth: 0,
-                        borderTopWidth: 0,
-                      }}
-                    >
-                      <Text style={styles.tableCell}>{data.total}</Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        fontFamily: "Roboto",
-                        borderStyle: "solid",
-                        height: "auto",
-                        borderWidth: 1,
-                        borderLeftWidth: 0,
-                        borderTopWidth: 0,
-                      }}
-                    >
-                      <Text style={styles.tableCell}> </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "33%",
-                        fontFamily: "Roboto",
-                        borderStyle: "solid",
-                        height: "auto",
-                        borderWidth: 1,
-                        borderLeftWidth: 0,
-                        borderTopWidth: 0,
-                      }}
-                    >
-                      <Text style={styles.tableCell}></Text>
-                    </View>
-                  </View>
-                ))}
+              ))}
+            </View>
+            <View
+              style={{
+                display: "table",
+                width: "auto",
+                height: "auto",
+                borderStyle: "solid",
+                borderWidth: 1,
+                borderRightWidth: 0,
+                borderBottomWidth: 0,
+                marginTop: 15,
+              }}
+            >
+              <View style={styles.tableRow}>
+                <View style={styles.tableTr}>
+                  <Text style={styles.tableCell}>Т\р</Text>
+                </View>
+                <View style={styles.tableItem}>
+                  <Text style={styles.tableCell}>Тўлов санаси</Text>
+                </View>
+                <View style={styles.tableItem}>
+                  <Text style={styles.tableCell}>Олдиндан тўлов суммаси</Text>
+                </View>
+                <View style={styles.tableItem}>
+                  <Text style={styles.tableCell}>Қарздорлик сўммаси</Text>
+                </View>
               </View>
-              <View
-                style={{
-                  display: "table",
-                  width: "auto",
-                  height: "auto",
-                  borderStyle: "solid",
-                  borderWidth: 1,
-                  borderRightWidth: 0,
-                  borderBottomWidth: 0,
-                  marginTop: 15,
-                }}
-              >
-                <View style={styles.tableRow}>
+
+              {data.payments.map((item, ind) => (
+                <View key={ind} style={styles.tableRow}>
                   <View style={styles.tableTr}>
-                    <Text style={styles.tableCell}>Т\р</Text>
+                    <Text style={styles.tableCell}>{ind + 1}</Text>
                   </View>
                   <View style={styles.tableItem}>
-                    <Text style={styles.tableCell}>Тўлов санаси</Text>
+                    <Text style={styles.tableCell}>
+                      {item.startDate.slice(0, 10)}
+                    </Text>
                   </View>
                   <View style={styles.tableItem}>
-                    <Text style={styles.tableCell}>Олдиндан тўлов суммаси</Text>
+                    <Text style={styles.tableCell}>Oldindan tulov summasi</Text>
                   </View>
                   <View style={styles.tableItem}>
-                    <Text style={styles.tableCell}>Қарздорлик сўммаси</Text>
+                    <Text style={styles.tableCell}>{item.paymentAmount}</Text>
                   </View>
                 </View>
+              ))}
+            </View>
 
-                {data.payments.map((item, ind) => (
-                  <View key={ind} style={styles.tableRow}>
-                    <View style={styles.tableTr}>
-                      <Text style={styles.tableCell}>{ind + 1}</Text>
-                    </View>
-                    <View style={styles.tableItem}>
-                      <Text style={styles.tableCell}>
-                        {item.startDate.slice(0, 10)}
-                      </Text>
-                    </View>
-                    <View style={styles.tableItem}>
-                      <Text style={styles.tableCell}></Text>
-                    </View>
-                    <View style={styles.tableItem}>
-                      <Text style={styles.tableCell}>{item.paymentAmount}</Text>
-                    </View>
-                  </View>
-                ))}
-              </View>
-
-              <View style={{ marginTop: 17 }}>
-                <Text
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    fontFamily: "Roboto",
-                    fontSize: 13,
-                    textAlign: "center",
-                  }}
-                >
-                  ЮК ХАТИ \ ХИСОБВАРАҚ-ФАКТУРА № {foo.yuknomer}
-                </Text>
-              </View>
-              <View>
-                <Text
-                  style={{
-                    display: "block",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    fontFamily: "Roboto",
-                    fontSize: 11,
-                  }}
-                >
-                  {foo.sana} йилдаги № {foo.nomer} -сонли муддатли тулов шарти
-                  билан тузилган олди-сотди шартномасига асосан
-                </Text>
-              </View>
-              <View style={styles.table}>
-                <View style={styles.tableRow}>
-                  <View
-                    style={{
-                      width: "50%",
-                      fontFamily: "Roboto",
-                      borderStyle: "solid",
-                      height: "auto",
-                      borderWidth: 1,
-                      borderLeftWidth: 0,
-                      borderTopWidth: 0,
-                    }}
-                  >
-                    <Text style={{ height: "auto", margin: 5, fontSize: 10 }}>
-                      “СОТУВЧИ”
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      width: "50%",
-                      fontFamily: "Roboto",
-                      borderStyle: "solid",
-                      height: "auto",
-                      borderWidth: 1,
-                      borderLeftWidth: 0,
-                      borderTopWidth: 0,
-                    }}
-                  >
-                    <Text style={{ height: "auto", margin: 5, fontSize: 10 }}>
-                      “ХАРИДОР”
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.tableRow}>
-                  <View
-                    style={{
-                      width: "50%",
-                      fontFamily: "Roboto",
-                      borderStyle: "solid",
-                      height: "auto",
-                      borderWidth: 1,
-                      borderLeftWidth: 0,
-                      borderTopWidth: 0,
-                    }}
-                  >
-                    <Text style={{ height: "auto", margin: 5, fontSize: 10 }}>
-                      ЯТТ Мухожиров Мухсинхўжа {"\n"}
-                      Манзил : Риштон шахар Рошидоний кучаси{"\n"}
-                      Х/р: 20218000005384518001{"\n"}
-                      МФО: 00520{"\n"}
-                      Банк : {"\n"}
-                      Телефон: +998 97 036 10 10 {"\n"} +998 91 97 037 10 10
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      width: "50%",
-                      fontFamily: "Roboto",
-                      borderStyle: "solid",
-                      height: "auto",
-                      borderWidth: 1,
-                      borderLeftWidth: 0,
-                      borderTopWidth: 0,
-                    }}
-                  >
-                    <Text style={{ height: "auto", margin: 5, fontSize: 10 }}>
-                      {shaxs.username} {shaxs.surname} {"\n"}
-                      Манзил : {shaxs.address} {"\n"}
-                      Хужжат : {shaxs.pasSerNum} {"\n"}
-                      Телефон: {shaxs.phone} {"\n"}
-                      Телефон2: {shaxs.phone2}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View
+            <View style={{ marginTop: 17 }}>
+              <Text
                 style={{
-                  display: "table",
-                  width: "auto",
-                  height: "auto",
-                  borderStyle: "solid",
-                  borderWidth: 1,
-                  borderRightWidth: 0,
-                  borderBottomWidth: 0,
-                  marginTop: 47,
+                  display: "flex",
+                  alignItems: "center",
+                  fontFamily: "Roboto",
+                  fontSize: 13,
+                  textAlign: "center",
                 }}
               >
-                <View style={styles.tableRow}>
+                ЮК ХАТИ \ ХИСОБВАРАҚ-ФАКТУРА № {foo.yuknomer}
+              </Text>
+            </View>
+            <View>
+              <Text
+                style={{
+                  display: "block",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  fontFamily: "Roboto",
+                  fontSize: 11,
+                }}
+              >
+                {foo.sana} йилдаги № {foo.nomer} -сонли муддатли тулов шарти
+                билан тузилган олди-сотди шартномасига асосан
+              </Text>
+            </View>
+            <View style={styles.table}>
+              <View style={styles.tableRow}>
+                <View
+                  style={{
+                    width: "50%",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={{ height: "auto", margin: 5, fontSize: 10 }}>
+                    “СОТУВЧИ”
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    width: "50%",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={{ height: "auto", margin: 5, fontSize: 10 }}>
+                    “ХАРИДОР”
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.tableRow}>
+                <View
+                  style={{
+                    width: "50%",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={{ height: "auto", margin: 5, fontSize: 10 }}>
+                    ЯТТ Мухожиров Мухсинхўжа {"\n"}
+                    Манзил : Риштон шахар Рошидоний кучаси{"\n"}
+                    Х/р: 20218000005384518001{"\n"}
+                    МФО: 00520{"\n"}
+                    Банк : {"\n"}
+                    Телефон: +998 97 036 10 10 {"\n"} +998 91 97 037 10 10
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    width: "50%",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={{ height: "auto", margin: 5, fontSize: 10 }}>
+                    {shaxs.username} {shaxs.surname} {"\n"}
+                    Манзил : {shaxs.address} {"\n"}
+                    Хужжат : {shaxs.pasSerNum} {"\n"}
+                    Телефон: {shaxs.phone} {"\n"}
+                    Телефон2: {shaxs.phone2}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                display: "table",
+                width: "auto",
+                height: "auto",
+                borderStyle: "solid",
+                borderWidth: 1,
+                borderRightWidth: 0,
+                borderBottomWidth: 0,
+                marginTop: 47,
+              }}
+            >
+              <View style={styles.tableRow}>
+                <View style={styles.jadval}>
+                  <Text style={styles.tableCell}>T\p</Text>
+                </View>
+                <View
+                  style={{
+                    width: "41%",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={styles.tableCell}>Махсулот номи</Text>
+                </View>
+                <View
+                  style={{
+                    width: "10%",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={styles.tableCell}>Сони</Text>
+                </View>
+                <View
+                  style={{
+                    width: "22%",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={styles.tableCell}>Махсулот нархи</Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "22%",
+                    fontFamily: "Roboto",
+                    borderStyle: "solid",
+                    height: "auto",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
+                  <Text style={styles.tableCell}>Умумий киймати</Text>
+                </View>
+              </View>
+
+              {data.items.map((item, ind) => (
+                <View key={ind} style={styles.tableRow}>
                   <View style={styles.jadval}>
-                    <Text style={styles.tableCell}>T\p</Text>
+                    <Text style={styles.tableCell}>{ind + 1}</Text>
                   </View>
                   <View
                     style={{
@@ -761,7 +821,7 @@ const MyDocument = ({ contract, shaxs, data }) => {
                       borderTopWidth: 0,
                     }}
                   >
-                    <Text style={styles.tableCell}>Махсулот номи</Text>
+                    <Text style={styles.tableCell}>{item.title}</Text>
                   </View>
                   <View
                     style={{
@@ -774,7 +834,7 @@ const MyDocument = ({ contract, shaxs, data }) => {
                       borderTopWidth: 0,
                     }}
                   >
-                    <Text style={styles.tableCell}>Сони</Text>
+                    <Text style={styles.tableCell}> {item.quantity} </Text>
                   </View>
                   <View
                     style={{
@@ -787,7 +847,7 @@ const MyDocument = ({ contract, shaxs, data }) => {
                       borderTopWidth: 0,
                     }}
                   >
-                    <Text style={styles.tableCell}>Махсулот нархи</Text>
+                    <Text style={styles.tableCell}> {item.price} </Text>
                   </View>
 
                   <View
@@ -801,134 +861,71 @@ const MyDocument = ({ contract, shaxs, data }) => {
                       borderTopWidth: 0,
                     }}
                   >
-                    <Text style={styles.tableCell}>Умумий киймати</Text>
+                    <Text style={styles.tableCell}> {data.total} </Text>
                   </View>
                 </View>
+              ))}
+            </View>
+            <View style={{ marginTop: 10 }}>
+              <Text style={{ fontSize: 10 }}>
+                ( ___________________________________ )
+              </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 30,
+                flex: 0,
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
+                Топширдим
+              </Text>
+              <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>Олдим</Text>
+            </View>
+            <View
+              style={{
+                marginTop: 20,
+                flex: 0,
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
+                Рахбар ___________ Мухожиров Мухсинхўжа{" "}
+              </Text>
+              <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
+                {" "}
+                ___________{" "}
+              </Text>
+            </View>
 
-                {data.items.map((item, ind) => (
-                  <View key={ind} style={styles.tableRow}>
-                    <View style={styles.jadval}>
-                      <Text style={styles.tableCell}>{ind + 1}</Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "41%",
-                        fontFamily: "Roboto",
-                        borderStyle: "solid",
-                        height: "auto",
-                        borderWidth: 1,
-                        borderLeftWidth: 0,
-                        borderTopWidth: 0,
-                      }}
-                    >
-                      <Text style={styles.tableCell}>{item.title}</Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "10%",
-                        fontFamily: "Roboto",
-                        borderStyle: "solid",
-                        height: "auto",
-                        borderWidth: 1,
-                        borderLeftWidth: 0,
-                        borderTopWidth: 0,
-                      }}
-                    >
-                      <Text style={styles.tableCell}> {item.quantity} </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: "22%",
-                        fontFamily: "Roboto",
-                        borderStyle: "solid",
-                        height: "auto",
-                        borderWidth: 1,
-                        borderLeftWidth: 0,
-                        borderTopWidth: 0,
-                      }}
-                    >
-                      <Text style={styles.tableCell}> {item.price} </Text>
-                    </View>
-
-                    <View
-                      style={{
-                        width: "22%",
-                        fontFamily: "Roboto",
-                        borderStyle: "solid",
-                        height: "auto",
-                        borderWidth: 1,
-                        borderLeftWidth: 0,
-                        borderTopWidth: 0,
-                      }}
-                    >
-                      <Text style={styles.tableCell}> {data.total} </Text>
-                    </View>
-                  </View>
-                ))}
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <Text style={{ fontSize: 10 }}>
-                  ( ___________________________________ )
-                </Text>
-              </View>
-              <View
-                style={{
-                  marginTop: 30,
-                  flex: 0,
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                }}
-              >
-                <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
-                  Топширдим
-                </Text>
-                <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
-                  Олдим
-                </Text>
-              </View>
-              <View
-                style={{
-                  marginTop: 20,
-                  flex: 0,
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                }}
-              >
-                <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
-                  Рахбар ___________ Мухожиров Мухсинхўжа{" "}
-                </Text>
-                <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
-                  {" "}
-                  ___________{" "}
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  marginTop: 30,
-                  flex: 0,
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                }}
-              >
-                <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
-                  Ишончнома бўйича
-                </Text>
-                <Text style={{ fontFamily: "Roboto", fontSize: 10 }}> </Text>
-              </View>
-              <View
-                style={{
-                  marginTop: 20,
-                  flex: 0,
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                }}
-              >
-                <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
-                  Махсулотни бериб юбордим ________________________
-                </Text>
-                <Text style={{ fontFamily: "Roboto", fontSize: 10 }}> </Text>
-              </View>
+            <View
+              style={{
+                marginTop: 30,
+                flex: 0,
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
+                Ишончнома бўйича
+              </Text>
+              <Text style={{ fontFamily: "Roboto", fontSize: 10 }}> </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 20,
+                flex: 0,
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Text style={{ fontFamily: "Roboto", fontSize: 10 }}>
+                Махсулотни бериб юбордим ________________________
+              </Text>
+              <Text style={{ fontFamily: "Roboto", fontSize: 10 }}> </Text>
             </View>
           </View>
         </View>
@@ -937,7 +934,7 @@ const MyDocument = ({ contract, shaxs, data }) => {
   );
 };
 
-export default MyDocument;
+export default YukXati;
 
 const styles = StyleSheet.create({
   myText: {
