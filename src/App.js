@@ -31,7 +31,6 @@ const App = () => {
 
   useEffect(() => {
     axios.get(apiUrl.url + "/categorys").then((res) => {
-      console.log("Categoriyalar yuklanmoqda");
       setData(res.data);
     });
   }, [setData]);

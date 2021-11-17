@@ -1,18 +1,14 @@
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Button, TextField } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import ProdCRUDList from "./ProdCRUDList";
+import apiUrl from "../../config/httpConnect";
+import axios from "axios";
 
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Button, TextField } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import ProdCRUDList from './ProdCRUDList';
-import apiUrl from '../../config/httpConnect';
-import axios from 'axios';
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch } from 'react-redux';
-import { setProdId } from '../../store/actions';
-import Loading from '../Loading';
-
+// import { useDispatch } from "react-redux";
+// import { setProdId } from "../../store/actions";
+import Loading from "../Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,25 +32,18 @@ const ProdList = () => {
   const [name, setName] = useState("");
   const [prod, setProd] = useState([]);
   const [prodData, setProdData] = useState([]);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-
     setLoading(true);
     axios
-      .get(apiUrl.url + '/products')
+      .get(apiUrl.url + "/products")
       .then((res) => {
-        if (res.status === 200) {
-          toast.success('maxsulotlar yuklandi');
-        } else {
-          toast.error('maxsulotlar yuklanmadi');
-        }
         setProd(res.data);
         setProdData(res.data);
       })
       .finally(() => setLoading(false));
-
   }, [setProd]);
 
   const search_data = (value) => {

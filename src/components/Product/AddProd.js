@@ -1,20 +1,15 @@
-
-import { Button, Grid, TextField } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import apiUrl from '../../config/httpConnect';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearProdId } from '../../store/actions';
-import Loading from '../Loading';
-
+import { Button, Grid, TextField } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
+import apiUrl from "../../config/httpConnect";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { useDispatch, useSelector } from "react-redux";
+import { clearProdId } from "../../store/actions";
+import Loading from "../Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,12 +45,11 @@ const AddProduct = (props) => {
   const [arr, setArr] = useState([]);
   const { prodID } = useSelector((state) => state.cart);
   const [loading, setLoading] = useState(false);
-  // let proId = window.localStorage.getItem('prodId');
 
   useEffect(() => {
     let categ = window.localStorage.getItem("categoriyalar");
     setArr(JSON.parse(categ));
-    console.log(prodID);
+
     if (prodID) {
       setLoading(true);
       axios
@@ -70,9 +64,8 @@ const AddProduct = (props) => {
 
         .finally(() => setLoading(false));
       return () => dispatch(clearProdId());
-
     }
-  }, [prodID]);
+  }, [dispatch, prodID]);
 
   const addPerson = async () => {
     let newprod = {
@@ -151,8 +144,12 @@ const AddProduct = (props) => {
                 value={categoriyasi}
                 onChange={handleChange}
               >
-                {arr.map((item) => {
-                  return <MenuItem value={item.id}>{item.title}</MenuItem>;
+                {arr.map((item, ind) => {
+                  return (
+                    <MenuItem key={ind + 1} value={item.id}>
+                      {item.title}
+                    </MenuItem>
+                  );
                 })}
               </Select>
             </FormControl>

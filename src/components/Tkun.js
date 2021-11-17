@@ -38,7 +38,7 @@ const Tkun = () => {
   const classes = useStyles();
   const [data, setData] = useState([]);
   const hozzi = new Date();
-  console.log("adsadsads", hozzi);
+
   let oy = hozzi.getMonth() + 1;
   if (oy <= 9) {
     oy = "0" + oy;
@@ -59,7 +59,6 @@ const Tkun = () => {
           style={{ marginTop: "30px", marginBottom: "20px" }}
           component={Paper}
         >
-          {/* <h2 align="center">Bugun Tug'ilgan Mijozlar</h2> */}
           <Table className={classes.table} aria-label="customized table">
             <TableHead>
               <TableRow>
@@ -76,7 +75,7 @@ const Tkun = () => {
             </TableHead>
             <TableBody>
               {data.map((item) => (
-                <StyledTableRow key={item.name}>
+                <StyledTableRow key={item.id}>
                   <StyledTableCell component="th" scope="row">
                     {item.username}
                   </StyledTableCell>
